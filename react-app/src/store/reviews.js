@@ -48,10 +48,11 @@ export const newReview = (review, guide_id) => async (dispatch) => {
         },
         body: JSON.stringify(review),
     });
-
+    console.log(response)
     if (response.ok) {
         const data = await response.json();
         dispatch(postReview(data));
+
         return data
     } else if (response.status < 500) {
         const data = await response.json();
