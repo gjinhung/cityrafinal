@@ -26,7 +26,7 @@ def get_one_review(id):
     return {'reviews': {review_dict['id']: review_dict}}
 
 
-@review_routes.route('/guide/<int:guideId>', methods=['POST'])
+@review_routes.route('/guide/<int:guideId>/new', methods=['POST'])
 @login_required
 def add_review(guideId):
     form = ReviewForm()

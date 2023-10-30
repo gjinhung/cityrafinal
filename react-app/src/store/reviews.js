@@ -41,7 +41,7 @@ export const getOneReview = (id) => async (dispatch) => {
 };
 
 export const newReview = (review, guide_id) => async (dispatch) => {
-    const response = await fetch(`/api/reviews/guide/${guide_id}`, {
+    const response = await fetch(`/api/reviews/guide/${guide_id}/new`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
