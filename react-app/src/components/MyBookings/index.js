@@ -20,7 +20,9 @@ export default function MyBookings() {
     let upcomingBooking_ids = []
 
     normalizedBookingIds.forEach((booking_id) => {
-        if (bookings[booking_id].complete) {
+        console.log(normalizedBookingIds)
+        console.log(booking_id)
+        if (bookings[booking_id].completed) {
             pastBookings_ids.push(booking_id)
         } else {
             upcomingBooking_ids.push(booking_id)

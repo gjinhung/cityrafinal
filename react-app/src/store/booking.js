@@ -1,3 +1,4 @@
+import { authenticate } from "./session";
 import { allUsers } from "./users";
 
 // constants
@@ -95,8 +96,17 @@ export const deleteBooking = (id) => async (dispatch) => {
     });
 
     if (response.ok) {
-        dispatch(allUsers())
-        dispatch(removeBooking(id));
+        await console.log('authenticate')
+        await dispatch(authenticate())
+        await console.log('load all Users')
+        await dispatch(allUsers())
+        await dispatch(getBookings())
+        await dispatch(removeBooking(id))
+
+
+
+        // console.log('load all Users')
+        // console.log('remove bookg dispatch')
     } else if (response.status < 500) {
         // const data = await response.json();
         // if (data.errors) {

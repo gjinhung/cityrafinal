@@ -40,7 +40,6 @@ export default function MyTours({ loaded }) {
             user_tours_arr.push(tour.id)
         }
     })
-    console.log(user_tours_arr)
 
     if (!loaded) {
         return (

@@ -22,10 +22,10 @@ function DeleteBookingModal({ booking_id }) {
       setErrors(data)
     } else {
       closeModal()
-      dispatch(getBookings())
-      dispatch(allUsers())
-      dispatch(authenticate())
-      window.location.reload(true)
+      // dispatch(getBookings())
+      // dispatch(allUsers())
+      // dispatch(authenticate())
+      // window.location.reload(true)
     }
   }
 

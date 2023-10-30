@@ -22,9 +22,9 @@ export default function EditBookingModal({ booking }) {
     const tours = useSelector((state) => state.tours)
     const cities = useSelector((state) => state.cities)
     const type = useSelector((state) => state.specialties)
-    const city = cities[booking.tour.city_id].city
+    const city = cities[tours[booking.tour_guide_id].city_id].city
     const { closeModal } = useModal();
-    const id = bookings[booking.id].tour.guide_id
+    const id = bookings[booking.id].tour_guide_id
     const guide = users[+id]
 
     // const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -77,7 +77,7 @@ export default function EditBookingModal({ booking }) {
     }
 
     const handleDate = (e) => {
-        let tour_dates = tours[bookings[booking.id].tour.id].dates
+        let tour_dates = tours[bookings[booking.id].tour_guide_id].dates
         dateRef.current = e
         let year = dateRef.current.substring(0, 4);
         let month = dateRef.current.substring(5, 7);
@@ -104,23 +104,23 @@ export default function EditBookingModal({ booking }) {
     let show = (
         <>
             <div className="title-tour-container">
-                <h3 className="title-tour">Update Your Tour with {users[bookings[booking.id].tour.guide_id].first_name}</h3>
+                <h3 className="title-tour">Update Your Tour with {users[bookings[booking.id].tour_guide_id].first_name}</h3>
             </div>
             < form className="editBooking-container" onSubmit={handleSubmit} >
                 <div className="booking-detail-container">
-                    <div className="type" >Type: {type[tours[bookings[booking.id].tour.id].specialties_id[0]].specialty}</div>
+                    <div className="type" >Type: {type[tours[bookings[booking.id].tour_guide_id].specialties_id[0]].specialty}</div>
 
                     < br />
                     <div className="row ">
                         <div className="type booking-column">About:  </div>
-                        <div className="type column">{booking.tour.about}</div>
+                        <div className="type column">{tours[booking.tour_guide_id].about}</div>
                     </div>
                     < br />
-                    <div className="type">Price: ${booking.tour.price}/hr</div>
+                    <div className="type">Price: ${tours[booking.tour_guide_id].price}/hr</div>
                 </div>
                 <br />
                 <div className="city">
-                    City: {cities[booking.tour.city_id].city}
+                    City: {cities[tours[booking.tour_guide_id].city_id].city}
                 </div>
                 <br />
                 <div className="update-booking-date">
@@ -161,7 +161,7 @@ export default function EditBookingModal({ booking }) {
                 <br />
                 <div className="title-style">
                     {duration && (<>
-                        Total: ${duration * booking.tour.price}
+                        Total: ${duration * tours[booking.tour_guide_id].price}
                     </>)}
                 </div>
                 <br />

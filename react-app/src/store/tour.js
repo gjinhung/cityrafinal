@@ -1,3 +1,4 @@
+import { authenticate } from "./session";
 import { allUsers } from "./users";
 
 // constants
@@ -93,6 +94,7 @@ export const deleteTour = (id) => async (dispatch) => {
     if (response.ok) {
         console.log('ok')
         dispatch(allUsers())
+        dispatch(authenticate())
         dispatch(removeTour(id));
     } else if (response.status < 500) {
         const data = await response.json();
