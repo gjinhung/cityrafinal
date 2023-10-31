@@ -20,8 +20,6 @@ export default function MyBookings() {
     let upcomingBooking_ids = []
 
     normalizedBookingIds.forEach((booking_id) => {
-        console.log(normalizedBookingIds)
-        console.log(booking_id)
         if (bookings[booking_id].completed) {
             pastBookings_ids.push(booking_id)
         } else {
@@ -30,15 +28,28 @@ export default function MyBookings() {
     })
 
     function convertDate(data) {
+
+        const yr = (data.substring(0, 4))
+        const mm = data.substring(5, 7)
+        const dd = data.substring(8, 10)
+        // let parts = data.split('-')
+        // let mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+        // let newDate = mydate.getDay();
+        // console.log(dat)
+        // console.log(typeof (data))
+        // console.log(dd)
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
         const date = new Date(data);
+        // const f = new Intl.DateTimeFormat("en-US")
+
+        // console.log(f.format(newDate))
+
         const day = days[date.getDay()];
         const num = date.getDate()
         const month = months[date.getMonth()];
         const year = date.getFullYear();
-
+        // console.log(num)
         return `${day}, ${month} ${num}, ${year}`;
 
     }

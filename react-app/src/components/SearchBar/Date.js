@@ -9,6 +9,7 @@ export default function DateSelection() {
     // const [dayOfWk, setDayOfWk] = useState('');
     const [error, setError] = useState('')
     const { searchTerms, setSearch } = useSearch()
+    const [date, setDate] = useState('')
 
     // useEffect(() => {
     //     let handler = (e) => {
@@ -49,6 +50,8 @@ export default function DateSelection() {
 
     const handleChange = (e) => {
         dateRef.current = e
+        setDate(e)
+        console.log(dateRef.current)
         let year = dateRef.current.substring(0, 4);
         let month = dateRef.current.substring(5, 7);
         let day = dateRef.current.substring(8, 10);
@@ -82,7 +85,7 @@ export default function DateSelection() {
                     <input
                         type="date"
                         className="date-input"
-                        value={dateRef.current}
+                        value={date}
                         onChange={(e) => handleChange(e.target.value)}
                     />
                 </div>

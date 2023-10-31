@@ -51,6 +51,8 @@ export default function PostTourModal() {
             'adventure': adventure,
             'other': other
         }
+
+        console.log(tour_data)
         const data = await dispatch(newTour(tour_data));
         if (data) {
             setErrors(data.errors);
