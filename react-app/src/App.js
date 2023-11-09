@@ -53,21 +53,21 @@ function App() {
             <Route path="/signup">
               <SignupFormPage />
             </Route>
-            <Route path='/slider'>
-              <LogInSignUp loaded={isLoaded} />
-            </Route>
+
             <Route path='/guide/:id'>
               <GuidePage loaded={isLoaded} />
             </Route>
             <ProtectedRoute path='/dashboard' exact={true}>
               < Dashboard loaded={isLoaded} />
             </ProtectedRoute>
-            <Route path=''>
+            <Route exact path='/'>
               <MainPage loaded={isLoaded} />
             </Route>
             {/* <SelfRoutes /> */}
           </Switch>
         )}
+        <LogInSignUp loaded={isLoaded} />
+
       </>
 
     );

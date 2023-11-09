@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     height: 50px;
-    background-color: #cf2e2e;
+    background-color: #1b86bb;
     
 }
 
@@ -79,7 +79,7 @@
     justify-content: center;
     align-items: center;
     height: 100px;
-    background-color: #cf2e2e;
+    background-color: #1b86bb;
     width: 100%;
 }
 
@@ -90,7 +90,7 @@
     width: 250px;
     align-self: flex-end;
     color: white;
-    background-color: #cf2e2e;
+    background-color: #1b86bb;
     border: white solid 2px;
     cursor: pointer;
 }
@@ -102,7 +102,7 @@
 .date-input{
     width: 100%;
     border: none;
-    background-color: #cf2e2e;
+    background-color: #1b86bb;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     font-size: small;
