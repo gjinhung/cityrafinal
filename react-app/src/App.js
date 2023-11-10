@@ -53,7 +53,9 @@ function App() {
             <Route path="/signup">
               <SignupFormPage />
             </Route>
-
+            <Route path="/slider">
+              <LogInSignUp loaded={isLoaded} />
+            </Route>
             <Route path='/guide/:id'>
               <GuidePage loaded={isLoaded} />
             </Route>
@@ -66,7 +68,7 @@ function App() {
             {/* <SelfRoutes /> */}
           </Switch>
         )}
-        <LogInSignUp loaded={isLoaded} />
+
 
       </>
 
