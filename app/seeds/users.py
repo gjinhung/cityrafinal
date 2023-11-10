@@ -261,7 +261,7 @@ def seed_users():
 
     review2 = Review(
         reviewer=demo3,
-        guide_id=2,
+        guide_id=3,
         # communication_rating=5,
         # knowledgability_rating=4,
         # professionalism_rating=5,
@@ -274,7 +274,7 @@ def seed_users():
 
     review3 = Review(
         reviewer=demo,
-        guide_id=2,
+        guide_id=3,
         # communication_rating=5,
         # knowledgability_rating=4,
         # professionalism_rating=5,
