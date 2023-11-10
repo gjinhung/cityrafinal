@@ -18,7 +18,6 @@ import datetime
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        id=1,
         username="Demo",
         email="demo@aa.io",
         password="password",
@@ -33,7 +32,6 @@ def seed_users():
     )
 
     demo2 = User(
-        id=2,
         username="Demo2",
         email="demo2@aa.io",
         password="password",
@@ -48,7 +46,6 @@ def seed_users():
     )
 
     demo3 = User(
-        id=3,
         username="Demo3",
         email="demo3@aa.io",
         password="password",
@@ -79,39 +76,6 @@ def seed_users():
     seattle = City(
         id=3,
         city="Seattle",
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    booking1 = Booking(
-        id=1,
-        tour_guide_id=1,
-        date=datetime.date(2024, 1, 1),
-        start_time=datetime.time(9),
-        duration=2,
-        tourist=demo3,
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    booking2 = Booking(
-        id=2,
-        tourist_id=3,
-        date=datetime.date(2024, 2, 1),
-        start_time=datetime.time(9),
-        duration=3,
-        tour_guide_id=2,
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    booking3 = Booking(
-        id=3,
-        tourist_id=1,
-        tour_guide_id=2,
-        date=datetime.date(2024, 1, 15),
-        start_time=datetime.time(13),
-        duration=2,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
@@ -215,8 +179,7 @@ def seed_users():
     )
 
     tour1 = TourGuide(
-        id=1,
-        guide_id=1,
+        guide=demo,
         city_id=1,
         language=english,
         price=40,
@@ -228,7 +191,6 @@ def seed_users():
     )
 
     tour2 = TourGuide(
-        id=2,
         guide=demo2,
         city_id=2,
         language=spanish,
@@ -241,8 +203,7 @@ def seed_users():
     )
 
     tour3 = TourGuide(
-        id=3,
-        guide_id=2,
+        guide=demo2,
         city_id=3,
         language=chinese,
         price=50,
@@ -255,9 +216,39 @@ def seed_users():
 
     tour3.dates.append(monday)
 
+    booking1 = Booking(
+        tour_guide=tour1,
+        date=datetime.date(2024, 1, 1),
+        start_time=datetime.time(9),
+        duration=2,
+        tourist=demo3,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking2 = Booking(
+        tourist=demo3,
+        date=datetime.date(2024, 2, 1),
+        start_time=datetime.time(9),
+        duration=3,
+        tour_guide=tour2,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking3 = Booking(
+        tourist=demo,
+        tour_guide=tour2,
+        date=datetime.date(2024, 1, 15),
+        start_time=datetime.time(13),
+        duration=2,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
     review1 = Review(
         id=1,
-        reviewer_id=3,
+        reviewer=demo3,
         guide_id=1,
         # communication_rating=5,
         # knowledgability_rating=4,
@@ -271,7 +262,7 @@ def seed_users():
 
     review2 = Review(
         id=2,
-        reviewer_id=3,
+        reviewer=demo3,
         guide_id=2,
         # communication_rating=5,
         # knowledgability_rating=4,
@@ -285,7 +276,7 @@ def seed_users():
 
     review3 = Review(
         id=3,
-        reviewer_id=1,
+        reviewer=demo,
         guide_id=2,
         # communication_rating=5,
         # knowledgability_rating=4,
