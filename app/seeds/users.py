@@ -5,9 +5,10 @@ from app.models import (
     Date,
     Review,
     Booking,
-    TourGuide,
+    Tour,
     Language,
-    Specialty,
+    Type,
+    Availability,
     environment,
     SCHEMA,
 )
@@ -17,6 +18,30 @@ import datetime
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
+    english = Language(
+        language="English",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    spanish = Language(
+        language="Spanish",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    chinese = Language(
+        language="Chinese",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    italian = Language(
+        language="Italian",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
     demo = User(
         username="Demo",
         email="demo@aa.io",
@@ -26,6 +51,7 @@ def seed_users():
         profile_pic="https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
         joined_on=datetime.datetime.now(),
         student=True,
+        languages=[english, chinese],
         graduation_date=datetime.date(2024, 5, 24),
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
@@ -35,11 +61,12 @@ def seed_users():
         username="Demo2",
         email="demo2@aa.io",
         password="password",
-        first_name="Demo",
-        last_name="Lition",
+        first_name="John",
+        last_name="Chen",
         profile_pic="https://png.pngtree.com/background/20230426/original/pngtree-young-professional-asian-college-man-with-glasses-picture-image_2489385.jpg",
         joined_on=datetime.datetime.now(),
         student=True,
+        languages=[english, spanish],
         graduation_date=datetime.date(2024, 5, 24),
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
@@ -55,205 +82,193 @@ def seed_users():
         joined_on=datetime.datetime.now(),
         student=False,
         graduation_date=None,
+        languages=[english, italian],
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    demo4 = User(
+        username="Demo4",
+        email="demo4@aa.io",
+        password="password",
+        first_name="Mary",
+        last_name="Poppins",
+        profile_pic="https://www.davidson.edu/sites/default/files/styles/extra_extra_large_16_9/public/2020-10/Grace_Rooker%2724_03.jpg",
+        joined_on=datetime.datetime.now(),
+        student=False,
+        graduation_date=None,
+        languages=[english],
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    demo5 = User(
+        username="Demo5",
+        email="demo5@aa.io",
+        password="password",
+        first_name="Stue",
+        last_name="Dent",
+        profile_pic="https://www.ecclesiologyandethnography.net/wp-content/uploads/2019/06/Koos-Tamminga.jpg",
+        joined_on=datetime.datetime.now(),
+        student=True,
+        graduation_date=datetime.date(2024, 6, 24),
+        languages=[english, spanish],
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     new_york = City(
-        id=1,
         city="New York",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     los_angeles = City(
-        id=2,
         city="Los Angeles",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     seattle = City(
-        id=3,
         city="Seattle",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
-    food = Specialty(
-        id=1,
-        specialty="Food",
+    miami = City(
+        city="Miami",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
-    history = Specialty(
-        id=2,
-        specialty="History",
+    food = Type(
+        type="Food",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
-    adventure = Specialty(
-        id=3,
-        specialty="Adventure",
+    history = Type(
+        type="History",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
-    other = Specialty(
-        id=4,
-        specialty="Other",
+    adventure = Type(
+        type="Adventure",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    other = Type(
+        type="Other",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     monday = Date(
-        id=1,
         date="Monday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     tuesday = Date(
-        id=2,
         date="Tuesday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     wednesday = Date(
-        id=3,
         date="Wednesday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     thursday = Date(
-        id=4,
         date="Thursday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     friday = Date(
-        id=5,
         date="Friday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     saturday = Date(
-        id=6,
         date="Saturday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     sunday = Date(
-        id=0,
         date="Sunday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
-    english = Language(
-        id=1,
-        language="English",
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    spanish = Language(
-        id=2,
-        language="Spanish",
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    chinese = Language(
-        id=3,
-        language="Chinese",
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    tour1 = TourGuide(
+    tour1 = Tour(
         guide=demo,
-        city_id=1,
-        language=english,
-        price=40,
-        about='Born and raised in NYC. I"ve spent a lot of money and time, traveling around, taking pictures and eating all over New York. Come with me on a journey to explore New York',
-        dates=[monday, tuesday, saturday],
-        specialties=[food],
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    tour2 = TourGuide(
-        guide=demo2,
-        city_id=2,
-        language=spanish,
-        price=20,
-        about='Born and raised in LA. I"ve spent a lot of money and time, traveling around, taking pictures and eating all over LA. Come with me on a journey to explore Los Angeles.',
-        dates=[wednesday, friday, saturday, sunday],
-        specialties=[other],
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    tour3 = TourGuide(
-        guide=demo2,
-        city_id=3,
-        language=chinese,
-        price=50,
-        about='Born and raised in Seattle. I"ve spent a lot of money and time, traveling around, taking pictures and eating all over Seattle. Come with me on a journey to explore Seattle',
-        dates=[friday, saturday, sunday],
-        specialties=[adventure],
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    tour3.dates.append(monday)
-
-    booking1 = Booking(
-        tour_guide=tour1,
-        date=datetime.date(2024, 1, 1),
-        start_time=datetime.time(9),
-        duration=2,
-        tourist=demo3,
-        created_at=datetime.datetime.now(),
-        updated_at=datetime.datetime.now(),
-    )
-
-    booking2 = Booking(
-        tourist=demo3,
-        date=datetime.date(2024, 2, 1),
-        start_time=datetime.time(9),
+        type=food,
+        city=new_york,
+        title="A Little Taste of New York",
+        price=120,
         duration=3,
-        tour_guide=tour2,
+        about='Born and raised in NYC. I"ve spent a lot of money and time, traveling around, taking pictures and eating all over New York. Come with me on a journey to explore New York',
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
-    booking3 = Booking(
-        tourist=demo,
-        tour_guide=tour2,
-        date=datetime.date(2024, 1, 15),
-        start_time=datetime.time(13),
-        duration=2,
+    tour1_avail = Availability(tour=tour1, date=monday, time=18)
+
+    tour1_avail1 = Availability(tour=tour1, date=saturday, time=18)
+
+    tour1_avail2 = Availability(tour=tour1, date=sunday, time=18)
+
+    tour2 = Tour(
+        guide=demo2,
+        city=los_angeles,
+        price=80,
+        title="Explore LA's street arts",
+        about='Born and raised in LA. I"ve spent a lot of money and time, traveling around, taking pictures and eating all over LA. Come with me on a journey to explore Los Angeles.',
+        type=other,
+        duration=4,
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
+
+    tour2_avail = Availability(tour=tour2, date=friday, time=17)
+
+    tour2_avail1 = Availability(tour=tour2, date=saturday, time=14)
+
+    tour2_avail2 = Availability(tour=tour2, date=sunday, time=11)
+
+    tour3 = Tour(
+        guide=demo2,
+        city=seattle,
+        price=300,
+        duration=6,
+        title="Guided Hike of Mount Rainier",
+        about='Born and raised in Seattle. I"ve spent a lot of money and time, traveling around, taking pictures and eating all over Seattle. Come with me on a journey to explore Seattle',
+        type=adventure,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    tour3_avail = Availability(tour=tour3, date=monday, time=17)
+
+    tour3_avail1 = Availability(tour=tour3, date=tuesday, time=14)
+
+    tour3_avail2 = Availability(tour=tour3, date=thursday, time=11)
 
     review1 = Review(
         reviewer=demo3,
         guide_id=1,
-        # communication_rating=5,
-        # knowledgability_rating=4,
-        # professionalism_rating=5,
-        # average_rating=round(((5+4+5)/3), 2),
-        rating=5,
+        communication_rating=5,
+        knowledgability_rating=4,
+        professionalism_rating=5,
+        rating=round(((5 + 4 + 5) / 3), 2),
+        # rating=5,
         review_body="Demo was a very friendly person with lots of knowledge of the city",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
@@ -261,12 +276,12 @@ def seed_users():
 
     review2 = Review(
         reviewer=demo3,
-        guide_id=3,
-        # communication_rating=5,
-        # knowledgability_rating=4,
-        # professionalism_rating=5,
-        rating=4,
-        # average_rating=round(((5+4+5)/3), 2),
+        guide_id=2,
+        communication_rating=5,
+        knowledgability_rating=4,
+        professionalism_rating=5,
+        # rating=4,
+        rating=round(((5 + 4 + 5) / 3), 2),
         review_body="Demo2 was a very friendly person with lots of knowledge of the city",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
@@ -274,25 +289,120 @@ def seed_users():
 
     review3 = Review(
         reviewer=demo,
-        guide_id=3,
-        # communication_rating=5,
-        # knowledgability_rating=4,
-        # professionalism_rating=5,
-        # average_rating=round(((5+4+5)/3), 2),
-        rating=4,
+        guide_id=2,
+        communication_rating=5,
+        knowledgability_rating=4,
+        professionalism_rating=5,
+        rating=round(((5 + 4 + 5) / 3), 2),
+        # rating=4,
         review_body="Demo3 was a very friendly person with lots of knowledge of the city",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    review4 = Review(
+        reviewer=demo4,
+        guide_id=5,
+        communication_rating=5,
+        knowledgability_rating=4,
+        professionalism_rating=5,
+        rating=round(((5 + 4 + 5) / 3), 2),
+        # rating=4,
+        review_body="Demo3 was a very friendly person with lots of knowledge of the city",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking1 = Booking(
+        tourist=demo3,
+        tour=tour1,
+        guide_id=1,
+        date=datetime.date(2024, 1, 1),
+        time=datetime.time(9),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking2 = Booking(
+        tourist=demo3,
+        tour=tour2,
+        guide_id=2,
+        date=datetime.date(2024, 2, 1),
+        time=datetime.time(9),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking3 = Booking(
+        tourist=demo,
+        tour=tour2,
+        guide_id=2,
+        date=datetime.date(2024, 1, 15),
+        time=datetime.time(13),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking4 = Booking(
+        tourist=demo,
+        tour=tour3,
+        guide_id=2,
+        date=datetime.date(2023, 1, 27),
+        time=datetime.time(13),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking5 = Booking(
+        tourist=demo3,
+        tour=tour2,
+        guide_id=2,
+        date=datetime.date(2023, 1, 20),
+        time=datetime.time(13),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking6 = Booking(
+        tourist=demo5,
+        tour=tour1,
+        guide_id=1,
+        date=datetime.date(2024, 1, 13),
+        time=datetime.time(13),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    booking7 = Booking(
+        tourist=demo4,
+        tour=tour2,
+        guide_id=2,
+        date=datetime.date(2024, 1, 13),
+        time=datetime.time(13),
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     db.session.add_all(
         [
+            tour3_avail,
+            tour3_avail1,
+            tour3_avail2,
+            tour1_avail,
+            tour1_avail1,
+            tour1_avail2,
+            tour2_avail,
+            tour2_avail1,
+            tour2_avail2,
             seattle,
             new_york,
             los_angeles,
+            miami,
             demo,
             demo2,
             demo3,
+            demo4,
+            demo5,
             monday,
             tuesday,
             wednesday,
@@ -316,6 +426,11 @@ def seed_users():
             review1,
             review2,
             review3,
+            review4,
+            booking4,
+            booking5,
+            booking6,
+            booking7,
         ]
     )
     db.session.commit()
@@ -335,21 +450,17 @@ def undo_users():
             f"TRUNCATE table {SCHEMA}.bookings RESTART IDENTITY CASCADE;"
         )
         db.session.execute(f"TRUNCATE table {SCHEMA}.cities RESTART IDENTITY CASCADE;")
-        db.session.execute(
-            f"TRUNCATE table {SCHEMA}.tour_specialties RESTART IDENTITY CASCADE;"
-        )
-        db.session.execute(
-            f"TRUNCATE table {SCHEMA}.tour_dates RESTART IDENTITY CASCADE;"
-        )
         db.session.execute(f"TRUNCATE table {SCHEMA}.dates RESTART IDENTITY CASCADE;")
         db.session.execute(
             f"TRUNCATE table {SCHEMA}.languages RESTART IDENTITY CASCADE;"
         )
+        db.session.execute(f"TRUNCATE table {SCHEMA}.types RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.tours RESTART IDENTITY CASCADE;")
         db.session.execute(
-            f"TRUNCATE table {SCHEMA}.specialties RESTART IDENTITY CASCADE;"
+            f"TRUNCATE table {SCHEMA}.availabilities RESTART IDENTITY CASCADE;"
         )
         db.session.execute(
-            f"TRUNCATE table {SCHEMA}.tour_guides RESTART IDENTITY CASCADE;"
+            f"TRUNCATE table {SCHEMA}.users_languages RESTART IDENTITY CASCADE;"
         )
     else:
         db.session.execute(text("DELETE FROM users"))
