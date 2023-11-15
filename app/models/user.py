@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+import json
 
 users_languages = db.Table(
     "users_languages",
@@ -96,14 +97,14 @@ class Booking(db.Model):
     tour = db.relationship("Tour", back_populates="bookings")
 
     def to_dict(self):
-        # time_format = "%H:%M:%S"
+        time_format = "%H:%M"
         date_format = "%A, %B %d, %Y"
-        # raw_time = self.time
+        raw_time = self.time
         raw_date = self.date
-        # string_time = raw_time.strftime(time_format)
+        string_time = raw_time.strftime(time_format)
         string_date = raw_date.strftime(date_format)
         self.date = string_date
-        # self.time = string_time
+        self.time = string_time
 
         return {
             "id": self.id,
@@ -269,12 +270,16 @@ class Availability(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     tour_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tours.id")))
     date_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("dates.id")))
-    time = db.Column(db.Integer, nullable=True)
+    time = db.Column(db.Time(), nullable=False)
 
     tour = db.relationship("Tour", back_populates="availability")
     date = db.relationship("Date", back_populates="available_tours")
 
     def to_dict(self):
+        time_format = "%H:%M"
+        raw_time = self.time
+        string_time = raw_time.strftime(time_format)
+        self.time = string_time
         return {
             "id": self.id,
             "tour_id": self.tour_id,

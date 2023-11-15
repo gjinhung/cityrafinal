@@ -1,87 +1,42 @@
 from flask import Blueprint, jsonify, request
-from app.models import db, Tour, City, Date, Language
+from app.models import db, Tour, City, Date, Language, Availability
 from flask_login import current_user, login_required
 
 # from app.forms import TourGuideForm
 import datetime
 from .auth_routes import validation_errors_to_error_messages
 
-tours_routes = Blueprint("tours", __name__)
+avail_routes = Blueprint("availabilities", __name__)
 
 
-@tours_routes.route("/")
-def get_all_tours():
-    tours = Tour.query.all()
-    tours_data = []
-    for tour in tours:
-        tour_dict = tour.to_dict()
-        # get bookings of tours
-        bookings = tour.bookings
-        bookings_data = []
-        for booking in bookings:
-            bookings_data.append(booking.id)
-        tour_dict["bookings_id"] = bookings_data
+@avail_routes.route("/")
+def get_all_avail():
+    availabilities = Availability.query.all()
+    availabilities_data = []
+    for avail in availabilities:
+        avail_dict = avail.to_dict()
+        availabilities_data.append(avail_dict)
 
-        # get availability
-        availabilities = tour.availability
-        availability_list = []
-        for availability in availabilities:
-            # av_dict = availability.to_dict()
-            raw_time = availability.time
-            time_format = "%H:%M"
-            string_time = raw_time.strftime(time_format)
-            dict = {
-                "id": availability.id,
-                "tour_id": availability.tour_id,
-                "date_id": availability.date_id,
-                "time": string_time,
-            }
-            availability_list.append(dict)
-        tour_dict["availabilities"] = availability_list
-
-        tours_data.append(tour_dict)
-
-    return {"tours": {tours["id"]: tours for tours in tours_data}}
+    return {"availabilities": {avail["id"]: avail for avail in availabilities_data}}
 
 
-@tours_routes.route("/<int:id>")
-def get_one_tour(id):
+@avail_routes.route("/tour/<int:id>")
+def get_tour_avail(id):
     tour = Tour.query.get_or_404(id)
 
     if not tour:
         return jsonify({"errors": "Tour not found"}), 404
 
-    tour_dict = tour.to_dict()
-    # get bookings of tours
-    bookings = tour.bookings
-    bookings_data = []
-    for booking in bookings:
-        bookings_data.append(booking.id)
-    tour_dict["bookings_id"] = bookings_data
+    avails = Availability.query.filter_by(tour_id=id).all()
+    availabilities_data = []
+    for avail in avails:
+        avail_dict = avail.to_dict()
+        availabilities_data.append(avail_dict)
 
-    # get availability
-    availabilities = tour.availability
-    availability_list = []
-    for availability in availabilities:
-        # av_dict = availability.to_dict()
-        raw_time = availability.time
-        time_format = "%H:%M"
-        string_time = raw_time.strftime(time_format)
-        dict = {
-            "id": availability.id,
-            "tour_id": availability.tour_id,
-            "date_id": availability.date_id,
-            "time": string_time,
-        }
-        availability_list.append(dict)
-    tour_dict["availabilities"] = availability_list
-
-    # return tour_dict
-
-    return {"tours": {tour_dict["id"]: tour_dict}}
+    return {"availabilities": {avail["id"]: avail for avail in availabilities_data}}
 
 
-# @tours_routes.route("/new", methods=["POST"])
+# @avail_routes.route("/new", methods=["POST"])
 # @login_required
 # def add_tour():
 #     form = TourGuideForm()

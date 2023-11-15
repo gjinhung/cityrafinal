@@ -219,11 +219,11 @@ def seed_users():
         updated_at=datetime.datetime.now(),
     )
 
-    tour1_avail = Availability(tour=tour1, date=monday, time=18)
+    tour1_avail = Availability(tour=tour1, date=monday, time=datetime.time(18))
 
-    tour1_avail1 = Availability(tour=tour1, date=saturday, time=18)
+    tour1_avail1 = Availability(tour=tour1, date=saturday, time=datetime.time(18))
 
-    tour1_avail2 = Availability(tour=tour1, date=sunday, time=18)
+    tour1_avail2 = Availability(tour=tour1, date=sunday, time=datetime.time(18))
 
     tour2 = Tour(
         guide=demo2,
@@ -237,11 +237,11 @@ def seed_users():
         updated_at=datetime.datetime.now(),
     )
 
-    tour2_avail = Availability(tour=tour2, date=friday, time=17)
+    tour2_avail = Availability(tour=tour2, date=friday, time=datetime.time(17))
 
-    tour2_avail1 = Availability(tour=tour2, date=saturday, time=14)
+    tour2_avail1 = Availability(tour=tour2, date=saturday, time=datetime.time(14))
 
-    tour2_avail2 = Availability(tour=tour2, date=sunday, time=11)
+    tour2_avail2 = Availability(tour=tour2, date=sunday, time=datetime.time(11))
 
     tour3 = Tour(
         guide=demo2,
@@ -255,11 +255,11 @@ def seed_users():
         updated_at=datetime.datetime.now(),
     )
 
-    tour3_avail = Availability(tour=tour3, date=monday, time=17)
+    tour3_avail = Availability(tour=tour3, date=monday, time=datetime.time(17))
 
-    tour3_avail1 = Availability(tour=tour3, date=tuesday, time=14)
+    tour3_avail1 = Availability(tour=tour3, date=tuesday, time=datetime.time(14))
 
-    tour3_avail2 = Availability(tour=tour3, date=thursday, time=11)
+    tour3_avail2 = Availability(tour=tour3, date=thursday, time=datetime.time(11))
 
     review1 = Review(
         reviewer=demo3,

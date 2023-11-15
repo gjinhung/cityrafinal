@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: cc81289f42bb
+Revision ID: 0379a81fb52a
 Revises: 
-Create Date: 2023-11-09 18:20:10.192055
+Create Date: 2023-11-14 23:10:04.773228
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'cc81289f42bb'
+revision = '0379a81fb52a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,9 +42,9 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('language')
     )
-    op.create_table('specialties',
+    op.create_table('types',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('specialty', sa.String(length=50), nullable=False),
+    sa.Column('type', sa.String(length=50), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
@@ -58,7 +58,7 @@ def upgrade():
     sa.Column('last_name', sa.String(length=50), nullable=False),
     sa.Column('joined_on', sa.DateTime(), nullable=False),
     sa.Column('student', sa.Boolean(), nullable=False),
-    sa.Column('graduation_date', sa.DateTime(), nullable=True),
+    sa.Column('graduation_date', sa.Date(), nullable=True),
     sa.Column('profile_pic', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
@@ -71,65 +71,72 @@ def upgrade():
     sa.Column('reviewer_id', sa.Integer(), nullable=True),
     sa.Column('guide_id', sa.Integer(), nullable=False),
     sa.Column('rating', sa.Integer(), nullable=False),
+    sa.Column('communication_rating', sa.Integer(), nullable=False),
+    sa.Column('knowledgability_rating', sa.Integer(), nullable=False),
+    sa.Column('professionalism_rating', sa.Integer(), nullable=False),
     sa.Column('review_body', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['reviewer_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('tour_guides',
+    op.create_table('tours',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('guide_id', sa.Integer(), nullable=False),
+    sa.Column('guide_id', sa.Integer(), nullable=True),
+    sa.Column('type_id', sa.Integer(), nullable=False),
     sa.Column('city_id', sa.Integer(), nullable=False),
-    sa.Column('language_id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=255), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
+    sa.Column('duration', sa.Integer(), nullable=False),
     sa.Column('about', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['city_id'], ['cities.id'], ),
     sa.ForeignKeyConstraint(['guide_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['type_id'], ['types.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('users_languages',
+    sa.Column('language_id', sa.Integer(), nullable=False),
+    sa.Column('users_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['language_id'], ['languages.id'], ),
+    sa.ForeignKeyConstraint(['users_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('language_id', 'users_id')
+    )
+    op.create_table('availabilities',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('tour_id', sa.Integer(), nullable=True),
+    sa.Column('date_id', sa.Integer(), nullable=True),
+    sa.Column('time', sa.Time(), nullable=True),
+    sa.ForeignKeyConstraint(['date_id'], ['dates.id'], ),
+    sa.ForeignKeyConstraint(['tour_id'], ['tours.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('bookings',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('tourist_id', sa.Integer(), nullable=True),
-    sa.Column('tour_guide_id', sa.Integer(), nullable=True),
+    sa.Column('tour_id', sa.Integer(), nullable=True),
+    sa.Column('guide_id', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
-    sa.Column('start_time', sa.Time(), nullable=False),
-    sa.Column('duration', sa.Float(), nullable=False),
+    sa.Column('time', sa.Time(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
-    sa.ForeignKeyConstraint(['tour_guide_id'], ['tour_guides.id'], ),
+    sa.ForeignKeyConstraint(['tour_id'], ['tours.id'], ),
     sa.ForeignKeyConstraint(['tourist_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('tour_dates',
-    sa.Column('date_id', sa.Integer(), nullable=False),
-    sa.Column('tour_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['date_id'], ['dates.id'], ),
-    sa.ForeignKeyConstraint(['tour_id'], ['tour_guides.id'], ),
-    sa.PrimaryKeyConstraint('date_id', 'tour_id')
-    )
-    op.create_table('tour_specialties',
-    sa.Column('specialty_id', sa.Integer(), nullable=False),
-    sa.Column('specialty_tour_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['specialty_id'], ['specialties.id'], ),
-    sa.ForeignKeyConstraint(['specialty_tour_id'], ['tour_guides.id'], ),
-    sa.PrimaryKeyConstraint('specialty_id', 'specialty_tour_id')
     )
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
-    op.drop_table('tour_specialties')
-    op.drop_table('tour_dates')
     op.drop_table('bookings')
-    op.drop_table('tour_guides')
+    op.drop_table('availabilities')
+    op.drop_table('users_languages')
+    op.drop_table('tours')
     op.drop_table('reviews')
     op.drop_table('users')
-    op.drop_table('specialties')
+    op.drop_table('types')
     op.drop_table('languages')
     op.drop_table('dates')
     op.drop_table('cities')

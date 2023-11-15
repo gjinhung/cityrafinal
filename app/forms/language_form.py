@@ -3,7 +3,6 @@ from wtforms import StringField, IntegerField, SubmitField, FloatField, BooleanF
 from wtforms.validators import DataRequired, NumberRange, Length
 
 
-class AvailabilityForm(FlaskForm):
-    date = StringField("date")
-    time = StringField("time")
+class LanguageForm(FlaskForm):
+    language = StringField("language")
     submit = SubmitField("Submit")
