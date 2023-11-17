@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, NumberRange, Length
 
 
 class ReviewForm(FlaskForm):
-    rating = IntegerField("rating", validators=[DataRequired(), NumberRange(1, 5)])
+    # rating = IntegerField("rating", validators=[DataRequired(), NumberRange(1, 5)])
     guide_id = IntegerField("guide_id", validators=[DataRequired()])
     communication_rating = IntegerField(
         "communication_rating", validators=[DataRequired()]

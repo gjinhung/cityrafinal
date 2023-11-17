@@ -51,7 +51,7 @@ def get_one_city(id):
 
 @city_routes.route("/new", methods=["POST"])
 @login_required
-def new_city():
+def post_city():
     form = CityForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -77,3 +77,21 @@ def new_city():
         return city_dict
     else:
         return {"errors": "error in post a new city"}
+
+
+def new_city(city_name):
+    city = City(
+        city=city_name.title(),
+        created_at=datetime.datetime.utcnow(),
+        updated_at=datetime.datetime.utcnow(),
+    )
+    db.session.add(city)
+    db.session.commit()
+    city_dict = city.to_dict()
+    tours = city.tours
+    tour_list = []
+    for tour in tours:
+        t_dic = tour.id
+        tour_list.append(t_dic)
+    city_dict["tours_id"] = tour_list
+    return city_dict

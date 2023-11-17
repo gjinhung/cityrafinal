@@ -271,6 +271,8 @@ class Availability(db.Model):
     tour_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tours.id")))
     date_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("dates.id")))
     time = db.Column(db.Time(), nullable=False)
+    created_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False)
 
     tour = db.relationship("Tour", back_populates="availability")
     date = db.relationship("Date", back_populates="available_tours")
@@ -285,4 +287,6 @@ class Availability(db.Model):
             "tour_id": self.tour_id,
             "date_id": self.date_id,
             "time": self.time,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
         }

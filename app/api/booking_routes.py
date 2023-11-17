@@ -106,7 +106,7 @@ def add_booking(tourId):
 
         return booking_dict
     else:
-        return {"errors": "error in post a new booking"}
+        return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
 
 @booking_routes.route("/<int:id>", methods=["PUT"])
@@ -132,7 +132,7 @@ def edit_booking(id):
 
         return booking_dict
     else:
-        return {"errors": f"error in updating booking ${id}"}
+        return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
 
 @booking_routes.route("/<int:id>/delete", methods=["DELETE"])

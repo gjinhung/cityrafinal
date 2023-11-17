@@ -3,6 +3,7 @@ from ..models import db, Type
 from flask_login import login_required
 from ..forms.type_form import TypeForm
 import datetime
+from .auth_routes import validation_errors_to_error_messages
 
 type_routes = Blueprint("type", __name__)
 
@@ -51,7 +52,7 @@ def get_one_type(id):
 
 @type_routes.route("/new", methods=["POST"])
 @login_required
-def new_type():
+def post_type():
     form = TypeForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -75,7 +76,7 @@ def new_type():
 
         return type_dict
     else:
-        return {"errors": "error in post a new type"}
+        return {"errors": validation_errors_to_error_messages(form.errors)}, 401
 
 
 @type_routes.route("/<int:id>/delete", methods=["DELETE"])
@@ -107,3 +108,24 @@ def delete_type(id):
             ),
             500,
         )
+
+
+def new_type(type_name):
+    type = Type(
+        type=type_name.title(),
+        created_at=datetime.datetime.utcnow(),
+        updated_at=datetime.datetime.utcnow(),
+    )
+
+    db.session.add(type)
+    db.session.commit()
+
+    type_dict = type.to_dict()
+    tours = type.tours
+    tours_list = []
+    for type in tours:
+        t_dic = type.to_dict()
+        tours_list.append(t_dic["id"])
+    type_dict["tours_id"] = tours_list
+
+    return type_dict
