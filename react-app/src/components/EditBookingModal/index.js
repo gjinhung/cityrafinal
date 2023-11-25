@@ -22,10 +22,10 @@ export default function EditBookingModal({ booking }) {
     const tours = useSelector((state) => state.tours)
     const cities = useSelector((state) => state.cities)
     const type = useSelector((state) => state.specialties)
-    const city = cities[tours[booking.tour_guide_id].city_id].city
+    const city = cities[tours[booking.guide_id].city_id].city
     const { closeModal } = useModal();
     const id = bookings[booking.id].tour_guide_id
-    const guide = users[+id]
+    const guide = users[booking.guide_id]
 
     // const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -104,23 +104,23 @@ export default function EditBookingModal({ booking }) {
     let show = (
         <>
             <div className="title-tour-container">
-                <h3 className="title-tour">Update Your Tour with {users[bookings[booking.id].tour_guide_id].first_name}</h3>
+                <h3 className="title-tour">Update Your Tour with {users[bookings[booking.id].guide_id].first_name}</h3>
             </div>
             < form className="editBooking-container" onSubmit={handleSubmit} >
                 <div className="booking-detail-container">
-                    <div className="type" >Type: {type[tours[bookings[booking.id].tour_guide_id].specialties_id[0]].specialty}</div>
+                    <div className="type" >Type: {tours[bookings[booking.id].tour_id].type}</div>
 
                     < br />
                     <div className="row ">
                         <div className="type booking-column">About:  </div>
-                        <div className="type column">{tours[booking.tour_guide_id].about}</div>
+                        <div className="type column">{tours[booking.tour_id].about}</div>
                     </div>
                     < br />
-                    <div className="type">Price: ${tours[booking.tour_guide_id].price}/hr</div>
+                    <div className="type">Price: ${tours[booking.tour_id].price}/hr</div>
                 </div>
                 <br />
                 <div className="city">
-                    City: {cities[tours[booking.tour_guide_id].city_id].city}
+                    City: {cities[tours[booking.tour_id].city_id].city}
                 </div>
                 <br />
                 <div className="update-booking-date">

@@ -1,33 +1,33 @@
 // constants
-const LOAD_SPECIALTIES = "specialty/LOAD_SPECIALTIES";
+const LOAD_TYPES = "specialty/LOAD_TYPES";
 
-const loadSpecialties = (data) => ({
-    type: LOAD_SPECIALTIES,
+const loadTypes = (data) => ({
+    type: LOAD_TYPES,
     payload: data,
 });
 
-export const getSpecialties = () => async (dispatch) => {
-    const response = await fetch(`/api/specialty`);
+export const getTypes = () => async (dispatch) => {
+    const response = await fetch(`/api/type`);
     if (response.ok) {
         const data = await response.json();
-        dispatch(loadSpecialties(data));
+        dispatch(loadTypes(data));
     } else {
         return (await response.json());
     }
 };
 
-export const getOneSpecialty = (id) => async (dispatch) => {
-    const response = await fetch(`/api/specialty/${id}`);
+export const getOneType = (id) => async (dispatch) => {
+    const response = await fetch(`/api/type/${id}`);
     if (response.ok) {
         const data = await response.json();
-        dispatch(loadSpecialties(data));
+        dispatch(loadTypes(data));
     } else {
         return (await response.json());
     }
 };
 
 export const typeByName = (type) => async (dispatch) => {
-    const response = await fetch(`/api/specialty?specialty=${type}`);
+    const response = await fetch(`/api/type?type=${type}`);
     if (response.ok) {
         const data = await response.json();
         return data
@@ -36,12 +36,12 @@ export const typeByName = (type) => async (dispatch) => {
     }
 };
 
-const initialState = { specialties: null };
+const initialState = { types: null };
 
-const specialties = (state = initialState, action) => {
+const types = (state = initialState, action) => {
     // const newState = { ...state }
     switch (action.type) {
-        case LOAD_SPECIALTIES:
+        case LOAD_TYPES:
             return { ...action.payload }
         default:
             return state;
@@ -49,4 +49,4 @@ const specialties = (state = initialState, action) => {
 }
 
 
-export default specialties;
+export default types;

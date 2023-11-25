@@ -18,14 +18,13 @@ function DeleteBookingModal({ booking_id }) {
     setErrors({});
     const data = await dispatch(deleteBooking(booking_id))
     if (data) {
-      console.log(data)
       setErrors(data)
+      console.log(errors)
     } else {
       closeModal()
-      // dispatch(getBookings())
-      // dispatch(allUsers())
-      // dispatch(authenticate())
-      // window.location.reload(true)
+      dispatch(getBookings())
+      dispatch(allUsers())
+      dispatch(authenticate())
     }
   }
 

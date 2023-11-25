@@ -96,9 +96,7 @@ export const deleteBooking = (id) => async (dispatch) => {
     });
 
     if (response.ok) {
-        await console.log('authenticate')
         await dispatch(authenticate())
-        await console.log('load all Users')
         await dispatch(allUsers())
         await dispatch(getBookings())
         await dispatch(removeBooking(id))

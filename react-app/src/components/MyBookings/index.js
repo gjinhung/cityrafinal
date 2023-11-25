@@ -1,10 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import EditBookingModal from "../EditBookingModal";
-import DeleteBookingModal from "../DeleteBookingModal";
-import OpenModalButton from "../OpenModalButton";
+// import EditBookingModal from "../EditBookingModal";
+// import DeleteBookingModal from "../DeleteBookingModal";
+// import OpenModalButton from "../OpenModalButton";
+import no_bookings from '../../images/add_tour_img.jpeg'
 import './MyBookings.css'
+import { NavLink } from "react-router-dom/cjs/react-router-dom";
 
 
 export default function MyBookings() {
@@ -27,11 +29,13 @@ export default function MyBookings() {
         }
     })
 
+
+
     function convertDate(data) {
 
-        const yr = (data.substring(0, 4))
-        const mm = data.substring(5, 7)
-        const dd = data.substring(8, 10)
+        // const yr = (data.substring(0, 4))
+        // const mm = data.substring(5, 7)
+        // const dd = data.substring(8, 10)
         // let parts = data.split('-')
         // let mydate = new Date(parts[0], parts[1] - 1, parts[2]);
         // let newDate = mydate.getDay();
@@ -54,6 +58,30 @@ export default function MyBookings() {
 
     }
 
+    function first20(string) {
+        if (string.length > 20) {
+            return (`${string.slice(0, 20)}...`)
+        }
+        else {
+            return string
+        }
+
+    }
+
+    function first30(string) {
+        if (string.length > 30) {
+            return (`${string.slice(0, 30)}...`)
+        }
+        else {
+            return string
+        }
+    }
+
+    function goToBooking(e, id) {
+        e.preventDefault()
+        history.push(`/booking/${id}`)
+    }
+
     function convertTime(time) {
         const hours = time.substring(0, 2);
         const minutes = time.substring(3, 5)
@@ -72,60 +100,86 @@ export default function MyBookings() {
 
     if (!upcomingBooking_ids.length) {
         showUpcoming = (
-            <h3>
-                No Upcoming Tours
-            </h3>
+            <div className="no_bookings_cont">
+                <div className="no_bookings_container">
+                    <div className="left_no_booking">
+                        <i className="fa-solid fa-mountain-city"></i>
+                        <div className="no_booking_texts">
+                            <h3 className="no_upcoming">
+                                No tours booked...yet!
+                            </h3>
+                            <div className="no_upcoming_text">
+                                Time to explore a new world with a trusted guide by your side
+                            </div>
+                        </div>
+                        <NavLink exact to="/" className="tours-buttons">
+                            Start Searching
+                        </NavLink>
+                    </div>
+                    <div className="right_no_booking">
+                        <img src={no_bookings} className="no_booking_stock" alt="booking_stock"></img>
+
+                    </div>
+                </div>
+            </div>
         )
     } else {
         showUpcoming = (
             upcomingBooking_ids.length && upcomingBooking_ids.map((booking_id, idx) => {
                 return (
-                    <div className='wrapper' key={idx}>
-                        <div className="texts">
-                            <div className="timeDate-container">
-                                <h4 className="timeDate" >
-                                    {convertDate(bookings[booking_id].date)} at {convertTime(bookings[booking_id].start_time)}
-                                </h4>
-                            </div>
-                        </div>
-                        <div className="image">
+
+                    <div className='booking_wrapper' key={idx}>
+
+                        <div className="booking_image">
                             <img
-                                src={users[bookings[booking_id].tour_guide_id].profile_pic}
-                                className='guide_img'
+                                src={users[bookings[booking_id].guide_id].profile_pic}
+                                className='booking_guide_img'
                                 alt={booking_id}
                                 key={idx}
-                                onClick={() => history.push(`/guide/${bookings[booking_id].tour_guide_id}`)} />
-                            <div className="content">
+                            // onClick={() => history.push(`/guide/${bookings[booking_id].tour_guide_id}`)} 
+                            />
+                            {/* <div className="button-container">
+                                <button
+                                    className="tours-buttons"
+                                    onClick={() => history.push(`/guide/${bookings[booking_id].tour_guide_id}`)}>
+                                    View
+                                </button>
 
-                                <div>Guide Name: {users[bookings[booking_id].tour_guide_id].first_name}</div>
-                                < br />
-                                <div>{cities[tours[bookings[booking_id].tour_guide_id].city_id].city}</div>
-                                <br />
-                                <div className="button-container">
-                                    <button
-                                        className="tours-buttons"
-                                        onClick={() => history.push(`/guide/${bookings[booking_id].tour_guide_id}`)}>
-                                        View
-                                    </button>
-
-                                    <OpenModalButton
-                                        buttonText="Update"
-                                        modalComponent={
-                                            <EditBookingModal booking={bookings[booking_id]} />
-                                        }
-                                        className={'tours-buttons'}
-                                    />
-                                    <OpenModalButton
-                                        buttonText="Cancel Tour"
-                                        modalComponent={
-                                            <DeleteBookingModal booking_id={booking_id} />
-                                        }
-                                        className={'tours-buttons'}
-                                    />
+                                <OpenModalButton
+                                    buttonText="Update"
+                                    modalComponent={
+                                        <EditBookingModal booking={bookings[booking_id]} />
+                                    }
+                                    className={'tours-buttons'}
+                                />
+                                <OpenModalButton
+                                    buttonText="Cancel Tour"
+                                    modalComponent={
+                                        <DeleteBookingModal booking_id={booking_id} />
+                                    }
+                                    className={'tours-buttons'}
+                                />
+                            </div> */}
+                        </div>
+                        <div className="text-container">
+                            <div className="texts">
+                                <div className="booking_timeDate-container">
+                                    <h4 className="booking_date" >
+                                        {convertDate(bookings[booking_id].date)}
+                                        <br />
+                                        {convertTime(bookings[booking_id].time)}
+                                    </h4>
                                 </div>
+                                <div className="booking_title">{first30(tours[bookings[booking_id].tour_id].title)} ({cities[tours[bookings[booking_id].guide_id].city_id].city})</div>
+                                <div className="booking_texts">Hosted by {users[bookings[booking_id].guide_id].first_name[0]}. {users[bookings[booking_id].guide_id].last_name}</div>
+                            </div>
+                            <div className="show_details_container">
+                                <NavLink exact to={`/booking/${booking_id}`} className="show_details_button">
+                                    Show Details
+                                </NavLink>
                             </div>
                         </div>
-                    </div>
+                    </div >
                 )
             })
         )
@@ -135,38 +189,41 @@ export default function MyBookings() {
 
     if (!pastBookings_ids.length) {
         showPrev = (
-            <h3>
-                No Previous Tours
-            </h3>
+            <>
+            </>
         )
     } else {
         showPrev = (
             pastBookings_ids.length && pastBookings_ids.map((booking_id, idx) => {
                 return (
-                    <div className='wrapper' key={idx}>
-                        <div className="texts">
-                            <div className="timeDate-container">
-                                <h4 className="timeDate" >
-                                    {convertDate(bookings[booking_id].date)} at {convertTime(bookings[booking_id].start_time)}
-                                </h4>
-                            </div>
-                        </div>
-                        <div className="image">
-                            <img
-                                src={users[bookings[booking_id].tour_guide_id].profile_pic}
-                                className='guide_img'
-                                alt={booking_id}
-                                key={idx}
-                            />
-                            <div className="content"
-                                onClick={() => history.push(`/guide/${bookings[booking_id].tour_guide_id}`)}>
-                                <div>Guide Name: {users[bookings[booking_id].tour_guide_id].first_name}</div>
-                                < br />
-                                <div>{cities[bookings[booking_id].tour.city_id].city}</div>
+                    <div key={idx}>
+                        <h2>Previous Tours</h2>
+                        <div className="booking_scroll-container">
+                            <div className='prev_booking_container' key={idx}
+                                onClick={(e) => goToBooking(e, booking_id)}
+                            >
+                                <div className="prev_booking_left">
+                                    <img
+                                        src={users[bookings[booking_id].guide_id].profile_pic}
+                                        className='prev_booking_img'
+                                        alt={booking_id}
+                                        key={idx}
+                                    />
+                                </div>
+                                <div className="prev_booking_right">
+                                    <div className="prev_booking_title">
+                                        {first20(tours[bookings[booking_id].tour_id].title)}
+                                    </div>
+                                    <div className="prev_booking_hostedby">
+                                        Hosted by {users[bookings[booking_id].guide_id].first_name[0]}. {users[bookings[booking_id].guide_id].last_name}
+                                    </div>
+                                    <div className="prev_booking_hostedby">
+                                        {bookings[booking_id].date}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 )
             })
         )
@@ -174,16 +231,16 @@ export default function MyBookings() {
 
 
     return (
-        <>
-            <h2>Upcoming Tours</h2>
-            <div className="scroll-container">
-                {showUpcoming}
-            </div>
-            <h2>Previous Tours</h2>
-            <div className="scroll-container">
+        <div className="booking_page_container">
+            <div className="booking_page">
+
+                <h2>Upcoming Tours</h2>
+
+                <div className="booking_scroll-container">
+                    {showUpcoming}
+                </div>
                 {showPrev}
             </div>
-
-        </>
+        </div >
     )
 }

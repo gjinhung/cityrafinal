@@ -41,6 +41,12 @@ def get_all_tours():
             availability_list.append(dict)
         tour_dict["availabilities"] = availability_list
 
+        types = tour.type.to_dict()
+        # types_data = []
+        # for type in types:
+        #     types_data.append(type.id)
+        tour_dict["type"] = types["type"]
+
         tours_data.append(tour_dict)
 
     return {"tours": {tours["id"]: tours for tours in tours_data}}

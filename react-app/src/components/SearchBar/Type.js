@@ -1,49 +1,31 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useSearch } from "../../context/SearchBar";
 
-export default function SpecialtySelection() {
-    // let menuRef = useRef()
-    const [show, setShow] = useState(false)
-    const [selectedSpec, setSelectSpec] = useState('Type')
+export default function TypeSelection() {
+    // const [show, setShow] = useState(false)
+    const [selectedType, setSelectType] = useState('')
     const options = []
-    const specialties = useSelector((state) => state.specialties)
+    const types = useSelector((state) => state.types)
     const { searchTerms, setSearch } = useSearch()
 
-    // useEffect(() => {
-    //     let handler = (e) => {
-    //         if (!menuRef.current.contains(e.target))
-    //             setShow(false)
-    //     }
-
-    //     document.addEventListener('mousedown', handler)
-
-    //     return () => {
-    //         document.removeEventListener('mousedown', handler)
-    //     }
-    // }, [menuRef])
-
-    const normalized_specs = Object.values(specialties)
-    normalized_specs.forEach((spec) => {
-        options.push(spec.specialty)
+    const normalized_types = Object.values(types)
+    normalized_types.forEach((type) => {
+        options.push(type.type)
     })
     options.sort()
     const opt_arr = Array.from(options)
     opt_arr.push("Any")
-
-    // function handleDropDown() {
-    //     setShow(!show)
-    // }
 
     function handleSelected(e) {
         let obj = searchTerms
         if (e.toLowerCase() === "any") {
             obj.type = ''
         } else { obj.type = e }
-        setSelectSpec(e)
+        setSelectType(e)
         setSearch(obj)
-        setShow(false)
+        // setShow(false)
     }
 
     return (
@@ -55,12 +37,12 @@ export default function SpecialtySelection() {
                         id='type'
                         name='type'
                         className="date-input"
-                        defaultValue={selectedSpec}
+                        defaultValue={selectedType}
                         onChange={(e) => handleSelected(e.target.value)}>
                         <option></option>
-                        {normalized_specs.map((type, idx) => {
+                        {normalized_types.map((type, idx) => {
                             return (
-                                <option key={idx} value={type.specialty}> {type.specialty}</option>
+                                <option key={idx} value={type.type}> {type.type}</option>
                             )
                         })}
                         <option key="any" value="Any">Any</option>

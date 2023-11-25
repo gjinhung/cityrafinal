@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// import { Redirect } from "react-router-dom";
 import { authenticate, signUp } from "../../store/session";
 import './SignupForm.css';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -8,10 +8,10 @@ import { allUsers } from "../../store/users";
 
 function SignupFormPage() {
   const stuRef = useRef(false)
-  console.log(stuRef.current)
+  // console.log(stuRef.current)
   const dispatch = useDispatch();
   const multiStepRef = useRef()
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,9 @@ function SignupFormPage() {
   const [student, setStudent] = useState(false)
   const [graduation_date, setGraduation] = useState("")
   const [errors, setErrors] = useState({});
+  const [imageLoading, setImageLoading] = useState(false);
   const [allowSub, setAllowSub] = useState(false)
+
   const history = useHistory()
 
   // if (sessionUser) return <Redirect to="/" />;
@@ -104,10 +106,13 @@ function SignupFormPage() {
   }
 
   const secondNext = async () => {
+    const formData = new FormData()
+    setProfilePic(formData.append("profile_pic", profile_pic))
+
+    setImageLoading(true);
     const data = await dispatch(signUp(username, email, password, first_name, last_name, profile_pic, student, graduation_date));
     if (data["first_name"] || data['last_name'] || data['profile_pic']) {
-      console.log('secondnext')
-      console.log(data)
+
       const errorList = {
         'first_name': data['first_name'],
         'last_name': data['last_name'],
@@ -186,7 +191,8 @@ function SignupFormPage() {
           <label>
             <label style={{ color: "red" }}>{errors['profile_pic']}</label>
           </label>
-          <input placeholder="Profile Picture URL" type='text' value={profile_pic} onChange={(e) => setProfilePic(e.target.value)}></input>
+          <input type='file' accept="image/*" onChange={(e) => setProfilePic(e.target.files[0])}></input>
+          {(imageLoading) && <p>Loading...</p>}
         </div>
         <button
           type="button"

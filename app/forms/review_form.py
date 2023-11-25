@@ -9,8 +9,8 @@ class ReviewForm(FlaskForm):
     communication_rating = IntegerField(
         "communication_rating", validators=[DataRequired()]
     )
-    knowledgability_rating = IntegerField(
-        "knowledgability_rating", validators=[DataRequired()]
+    knowledgeability_rating = IntegerField(
+        "knowledgeability_rating", validators=[DataRequired()]
     )
     professionalism_rating = IntegerField(
         "professionalism_rating", validators=[DataRequired()]

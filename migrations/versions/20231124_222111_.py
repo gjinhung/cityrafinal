@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6a079b5c320d
+Revision ID: 9b46fec21585
 Revises: 
-Create Date: 2023-11-16 21:27:57.094924
+Create Date: 2023-11-24 22:21:11.233039
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6a079b5c320d'
+revision = '9b46fec21585'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -72,7 +72,7 @@ def upgrade():
     sa.Column('guide_id', sa.Integer(), nullable=False),
     sa.Column('rating', sa.Integer(), nullable=False),
     sa.Column('communication_rating', sa.Integer(), nullable=False),
-    sa.Column('knowledgability_rating', sa.Integer(), nullable=False),
+    sa.Column('knowledgeability_rating', sa.Integer(), nullable=False),
     sa.Column('professionalism_rating', sa.Integer(), nullable=False),
     sa.Column('review_body', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -121,6 +121,10 @@ def upgrade():
     sa.Column('guide_id', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
     sa.Column('time', sa.Time(), nullable=False),
+    sa.Column('tour_title', sa.String(length=255), nullable=False),
+    sa.Column('tour_city', sa.String(length=255), nullable=False),
+    sa.Column('tour_duration', sa.Integer(), nullable=False),
+    sa.Column('tour_price', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['tour_id'], ['tours.id'], ),

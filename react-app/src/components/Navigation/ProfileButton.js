@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
-import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+// import OpenModalButton from "../OpenModalButton";
+// import LoginFormModal from "../LoginFormModal";
+// import SignupFormModal from "../SignupFormModal";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
@@ -52,7 +52,7 @@ function ProfileButton({ user }) {
         </NavLink>
       ) : (
         <button onClick={openMenu} className="profile-button">
-          <img src={user.profile_pic} className="mini-profile"></img>
+          <img src={user.profile_pic} className="mini-profile" alt='user_profile_pic'></img>
         </button>
       )}
 
@@ -63,6 +63,8 @@ function ProfileButton({ user }) {
             <li>Welcome, {user.username}</li>
             <li>{user.first_name} {user.last_name}</li>
             <li>{user.email}</li>
+            <li>
+              <NavLink onClick={closeMenu} exact to="/mybookings" className="view-dash-button">My Bookings</NavLink></li>
             <li>
               <NavLink onClick={closeMenu} exact to="/dashboard" className="view-dash-button">Dashboard</NavLink></li>
             <li onClick={handleLogout} className="logout-red-button">Log Out</li>

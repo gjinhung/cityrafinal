@@ -1,51 +1,11 @@
-.scroll-container {
+.booking_scroll-container {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    background-color: #f7f5f5;
+    /* background-color: #f7f5f5; */
     overflow: auto;
     white-space: nowrap;
-    padding: 5px;
-}
-
-.timeDate-container{
-    display: flex;
-    justify-content: center;
-}
-
-.guide_img {
-    object-fit: cover;
-    object-position: center;
-    aspect-ratio: 1/1;
-    width: 350px;
-    border-radius: 10px;
-}
-
-.image {
-    width: 350px;
-    position: relative;
-}
-
-.content{
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    opacity: 0;
-    /* opacity: 1; */
-    transition: 0.6s;
-    color: white
-}
-
-.content:hover{
-    opacity: 1;
-    border-radius: 10px;
+    padding: 15px 5px;
 }
 
 .button-container{
@@ -57,4 +17,227 @@
 
 .booking-buttons{
     background-color: #ffe100;
+}
+
+.no_bookings_container{
+    display: flex;
+    border: lightgray 1px solid;
+    border-radius: 10px;
+    width: 100%;
+    height: 280px;
+}
+
+.left_no_booking{
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.right_no_booking{
+    width: 70%;
+}
+
+.no_booking_stock{
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 280px;
+    margin: auto;
+    display: block;
+    border-radius: 0 10px 10px 0;
+}
+
+.fa-mountain-city{
+    font-size: xxx-large;
+}
+
+.no_upcoming{
+    font-size: 22.65px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+h2{
+    font-size: 22.65px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.no_upcoming_text{
+    font-size: 14px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-weight: lighter;    
+    color: gray;
+}
+
+.no_bookings_cont{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.booking_page_container{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow: auto;
+    white-space: nowrap;
+    padding: 5px;
+    justify-content: center;
+    width: 100%;
+}
+
+.booking_page{
+    width: 80%;
+}
+
+.prev_booking_container{
+    height: 72px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.prev_booking_container:hover{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.prev_booking_img{
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+    height: 72px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.prev_booking_container{
+    display: flex;
+    height: auto;
+    flex-direction: row;
+}
+
+.prev_booking_right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.prev_booking_hostedby{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 14px;
+    color: gray;
+}
+
+.prev_booking_title{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 14px;
+    color: black;
+    font-weight: 500;
+}
+
+.prev_booking_left{
+    display: flex;
+    align-items: center;
+}
+
+.booking_wrapper{
+    border-radius: 5px;
+    padding: 5px;
+    height: 350px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking_wrapper:hover{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+}
+
+.booking_guide_img {
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    background-color: lightgray;
+}
+
+.texts{
+    height: 350%;
+}
+
+.text-container{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto
+}
+
+.booking_image{
+    width: 350px;
+    height: 65%;
+    position: relative;
+    
+}
+
+.booking_timeDate-container{
+    display: flex;
+}
+
+.booking_date{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 14px;
+    color: gray;
+    font-weight: 500;
+}
+
+.booking_texts{
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 12px;
+    margin-top: 2px;
+    font-weight: 500;
+    padding-bottom: 10px;
+    border-bottom: lightgray 1px solid;
+}
+
+.booking_title{
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 16px;
+    color: black;
+    /* font-weight: normal; */
+    /* flex-wrap: wrap; */
+}
+
+.booking_cont{
+    display: flex;
+    width: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.show_details_button{
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: small;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #2f3e46
+}
+
+.show_details_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }

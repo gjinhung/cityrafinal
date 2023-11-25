@@ -13,7 +13,13 @@ def get_all_bookings():
     bookings = Booking.query.all()
     bookings_data = []
     for booking in bookings:
+        # tour_id = booking.tour_id
+        # tour = Tour.query.get_or_404(tour_id)
         booking_dict = booking.to_dict()
+
+        # print(tour_id)
+        # print(tour.id)
+        # booking_dict["tour_title"] = tour.title
         # # to convert to string use strftime
         # date_format = '%Y-%m-%d'
         # if not isinstance(booking.date, str):
@@ -23,13 +29,16 @@ def get_all_bookings():
         # start_time = (booking.start_time).strftime(time_format)
         # # to convert to datetime.date.fromisoformat(start_time)
         # booking_date = datetime.date.fromisoformat(booking.date)
+
         today = datetime.datetime.today()
         booking_date = datetime.datetime.strptime(booking.date, "%A, %B %d, %Y")
+        # booking_date = datetime.datetime.combine(datbooking.date, datetime.time(0, 0, 0))
         diff = (booking_date - today).days
         occured = False
         if diff <= 0:
             occured = True
         booking_dict["completed"] = occured
+
         # booking_dict['start_time'] = start_time
         # booking_dict['date'] = date
         # tour_guide = booking.tour_guide
@@ -119,10 +128,11 @@ def edit_booking(id):
         return jsonify({"errors": "Unauthorized to edit this booking"}), 403
 
     if form.validate_on_submit():
-        attributes_to_update = ["date", "time"]
-        for attr in attributes_to_update:
-            if hasattr(form, attr):
-                setattr(booking, attr, getattr(form, attr).data)
+        formated_date = datetime.datetime.strptime(form.date.data, "%Y-%m-%d").date()
+        formated_time = datetime.datetime.strptime(form.time.data, "%H:%M").time()
+
+        booking.date = formated_date
+        booking.time = formated_time
 
         booking.updated_at = datetime.datetime.utcnow()
         db.session.commit()

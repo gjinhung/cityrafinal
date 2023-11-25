@@ -29,7 +29,8 @@ export default function PostBooking() {
     const users = useSelector((state) => state.users)
     const tours = useSelector((state) => state.tours)
     const cities = useSelector((state) => state.cities)
-    const type = useSelector((state) => state.specialties)
+    const type = useSelector((state) => state.types)
+    // const dates = useSelector((state) => state.dates)
     const guide = users[+id]
 
     useEffect(() => {
@@ -47,13 +48,12 @@ export default function PostBooking() {
 
     let available_days = new Set()
     let toursCityWithSelectedDate = []
-    let tour_ids_arr = guide.tours_given_ids
     let final_tours = []
 
-    tour_ids_arr.forEach((tour_id) => {
+    guide.tours_given_ids.forEach((tour_id) => {
         let selectedTour = tours[tour_id]
-        selectedTour.dates.forEach((date) => {
-            available_days.add(date)
+        selectedTour.availabilities.forEach((date) => {
+            available_days.add(date.date_id)
         })
         if (selectedTour.dates.includes(dayNumRef.current)) {
             toursCityWithSelectedDate.push(selectedTour.city_id)

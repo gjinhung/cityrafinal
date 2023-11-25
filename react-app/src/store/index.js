@@ -6,7 +6,7 @@ import bookings from './booking'
 import dates from './date'
 import cities from './city'
 import languages from './language'
-import specialties from './specialty';
+import types from './type';
 import reviews from './reviews';
 import users from './users'
 
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   dates,
   cities,
   languages,
-  specialties,
+  types,
   reviews,
   users
 });

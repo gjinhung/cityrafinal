@@ -1,8 +1,9 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, jsonify, session, request, render_template
 from app.models import User, db, Review, Language, Booking
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from app.aws import upload_file_to_s3, get_unique_filename
 import datetime
 
 auth_routes = Blueprint("auth", __name__)
@@ -12,10 +13,10 @@ def validation_errors_to_error_messages(validation_errors):
     """
     Simple function that turns the WTForms validation errors into a simple list
     """
-    errorMessages = []
+    errorMessages = {}
     for field in validation_errors:
         for error in validation_errors[field]:
-            errorMessages.append(f"{field} : {error}")
+            errorMessages[field] = error
     return errorMessages
 
 
@@ -165,13 +166,30 @@ def sign_up():
     form = SignUpForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
+        # IMAGE UPLOAD
+
+        image = form.data["profile_pic"]
+        print(image)
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        print("look here!!!")
+        print(upload)
+
+        if "url" not in upload:
+            # if the dictionary doesn't have a url key
+            # it means that there was an error when you tried to upload
+            # so you send back that error message (and you printed it above)
+            return upload
+
+        url = upload["url"]
+
         user = User(
             username=form.data["username"],
             email=form.data["email"],
             password=form.data["password"],
             first_name=form.data["first_name"],
             last_name=form.data["last_name"],
-            profile_pic=form.data["profile_pic"],
+            profile_pic=url,
             student=form.data["student"],
             graduation_date=form.data["graduation_date"],
             joined_on=datetime.datetime.utcnow(),

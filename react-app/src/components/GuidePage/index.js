@@ -7,7 +7,7 @@ import StarsRating from "./StarRating";
 import OpenModalButton from "../OpenModalButton"
 import EditReviewModal from "../EditReviewModal";
 import DeleteReviewModal from '../DeleteReviewModal'
-import PostBooking from "./Booking";
+// import PostBooking from "./Booking";
 
 import './GuidePage.css'
 
@@ -15,6 +15,7 @@ export default function GuidePage({ loaded }) {
     const { id } = useParams()
     const dispatch = useDispatch()
     const users = useSelector((state) => state.users)
+    const tours = useSelector((state) => state.tours)
     const user = users[id]
     const guide = users[id]
     const languages = useSelector((state) => state.languages)
@@ -34,15 +35,15 @@ export default function GuidePage({ loaded }) {
         setCanEdit(false)
         if (current_user) {
             setLoggedIn(true)
-            let reviews_of_guide = users[id].reviews_of_guide
-            reviews_of_guide.forEach((review) => {
-                if (review.reviewer_id === current_user.id) {
+            let reviews_of_guide = users[id].reviews_of_guide_id
+            reviews_of_guide.forEach((review_id) => {
+                if (reviews[review_id].reviewer_id === current_user.id) {
                     setCanPost(false)
                     setCanEdit(true)
                 }
             })
         }
-    }, [canEdit, setCanEdit, current_user, id, reviews, users, guide.tours_given.length]);
+    }, [canEdit, setCanEdit, current_user, id, reviews, users, guide.tours_given_ids.length]);
 
     useEffect(() => {
         const errors = {};
@@ -111,15 +112,17 @@ export default function GuidePage({ loaded }) {
         )
     } else {
 
-        let language_set = new Set()
-        let num_tours_given = users[id].tours_given.length
+        let num_tours_given = users[id].tours_given_ids.length
         let review_lists = [] //get the reviewers with this guide_id
         let guide_tours = []
 
-        let normalized_tours = Object.values(user.tours_given)
-        normalized_tours.forEach((tour) => {
-            language_set.add(tour.language_id)
-            guide_tours.push(tour.id)
+        let normalized_tours = []
+        user.tours_given_ids.forEach((tour_id) => {
+            normalized_tours.push(tours[tour_id])
+        })
+
+        user.tours_given_ids.forEach((tour_id) => {
+            guide_tours.push(tour_id)
         })
 
         let normalized_reviews = Object.values(reviews)
@@ -147,8 +150,6 @@ export default function GuidePage({ loaded }) {
             setCanPost(input);
         }
 
-        const language_arr = Array.from(language_set)
-
         return (
             <div className="guide-page">
                 <div className="left-side">
@@ -168,7 +169,7 @@ export default function GuidePage({ loaded }) {
                                     {`(${num_tours_given} ${num_tours_given === 1 ? 'tour' : "tours"} given)`}
                                 </div>
                                 <div> <i className="fa-solid fa-language"></i> Languages I speak:</div>
-                                {language_arr.map((language_id, idx) => {
+                                {user.language_ids.map((language_id, idx) => {
                                     return (<li key={idx}>{languages[language_id].language}</li>)
                                 })}
                             </div>
@@ -281,11 +282,11 @@ export default function GuidePage({ loaded }) {
                         })}
                     </div>
                 </div>
-                <div className="right-side">
+                {/* <div className="right-side">
                     <>
                         <PostBooking />
                     </>
-                </div>
+                </div> */}
 
             </div >
         )

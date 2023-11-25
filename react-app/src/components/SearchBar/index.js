@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import LanguageSelection from './Language copy'
 import CitySelection from './City copy'
-import SpecialtySelection from "./Specialty copy";
+import SpecialtySelection from "./Type";
 import { useSearch } from "../../context/SearchBar";
 import { cityByName } from "../../store/city";
 import { langByName } from "../../store/language";
 import { dateByName } from "../../store/date";
 import { useDispatch, useSelector } from "react-redux";
-import { typeByName } from "../../store/specialty";
+import { typeByName } from "../../store/type";
 import './SearchBar.css'
 import DateSelection from "./Date";
 import { NavLink } from "react-router-dom";
@@ -104,8 +104,8 @@ export default function SearchBar({ loaded }) {
         // console.log(users)
         return (
             <div className="wrap">
-                <img src={mountains} className="background"></img>
-                <img src={NYC} className="foreground"></img>
+                <img src={mountains} className="background" alt="mountain"></img>
+                <img src={NYC} className="foreground" alt="foreground"></img>
                 <div className="header">
                     <div className="searchBarContainerCont">
                         <div className="searchBarContainer" >
@@ -151,9 +151,9 @@ export default function SearchBar({ loaded }) {
                                             <div className="tour-guide-info">{users[guide_id].first_name} {users[guide_id].last_name}</div>
                                             < br />
                                             <div className="tour-guide-info">{users[guide_id].rating}<i className="fa-solid fa-star"></i></div>
-                                            <p className="tour-guide-info-num">({users[guide_id].reviews_of_guide.length} {users[guide_id].reviews_of_guide.length === 1 ? 'rating' : 'ratings'})</p>
+                                            <p className="tour-guide-info-num">({users[guide_id].reviews_of_guide_id.length} {users[guide_id].reviews_of_guide_id.length === 1 ? 'rating' : 'ratings'})</p>
                                             < br />
-                                            <p className="tour-guide-info-num2">{users[guide_id].tours_given.length} {users[guide_id].tours_given.length == 1 ? "tour" : "tours"} available</p>
+                                            <p className="tour-guide-info-num2">{users[guide_id].tours_given_ids.length} {users[guide_id].tours_given_ids.length === 1 ? "tour" : "tours"} available</p>
                                         </div>
                                     </NavLink>
                                 </div>

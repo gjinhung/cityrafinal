@@ -36,6 +36,22 @@ def get_tour_avail(id):
     return {"availabilities": {avail["id"]: avail for avail in availabilities_data}}
 
 
+@avail_routes.route("/tour/<int:id>/<int:date_id>")
+def get_tour_date_avail(id, date_id):
+    tour = Tour.query.get_or_404(id)
+
+    if not tour:
+        return jsonify({"errors": "Tour not found"}), 404
+
+    avails = Availability.query.filter_by(tour_id=id).filter_by(date_id=date_id).all()
+    availabilities_data = []
+    for avail in avails:
+        avail_dict = avail.to_dict()
+        availabilities_data.append(avail_dict)
+
+    return {"availabilities": {avail["id"]: avail for avail in availabilities_data}}
+
+
 @avail_routes.route("/tour/<int:tour_id>/new", methods=["POST"])
 @login_required
 def add_tour_avail(tour_id):

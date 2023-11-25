@@ -21,10 +21,11 @@ function DeleteTourModal({ tour_id }) {
     const data = await dispatch(deleteTour(tour_id))
     if (data) {
       setErrors(data.errors)
+      console.log(errors)
     } else {
       closeModal()
       dispatch(authenticate())
-      // dispatch(allUsers())
+      dispatch(allUsers())
       dispatch(getTours())
       // window.location.reload(true)
     }

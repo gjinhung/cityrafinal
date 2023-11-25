@@ -208,11 +208,18 @@ cursor: pointer;
   background-color: #f9f9f9;
   border-bottom: 1px solid #e1e1e1;
   height: 40px;
+  width: 80%;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
+}
+
+.nav-big-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .small-logo {

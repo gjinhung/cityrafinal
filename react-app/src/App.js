@@ -11,13 +11,15 @@ import { getDates } from "./store/date";
 import { getCities } from "./store/city";
 import { getLanguages } from "./store/language";
 import { allUsers } from "./store/users";
-import { getSpecialties } from "./store/specialty";
+import { getTypes } from "./store/type";
 import { getReviews } from "./store/reviews";
 import MainPage from "./components/MainPage";
 import LogInSignUp from "./components/LogInSignUp";
 import GuidePage from "./components/GuidePage";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import MyBookings from "./components/MyBookings";
+import BookingPage from "./components/BookingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ function App() {
           dispatch(getBookings())).then(() =>
             dispatch(getDates())).then(() =>
               dispatch(getCities())).then(() =>
-                dispatch(getSpecialties())).then(() =>
+                dispatch(getTypes())).then(() =>
                   dispatch(getReviews())).then(() =>
                     dispatch(getLanguages())).then(() => setIsLoaded(true))
   }, [dispatch]);
@@ -59,8 +61,14 @@ function App() {
             <Route path='/guide/:id'>
               <GuidePage loaded={isLoaded} />
             </Route>
+            <Route path='/booking/:id'>
+              <BookingPage loaded={isLoaded} />
+            </Route>
             <ProtectedRoute path='/dashboard' exact={true}>
               < Dashboard loaded={isLoaded} />
+            </ProtectedRoute>
+            <ProtectedRoute path='/mybookings' exact={true}>
+              < MyBookings loaded={isLoaded} />
             </ProtectedRoute>
             <Route exact path='/'>
               <MainPage loaded={isLoaded} />

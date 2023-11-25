@@ -44,14 +44,14 @@ def add_review(guideId):
     if form.validate_on_submit():
         average = (
             form.communication_rating.data
-            + form.knowledgability_rating.data
+            + form.knowledgeability_rating.data
             + form.professionalism_rating.data
         ) / 3
         review = Review(
             reviewer_id=current_user.id,
             guide_id=+guideId,
             communication_rating=form.communication_rating.data,
-            knowledgability_rating=form.knowledgability_rating.data,
+            knowledgeability_rating=form.knowledgeability_rating.data,
             professionalism_rating=form.professionalism_rating.data,
             rating=round(average, 2),
             # rating=form.rating.data,
@@ -79,7 +79,7 @@ def edit_review(id):
     if form.validate_on_submit():
         attributes_to_update = [
             "communication_rating",
-            "knowledgability_rating",
+            "knowledgeability_rating",
             "professionalism_rating",
             "review_body",
         ]
@@ -92,7 +92,7 @@ def edit_review(id):
         review.updated_at = datetime.datetime.utcnow()
         average = (
             form.communication_rating.data
-            + form.knowledgability_rating.data
+            + form.knowledgeability_rating.data
             + form.professionalism_rating.data
         ) / 3
 

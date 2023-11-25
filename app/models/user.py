@@ -90,6 +90,10 @@ class Booking(db.Model):
     guide_id = db.Column(db.Integer, nullable=False)
     date = db.Column(db.Date(), nullable=False)
     time = db.Column(db.Time(), nullable=False)
+    tour_title = db.Column(db.String(255), nullable=False)
+    tour_city = db.Column(db.String(255), nullable=False)
+    tour_duration = db.Column(db.Integer, nullable=False)
+    tour_price = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False)
     updated_at = db.Column(db.DateTime(), nullable=False)
 
@@ -110,6 +114,10 @@ class Booking(db.Model):
             "id": self.id,
             "tour_id": self.tour_id,
             "tourist_id": self.tourist_id,
+            "tour_title": self.tour_title,
+            "tour_city": self.tour_city,
+            "tour_duration": self.tour_duration,
+            "tour_price": self.tour_price,
             "guide_id": self.guide_id,
             "date": self.date,
             "time": self.time,
@@ -182,7 +190,7 @@ class Review(db.Model):
     guide_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     communication_rating = db.Column(db.Integer, nullable=False)
-    knowledgability_rating = db.Column(db.Integer, nullable=False)
+    knowledgeability_rating = db.Column(db.Integer, nullable=False)
     professionalism_rating = db.Column(db.Integer, nullable=False)
     review_body = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
@@ -196,7 +204,7 @@ class Review(db.Model):
             "reviewer_id": self.reviewer_id,
             "guide_id": self.guide_id,
             "communication_rating": self.communication_rating,
-            "knowledgeability_rating": self.knowledgability_rating,
+            "knowledgeability_rating": self.knowledgeability_rating,
             "professionalism_rating": self.professionalism_rating,
             "rating": self.rating,
             "review_body": self.review_body,
@@ -254,7 +262,9 @@ class Tour(db.Model):
             "id": self.id,
             "guide_id": self.guide_id,
             "city_id": self.city_id,
+            "title": self.title,
             "price": self.price,
+            "duration": self.duration,
             "about": self.about,
             "created_at": self.created_at,
             "updated_at": self.updated_at,

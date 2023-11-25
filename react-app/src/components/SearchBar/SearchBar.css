@@ -59,7 +59,7 @@
 .x-button{
     position: relative;
     top: 6px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     padding-left: 10px;
     color: white;
     font-size: x-small;

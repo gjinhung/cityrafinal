@@ -20,6 +20,7 @@ function DeleteReviewModal({ review }) {
     const data = await dispatch(deleteReview(review.id))
     if (data) {
       setErrors(data.errors)
+      console.log(errors)
     } else {
       closeModal()
       dispatch(getReviews())
