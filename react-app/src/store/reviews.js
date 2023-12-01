@@ -90,16 +90,12 @@ export const editReview = (id, review) => async (dispatch) => {
 };
 
 export const deleteReview = (id) => async (dispatch) => {
-    console.log("in review")
-    console.log(id)
     const response = await fetch(`/api/reviews/${id}`, {
         method: 'DELETE',
     });
-    console.log('passed')
-    console.log(response)
     if (response.ok) {
-        console.log(response)
-        dispatch(removeReview(id));
+        // console.log(response)
+        // dispatch(removeReview(id));
         // const data = await response.json();
         // if (data.errors) {
         //     return data.errors;
@@ -122,7 +118,6 @@ const reviews = (state = initialState, action) => {
             return newState
         case REMOVE_REVIEWS:
             newState = { ...state }
-            delete newState[action.payload];
             return newState
         default:
             return state;

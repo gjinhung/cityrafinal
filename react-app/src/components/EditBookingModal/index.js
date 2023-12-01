@@ -21,10 +21,10 @@ export default function EditBookingModal({ booking }) {
     const users = useSelector((state) => state.users)
     const tours = useSelector((state) => state.tours)
     const cities = useSelector((state) => state.cities)
-    const type = useSelector((state) => state.specialties)
+    // const type = useSelector((state) => state.types)
     const city = cities[tours[booking.guide_id].city_id].city
     const { closeModal } = useModal();
-    const id = bookings[booking.id].tour_guide_id
+    // const id = bookings[booking.id].guide_id
     const guide = users[booking.guide_id]
 
     // const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];

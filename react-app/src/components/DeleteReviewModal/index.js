@@ -16,16 +16,15 @@ function DeleteReviewModal({ review }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    console.log(review.id)
     const data = await dispatch(deleteReview(review.id))
     if (data) {
       setErrors(data.errors)
       console.log(errors)
     } else {
       closeModal()
-      dispatch(getReviews())
-      dispatch(allUsers())
-      dispatch(authenticate())
+      dispatch(allUsers()).then(() =>
+        dispatch(authenticate())).then(() =>
+          dispatch(getReviews()))
     }
 
 

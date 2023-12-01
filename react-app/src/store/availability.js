@@ -1,13 +1,14 @@
 import { getTours } from "./tour";
 
 // constants
-const LOAD_AVAILABILITIES = "language/LOAD_AVAILABILITIES";
-const POST_AVAILABILITIES = "langauge/POST_AVAILABILITIES"
+// const LOAD_AVAILABILITIES = "language/LOAD_AVAILABILITIES";
+// const POST_AVAILABILITIES = "langauge/POST_AVAILABILITIES"
 
 export const getAvailabilities = () => async (dispatch) => {
     const response = await fetch(`/api/avail`);
     if (response.ok) {
         const data = await response.json();
+        console.log(data)
     } else {
         return (await response.json());
     }

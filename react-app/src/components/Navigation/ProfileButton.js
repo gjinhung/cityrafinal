@@ -64,6 +64,8 @@ function ProfileButton({ user }) {
             <li>{user.first_name} {user.last_name}</li>
             <li>{user.email}</li>
             <li>
+              <NavLink onClick={closeMenu} exact to="/mytours" className="view-dash-button">My Tours</NavLink></li>
+            <li>
               <NavLink onClick={closeMenu} exact to="/mybookings" className="view-dash-button">My Bookings</NavLink></li>
             <li>
               <NavLink onClick={closeMenu} exact to="/dashboard" className="view-dash-button">Dashboard</NavLink></li>

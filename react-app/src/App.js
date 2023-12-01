@@ -20,6 +20,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import MyBookings from "./components/MyBookings";
 import BookingPage from "./components/BookingPage";
+import MyToursPage from "./components/MyToursPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +70,9 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute path='/mybookings' exact={true}>
               < MyBookings loaded={isLoaded} />
+            </ProtectedRoute>
+            <ProtectedRoute path='/mytours' exact={true}>
+              < MyToursPage loaded={isLoaded} />
             </ProtectedRoute>
             <Route exact path='/'>
               <MainPage loaded={isLoaded} />

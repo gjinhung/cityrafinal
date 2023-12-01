@@ -1,0 +1,153 @@
+.my-tours-page-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.my-tours-page-small-container{
+    width: 80%;
+}
+
+.tour-subcontainer{
+display: flex;
+flex-direction: column;
+padding: 0 90px 60px
+}
+
+.left-right-container{
+    display: grid;
+    grid-template-columns: repeat(2, 50%) ;
+    column-gap: 100px;
+
+}
+
+.tour_title{
+    font-size: 39.51px;
+    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.tour_image{
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/.75;
+    width: 100%;
+}
+
+.left_sub_container{
+    padding: 30px 30px 20px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-row: auto auto
+
+}
+
+.tour_main_details{
+    width: 80%;
+    border: 1px solid #f7f7f7;
+}
+
+.show_more_button{
+    width: fit-content;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+
+}
+
+.tour_details_box{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 33px;
+}
+
+.tour_box_title{
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 5px;
+    color: #2F3E46
+}
+
+.tour_box_details{
+    font-size: 16px;
+    color: #2F3E46
+}
+
+.tour_details_container{
+    padding: 30px 30px 20px;
+    background-color: #CAD2C5;
+    color: rgb(202, 210, 197);
+}
+
+.avail_container{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    
+}
+
+.avail_day{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+    width: 55px;
+    background-color: #2F3E46;;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.avail_day_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 55px;
+}
+
+.avail_times{
+    font-size: 12px;
+    color: #354F52;
+}
+
+.avail-container{
+    padding-bottom: 20px;
+}
+
+.tour_title{
+    margin-bottom: 18px;
+    padding: 20px 0
+}
+
+.tour-options{
+    display: flex;
+    flex-direction: row;
+}
+
+.options_title_true{
+    width: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height: 100px;
+    color: white;
+    font-weight: 600;
+    border-bottom: solid 1px #2F3E46;
+    background-color: #2F3E46;
+    cursor: pointer;
+}
+
+.options_title_false{
+    width: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height: 100px;
+    font-weight: 600;
+    border-bottom: solid 1px #2F3E46;
+    cursor: pointer;
+}
+
+.tour_info-right{
+    border: solid 1px #2F3E46;
+}

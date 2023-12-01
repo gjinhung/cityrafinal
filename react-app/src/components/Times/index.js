@@ -10,15 +10,12 @@ export default function TimeOption({ time, handleTime, date, bookingTime }) {
     const booking_date = new Date(bookings[id].date);
     const formattedDate = booking_date.toISOString().slice(0, 10);
 
+
     useEffect(() => {
-        console.log(bookingTime)
-        console.log(time)
-        console.log(bookingTime === time)
-        console.log(formattedDate === date)
         if (bookingTime === time && formattedDate === date) {
             setSelected(true)
         }
-    })
+    }, [setSelected, bookingTime, time, formattedDate, date])
 
     function formattedTime(str_time) {
         let convertedTime = str_time.split(":")

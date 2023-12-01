@@ -9,22 +9,19 @@ import { allUsers } from "../../store/users";
 import { deleteBooking, editBooking, getBookings } from "../../store/booking";
 import { authenticate } from "../../store/session";
 
-//highlight time on selected
-//highlighted booking time
-//disable submit when not selected
 
 export default function BookingPage() {
     const dispatch = useDispatch()
     const { id } = useParams()
+    const history = useHistory()
     let dateRef = useRef()
     const bookings = useSelector((state) => state.bookings)
     const users = useSelector((state) => state.users)
     const dates = useSelector((state) => state.dates)
     const normalizedDates = Object.values(dates)
-    const history = useHistory()
     const [showUpdate, setShowUpdate] = useState(false)
-    const [bookingDate, setBookingDate] = useState(bookings[id].date)
-    const [bookingTime, setBookingTime] = useState(bookings[id].time)
+    const [bookingDate, setBookingDate] = useState(bookings[id] ? bookings[id].date : '')
+    const [bookingTime, setBookingTime] = useState(bookings[id] ? bookings[id].time : '')
     const [error, setError] = useState('')
     const [avail_times, setAvailTimes] = useState([])
     const [showTimes, setShowTimes] = useState(false)
@@ -33,12 +30,15 @@ export default function BookingPage() {
     const [showDelete, setShowDelete] = useState(false)
 
     useEffect(() => {
+        if (!bookings[id]) {
+            history.push('/')
+        }
         if (!bookingDate || !bookingTime) {
             setFormDisabled(true)
         } else {
             setFormDisabled(false)
         }
-    }, [bookingDate, bookingTime])
+    }, [dispatch, bookingDate, bookingTime])
 
 
     function formattedTime(str_time) {
@@ -72,17 +72,23 @@ export default function BookingPage() {
         </>
     )
 
+    const simpleDate = (data) => {
+        const booking_date = new Date(data);
+        const formattedDate = booking_date.toISOString().slice(0, 10);
+        return formattedDate
+    }
+
     const handleChange = async (e) => {
         // 2023-11-22
         setShowTimes(true)
         setAvailTimes([])
         dateRef.current = e
-        setBookingDate(e)
-        if (!showUpdate) {
+        if (e === simpleDate(bookings[id].date)) {
             setBookingTime(bookings[id].time)
         } else {
             setBookingTime('')
         }
+        setBookingDate(e)
         let year = dateRef.current.substring(0, 4);
         let month = dateRef.current.substring(5, 7);
         let day = dateRef.current.substring(8, 10);
@@ -138,6 +144,7 @@ export default function BookingPage() {
 
     const handleEdit = (e) => {
         setShowSuccess(false)
+        setShowDelete(false)
         const date = new Date(bookings[id].date);
         const formattedDate = date.toISOString().slice(0, 10);
         handleChange(formattedDate)
@@ -154,13 +161,13 @@ export default function BookingPage() {
     const handleDelete = async (e) => {
         e.preventDefault();
         setError('');
+
+
         await dispatch(deleteBooking(id)).then((data) => {
             if (data.error) {
                 setError('Error Deleting - See Console')
-                console.log(data)
             } else {
                 history.push('/mybookings')
-
             }
         }
         )
@@ -199,142 +206,154 @@ export default function BookingPage() {
     }
 
     return (
-        <div className="booking_details_container">
-            <div className="booking_details_left">
-                <div className="booking_card">
-                    <i className="fa-solid fa-arrow-left" onClick={goBack}></i>
-                    <div className="booking_card_title">
-                        {bookings[id].tour_title}
+        bookings[id] ? (
+            < div className="booking_details_container" >
+                <div className="booking_details_left">
+                    <div className="booking_card">
+                        <i className="fa-solid fa-arrow-left" onClick={goBack}></i>
+                        <div className="booking_card_title">
+                            {bookings[id].tour_title}
+                        </div>
+                        <div className="booking_card_subtitle">
+                            Tour Guided By {users[bookings[id].guide_id].first_name} {users[bookings[id].guide_id].last_name}
+                        </div>
+                        <img
+                            src={users[bookings[id].guide_id].profile_pic}
+                            className='booking_details_img'
+                            alt={id}
+                            key={id}
+                        />
+                        <div className="booking_details_date">
+                            {bookings[id].date}
+                        </div>
+                        <div className="booking_details_sub">
+                            {formattedTime(bookings[id].time)}
+                        </div>
+                        <div className="booking_details_sub">
+                            Duration: {bookings[id].tour_duration} Hours
+                        </div>
                     </div>
-                    <div className="booking_card_subtitle">
-                        Tour Guided By {users[bookings[id].guide_id].first_name} {users[bookings[id].guide_id].last_name}
-                    </div>
-                    <img
-                        src={users[bookings[id].guide_id].profile_pic}
-                        className='booking_details_img'
-                        alt={id}
-                        key={id}
-                    />
-                    <div className="booking_details_date">
-                        {bookings[id].date}
-                    </div>
-                    <div className="booking_details_sub">
-                        {formattedTime(bookings[id].time)}
-                    </div>
-                    <div className="booking_details_sub">
-                        Duration: {bookings[id].tour_duration} Hours
-                    </div>
-                </div>
-                {!bookings[id].completed &&
-                    (
-                        <div className="booking_card">
-                            <div className="booking_card_title">
-                                Update Reservation
-                            </div>
-                            <div className="booking_update_button_container">
-                                <div className="booking_edit_button" onClick={(e) => handleEdit(e)}>
-                                    Edit Booking
+                    {!bookings[id].completed &&
+                        (
+                            <div className="booking_card">
+                                <div className="booking_card_title">
+                                    Update Reservation
                                 </div>
-                                <div className="booking_delete_button" onClick={(e) => confirmDelete(e)}>
-                                    Delete Booking
+                                <div className="booking_update_button_container">
+                                    <div className="booking_edit_button" onClick={(e) => handleEdit(e)}>
+                                        Edit Booking
+                                    </div>
+                                    <div className="booking_cdelete_button" onClick={(e) => confirmDelete(e)}>
+                                        Cancel Booking
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
+                        )}
+
+                    {showDelete && (
+                        <div className="booking_card">
+                            <form onSubmit={handleDelete}>
+                                <div className="booking_card_title">
+                                    Click Below to Confirm Cancellation
+                                </div>
+                                <div className="booking_delete_button_container">
+                                    <div>
+                                        <button
+                                            type="submit"
+                                            className="booking_delete_button"
+                                        >Confirm Cancel</button>
+                                    </div>
+                                    < br />
+                                    <div onClick={(e) => handleCancel(e)} className="booking_keep_button">
+                                        Keep Booking
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     )}
 
-                {showDelete && (
-                    <div className="booking_card">
-                        <form onSubmit={handleDelete}>
-                            <div className="booking_update_button_container">
-                                <div>
-                                    <button
-                                        type="submit"
-                                        className="booking_update_buttons"
-                                    >Confirm Delete</button>
+                    {showUpdate && (
+                        <div className="booking_card">
+                            <form onSubmit={handleUpdate}>
+                                <div className="booking-date-selection-container">
+                                    <input
+                                        type="date"
+                                        className="booking_date_input"
+                                        value={bookingDate}
+                                        onChange={(e) => handleChange(e.target.value)}
+                                    />
                                 </div>
-                                <div onClick={(e) => handleCancel(e)} className="booking_update_buttons">
-                                    Cancel
+
+                                {showTimes && show}
+
+                                <div className="times_container">
+                                    {avail_times.map((times, idx) => {
+                                        return (
+                                            <TimeOption
+                                                key={idx}
+                                                handleTime={handleTime}
+                                                bookingTime={bookingTime}
+                                                date={bookingDate}
+                                                time={times}
+                                            />
+                                        )
+                                    })}
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                )}
+                                <div className="noAvail">
 
-                {showUpdate && (
-                    <div className="booking_card">
-                        <form onSubmit={handleUpdate}>
-                            <div className="booking-date-selection-container">
-                                <input
-                                    type="date"
-                                    className="booking_date_input"
-                                    value={bookingDate}
-                                    onChange={(e) => handleChange(e.target.value)}
-                                />
-                            </div>
+                                    {error}
+                                </div>
+                                <div className="booking_update_button_container">
+                                    <div>
+                                        <button
+                                            type="submit"
+                                            className="booking_update_buttons"
+                                            disabled={formDisabled}
+                                        >Update</button>
+                                    </div>
+                                    <div onClick={(e) => handleCancel(e)} className="booking_update_buttons">
+                                        Cancel
+                                    </div>
+                                </div>
 
-                            {showTimes && show}
+                            </form>
+                        </div>
+                    )
 
-                            <div className="times_container">
-                                {avail_times.map((times, idx) => {
-                                    return (
-                                        <TimeOption
-                                            key={idx}
-                                            handleTime={handleTime}
-                                            bookingTime={bookingTime}
-                                            date={bookingDate}
-                                            time={times}
-                                        />
-                                    )
-                                })}
-                            </div>
+                    }
+
+                    {showSuccess &&
+                        <div className="booking_card">
                             <div className="noAvail">
-
-                                {error}
+                                Booking Successfully Updated!
                             </div>
-                            <div className="booking_update_button_container">
-                                <div>
-                                    <button
-                                        type="submit"
-                                        className="booking_update_buttons"
-                                        disabled={formDisabled}
-                                    >Update</button>
-                                </div>
-                                <div onClick={(e) => handleCancel(e)} className="booking_update_buttons">
-                                    Cancel
-                                </div>
-                            </div>
+                        </div>
 
-                        </form>
-                    </div>
-                )
+                    }
 
-                }
-
-                {showSuccess &&
                     <div className="booking_card">
-                        <div className="noAvail">
-                            Booking Successfully Updated!
+                        <div className="booking_card_title">
+                            Payment Details
+                        </div>
+                        <div className="booking_details_cost">
+                            Total Cost
+                        </div>
+                        <div className="booking_details_sub">
+                            ${bookings[id].tour_price} USD
                         </div>
                     </div>
-
-                }
-
-                <div className="booking_card">
-                    <div className="booking_card_title">
-                        Payment Details
-                    </div>
-                    <div className="booking_details_cost">
-                        Total Cost
-                    </div>
-                    <div className="booking_details_sub">
-                        ${bookings[id].tour_price} USD
-                    </div>
                 </div>
-            </div>
-            <div className="booking_details_right">
-                MAP
-            </div>
-        </div >
+                <div className="booking_details_right">
+                    MAP
+                </div>
+            </div >
+        ) : (
+            <>
+                Booking does not exist
+            </>
+        )
+
+
     )
 }

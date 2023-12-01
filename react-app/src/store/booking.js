@@ -1,5 +1,5 @@
-import { authenticate } from "./session";
-import { allUsers } from "./users";
+// import { authenticate } from "./session";
+// import { allUsers } from "./users";
 
 // constants
 const LOAD_BOOKINGS = "booking/LOAD_BOOKINGS";
@@ -96,20 +96,15 @@ export const deleteBooking = (id) => async (dispatch) => {
     });
 
     if (response.ok) {
-        await dispatch(authenticate())
-        await dispatch(allUsers())
-        await dispatch(getBookings())
-        await dispatch(removeBooking(id))
-
-
-
+        // dispatch(removeBooking(id))
+        return ("Booking Successfull Deleted")
         // console.log('load all Users')
         // console.log('remove bookg dispatch')
     } else if (response.status < 500) {
-        // const data = await response.json();
-        // if (data.errors) {
-        //     return data.errors;
-        // }
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
     } else {
         return ["An error occurred while deleting a booking. Please try again."];
     }

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import db, Booking, Tour
+from app.models import db, Booking, Tour, City
 from app.forms import BookingForm
 from flask_login import current_user, login_required
 from .auth_routes import validation_errors_to_error_messages
@@ -81,6 +81,8 @@ def add_booking(tourId):
     form = BookingForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
     tour = Tour.query.get_or_404(tourId)
+    city = City.query.get_or_404(tour.city_id)
+
     if not tour:
         return jsonify({"errors": "Tour not found"}), 404
 
@@ -92,6 +94,10 @@ def add_booking(tourId):
             tourist_id=current_user.id,
             tour_id=tour.id,
             guide_id=tour.guide_id,
+            tour_title=tour.title,
+            tour_city=city.city,
+            tour_duration=tour.duration,
+            tour_price=tour.price,
             date=formated_date,
             time=formated_time,
             created_at=datetime.datetime.utcnow(),

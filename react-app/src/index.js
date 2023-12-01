@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import { LogInSignInProvider } from "./context/NavToggle";
 import { ModalProvider, Modal } from "./context/Modal";
 import { SearchProvider } from "./context/SearchBar";
+import { ActiveTourProvider } from "./context/ActiveTours";
+import { ActiveTourDetailsProvider } from "./context/ActiveTourDetails";
 import configureStore from "./store";
 import * as sessionActions from "./store/session";
 import App from "./App";
@@ -28,13 +30,17 @@ function Root() {
 				<BrowserRouter>
 					<LogInSignInProvider>
 						<SearchProvider>
-							<App />
-							<Modal />
+							<ActiveTourProvider>
+								<ActiveTourDetailsProvider>
+									<App />
+									<Modal />
+								</ActiveTourDetailsProvider>
+							</ActiveTourProvider>
 						</SearchProvider>
 					</LogInSignInProvider>
 				</BrowserRouter>
-			</Provider>
-		</ModalProvider>
+			</Provider >
+		</ModalProvider >
 	);
 }
 
