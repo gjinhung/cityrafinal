@@ -137,7 +137,7 @@ export default function ReviewCard() {
                                 name="text"
                                 rows={2}
                                 cols={40}
-                                placeholder="Leave your review here..."
+                                placeholder="Leave your review here... (10 characters minimum)"
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                             >
@@ -145,19 +145,28 @@ export default function ReviewCard() {
                         </div>
                         {/* {errors.comment && errors.comment ? <div style={{ color: "red" }}>{errors.comment}</div> : <div className="empty-space"> </div>} */}
                         <div className="rating-input">
-                            <div className="type">Communication: </div>
-                            <StarsRating disabled={false} stars={cStars} onChange={onChangeC} />
-                            {errors.cStars && <div style={{ color: "red" }}>{errors.cStars}</div>}
-
-                            <div className="type">Knowledgeability: </div>
-                            <StarsRating disabled={false} stars={kStars} onChange={onChangeK} />
-                            {errors.kStars && <div style={{ color: "red" }}>{errors.kStars}</div>}
-
-                            <div className="type">Professionalism: </div>
-                            <StarsRating disabled={false} stars={pStars} onChange={onChangeP} />
-                            {errors.pStars && <div style={{ color: "red" }}>{errors.pStars}</div>}
-
-
+                            <div className="rating-input-sub">
+                                <div>
+                                    <div className="type">Communication: </div>
+                                    <div className="type_star_container">
+                                        <StarsRating disabled={false} stars={cStars} onChange={onChangeC} />
+                                        {errors.cStars && <div style={{ color: "red" }}>{errors.cStars}</div>}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="type">Knowledgeability: </div>
+                                    <div className="type_star_container">
+                                        <StarsRating disabled={false} stars={kStars} onChange={onChangeK} />
+                                        {errors.kStars && <div style={{ color: "red" }}>{errors.kStars}</div>}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="type">Professionalism: </div>
+                                    <div className="type_star_container">                                <StarsRating disabled={false} stars={pStars} onChange={onChangeP} />
+                                        {errors.pStars && <div style={{ color: "red" }}>{errors.pStars}</div>}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <button
