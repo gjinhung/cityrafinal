@@ -55,6 +55,7 @@ export const newTour = (tour) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(postTour(data));
+        return data
     } else if (response.status < 500) {
         const data = await response.json();
         if (data) {

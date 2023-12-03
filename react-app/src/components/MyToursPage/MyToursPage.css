@@ -151,3 +151,125 @@ padding: 0 90px 60px
 .tour_info-right{
     border: solid 1px #2F3E46;
 }
+
+.tour_components{
+    padding: 40px 30px
+}
+
+#title{
+    width: -webkit-fill-available;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.tour-city{
+    width: -webkit-fill-available;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.tour-type{
+    width: -webkit-fill-available;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+input{
+    height: 30px;
+}
+
+.price_duration_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sameline{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+}
+
+.fa-dollar-sign, .fa-clock-tour{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.about-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.avail-slots{
+    display: flex;
+    flex-direction: row;
+}
+
+.tour_date{
+    height: 30px;
+    margin: 1px;
+    margin-right: 5px;
+
+}
+
+.select-time{
+    height: 26px;
+    margin-top: 1px;
+    margin-right: 5px;
+}
+
+.dur_price_container{
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-tour-button{
+    border: 1px solid black;
+    padding: 20px 30px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.delete-tour-button:hover{
+    background-color: crimson;
+    color: white
+}
+
+.delete-tour-container{
+    display: flex;
+    justify-content: center;
+}
+
+.new-tours-page-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.new-tours-page-small-container{
+    width: 60%;
+    padding: 40px 50px;
+}
+
+.tour-linkbuttons{
+        margin-right: 10px;
+        background: none!important;
+        border: none;
+        padding: 0!important;
+        /*optional*/
+        font-family: arial, sans-serif;
+        /*input has OS specific font-family*/
+        color: #069;
+        text-decoration: underline;
+        cursor: pointer;
+        width: fit-content;
+
+}

@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useActiveTourDetails } from "../../context/ActiveTourDetails";
 import './MyToursPage.css'
 import Mountain from '../../images/Mountain.png'
+import TourUpdateComponent from "./UpdateTour";
+import DeleteTour from "./DeleteTour";
 
 export default function TourCard({ tour_id }) {
     const tours = useSelector((state) => state.tours)
@@ -89,73 +91,82 @@ export default function TourCard({ tour_id }) {
             </>
         )
     }
+    if (tours[tour_id]) {
+        return (
+            <div className="tour-container" >
+                <div className="tour-subcontainer">
+                    <div className="tour_title">
+                        {tours[tour_id].title}
+                    </div>
+                    <div className="left-right-container">
+                        <div className="tour-info-left">
+                            <div className="tour_main_details">
+                                <img
+                                    src={Mountain}
+                                    className='tour_image'
+                                    alt={tour_id}
+                                    key={tour_id}
+                                />
+                                <div className="left_sub_container">
+                                    <div className="tour_details_box">
+                                        <div className="tour_box_title">TYPE: </div>
+                                        <div className="tour_box_details">{tours[tour_id].type}</div>
+                                    </div>
+                                    <div className="tour_details_box">
+                                        <div className="tour_box_title">DURATION: </div>
+                                        <div className="tour_box_details"><i className="fa-regular fa-clock"></i> {tours[tour_id].duration} Hrs</div>
+                                    </div>
+                                    <div className="tour_details_box">
+                                        <div className="tour_box_title">PRICE: </div>
+                                        <div className="tour_box_details">$ {tours[tour_id].price} USD</div>
+                                    </div>
+                                    <div className="tour_details_box">
+                                        <div className="tour_box_title">CITY: </div>
+                                        <div className="tour_box_details">{cities[tours[tour_id].city_id].city}</div>
+                                    </div>
+                                    <div className="show_more_button" onClick={(e) => handleShowDets(e)}>{!showDets ? ('+  SEE MORE DETAILS') : ('-  SEE LESS DETAILS')}</div>
+                                </div>
 
-    return (
-        <div className="tour-container" >
-            <div className="tour-subcontainer">
-                <div className="tour_title">
-                    {tours[tour_id].title}
-                </div>
-                <div className="left-right-container">
-                    <div className="tour-info-left">
-                        <div className="tour_main_details">
-                            <img
-                                src={Mountain}
-                                className='tour_image'
-                                alt={tour_id}
-                                key={tour_id}
-                            />
-                            <div className="left_sub_container">
-                                <div className="tour_details_box">
-                                    <div className="tour_box_title">TYPE: </div>
-                                    <div className="tour_box_details">{tours[tour_id].type}</div>
-                                </div>
-                                <div className="tour_details_box">
-                                    <div className="tour_box_title">DURATION: </div>
-                                    <div className="tour_box_details">{tours[tour_id].duration}</div>
-                                </div>
-                                <div className="tour_details_box">
-                                    <div className="tour_box_title">PRICE: </div>
-                                    <div className="tour_box_details">$ {tours[tour_id].price} USD</div>
-                                </div>
-                                <div className="tour_details_box">
-                                    <div className="tour_box_title">CITY: </div>
-                                    <div className="tour_box_details">{cities[tours[tour_id].city_id].city}</div>
-                                </div>
-                                <div className="show_more_button" onClick={(e) => handleShowDets(e)}>{!showDets ? ('+  SEE MORE DETAILS') : ('-  SEE LESS DETAILS')}</div>
+                                {showDets &&
+                                    <div className={`tour_details_container`}>
+                                        <div className="avail-container">{availablilties(tour_id)}</div>
+                                        <div className="tour_details_box">
+                                            <div className="tour_box_title">ABOUT: </div>
+                                            <div className="tour_box_details">{tours[tour_id].about}</div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div className="tour_info-right">
+                            <div className="tour-options">
+                                <div onClick={(e) => selectUpdate()} className={`options_title_${updateDelete}`}>UPDATE TOUR</div>
+                                <div onClick={(e) => selectDelete()} className={`options_title_${!updateDelete}`}>DELETE TOUR</div>
+                            </div>
+                            <div className="tour_components">
+                                {updateDelete ? (
+                                    <>
+                                        <TourUpdateComponent
+                                            tour_id={tour_id}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <DeleteTour
+                                            tour_id={tour_id}
+                                        />
+                                    </>
+                                )}
                             </div>
 
-                            {showDets &&
-                                <div className={`tour_details_container`}>
-                                    <div className="avail-container">{availablilties(tour_id)}</div>
-                                    <div className="tour_details_box">
-                                        <div className="tour_box_title">ABOUT: </div>
-                                        <div className="tour_box_details">{tours[tour_id].about}</div>
-                                    </div>
-                                </div>
-                            }
                         </div>
-                    </div>
-                    <div className="tour_info-right">
-                        <div className="tour-options">
-                            <div onClick={(e) => selectUpdate()} className={`options_title_${updateDelete}`}>UPDATE TOUR</div>
-                            <div onClick={(e) => selectDelete()} className={`options_title_${!updateDelete}`}>DELETE TOUR</div>
-                        </div>
-                        <div className="tour_components">
-                            {updateDelete ? (
-                                <>
-                                    Update Component
-                                </>
-                            ) : (
-                                <>
-                                    Delete Component
-                                </>
-                            )}
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    )
+
+        )
+    } else {
+        return (<>
+        </>)
+    }
 }

@@ -144,25 +144,31 @@ export default function TourBooking({ tour_id }) {
 
     return (
         <>
-            {+current_user.id !== +tours[tour_id].guide_id && < button onClick={(e) => showBookingOptions(e)}>
-                BOOK NOW
-            </button >}
-            <hr />
+            <div className="book-now-button-container">
+                {+current_user.id !== +tours[tour_id].guide_id && < button className="book-now-button" onClick={(e) => showBookingOptions(e)}>
+                    BOOK NOW
+                </button >}
+            </div>
             {
                 showBooking && (
                     <>
                         <form onSubmit={handleSubmit}>
-                            Select a Date:
-                            <input
-                                type="date"
-                                className="booking_date_input"
-                                value={bookingDate}
-                                onChange={(e) => handleChange(e.target.value)}
-                            />
-                            {error}
+                            <div className="select_date_container">
+                                <div className="select_date_text">Select a Date:</div>
+
+                                <input
+                                    type="date"
+                                    className="booking_date_input"
+                                    value={bookingDate}
+                                    onChange={(e) => handleChange(e.target.value)}
+                                />
+                            </div>
+                            <div className="noAvail">
+                                {error}
+                            </div>
                             {showTimes && !error && (
                                 <>
-                                    <div className="times_container">
+                                    <div className="booking_times_container">
                                         {avail_times.map((times, idx) => {
                                             return (
                                                 <TimeOption
@@ -175,20 +181,20 @@ export default function TourBooking({ tour_id }) {
                                             )
                                         })}
                                     </div>
-                                    <div>
+                                    <div className="booking_tour_cancel_container">
                                         <button
                                             type="submit"
-                                            className="booking_update_buttons"
+                                            className="booking_submit_buttons"
                                             disabled={formDisabled}
                                         >Book Tour</button>
+                                        <div onClick={(e) => handleCancel(e)} className="booking_update_buttons">
+                                            Cancel
+                                        </div>
                                     </div>
-                                    <div onClick={(e) => handleCancel(e)} className="booking_update_buttons">
-                                        Cancel
-                                    </div>
+
                                 </>
                             )}
                         </form>
-                        <hr />
                     </>
                 )
             }

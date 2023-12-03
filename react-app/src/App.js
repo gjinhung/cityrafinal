@@ -21,6 +21,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import MyBookings from "./components/MyBookings";
 import BookingPage from "./components/BookingPage";
 import MyToursPage from "./components/MyToursPage";
+import PostTour from "./components/MyToursPage/PostTour";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,12 +51,12 @@ function App() {
         <Navigation isLoaded={isLoaded} />
         {isLoaded && (
           <Switch>
-            <Route path="/login" >
+            {/* <Route path="/login" >
               <LoginFormPage />
             </Route>
             <Route path="/signup">
               <SignupFormPage />
-            </Route>
+            </Route> */}
             <Route path="/slider">
               <LogInSignUp loaded={isLoaded} />
             </Route>
@@ -65,14 +66,17 @@ function App() {
             <Route path='/booking/:id'>
               <BookingPage loaded={isLoaded} />
             </Route>
-            <ProtectedRoute path='/dashboard' exact={true}>
+            {/* <ProtectedRoute path='/dashboard' exact={true}>
               < Dashboard loaded={isLoaded} />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
             <ProtectedRoute path='/mybookings' exact={true}>
               < MyBookings loaded={isLoaded} />
             </ProtectedRoute>
             <ProtectedRoute path='/mytours' exact={true}>
               < MyToursPage loaded={isLoaded} />
+            </ProtectedRoute>
+            <ProtectedRoute path='/mytours/new' exact={true}>
+              < PostTour loaded={isLoaded} />
             </ProtectedRoute>
             <Route exact path='/'>
               <MainPage loaded={isLoaded} />

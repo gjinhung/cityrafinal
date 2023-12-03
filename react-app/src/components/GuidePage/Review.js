@@ -117,24 +117,23 @@ export default function Review({ review }) {
                             <div className="review_body">{review.review_body}</div>
 
                         </div>
-                        <div className="edit-review-container">
-                            {current_user && +review.reviewer_id === +current_user.id && (
-                                <>
-                                    <div className="reviewButtons">
-                                        <div className="linkbuttons"
-                                            onClick={(e) => setEdit(true)}>Edit</div>
 
-                                        {!toDelete ? (<div className="linkbuttons"
-                                            onClick={(e) => setDelete(true)}>Delete</div>
-                                        ) : (
-                                            <div className="linkbuttons"
-                                                onClick={(e) => handleDelete(e)}>Confirm Delete</div>
-                                        )}
-                                    </div>
-                                    < br />
-                                </>
-                            )}
-                        </div>
+                        {current_user && +review.reviewer_id === +current_user.id && (
+                            <>
+                                <div className="edit-review-container">
+                                    <div className="linkbuttons"
+                                        onClick={(e) => setEdit(true)}>Edit</div>
+
+                                    {!toDelete ? (<div className="linkbuttons"
+                                        onClick={(e) => setDelete(true)}>Delete</div>
+                                    ) : (
+                                        <div className="linkbuttons"
+                                            onClick={(e) => handleDelete(e)}>Confirm Delete</div>
+                                    )}
+                                </div>
+                                < br />
+                            </>
+                        )}
                     </div>) : (
                     <div>
                         <form
@@ -145,6 +144,7 @@ export default function Review({ review }) {
                                 <textarea
                                     style={{ resize: "none" }}
                                     name="text"
+                                    className="review_text_area"
                                     rows={2}
                                     cols={40}
                                     placeholder="Leave your review here..."
@@ -153,24 +153,31 @@ export default function Review({ review }) {
                                 >
                                 </textarea>
                             </div>
-                            <div className="namedatecontainer">
-                                <div className="reviewer-name">
-                                    <div className="rating-input">
+                            <div className="edit_review_container">
+                                <div className="rating-input">
+                                    <div className="type_star_container">
                                         <div className="type">Communication: </div>
                                         <StarsRating disabled={false} stars={cStars} onChange={onChangeC} />
+                                    </div>
+                                    <div className="type_star_container">
                                         <div className="type">Knowledgeability: </div>
                                         <StarsRating disabled={false} stars={kStars} onChange={onChangeK} />
+                                    </div>
+                                    <div className="type_star_container">
                                         <div className="type">Professionalism: </div>
                                         <StarsRating disabled={false} stars={pStars} onChange={onChangeP} />
-                                    </div></div>
-                                <button
-                                    className={'tours-buttons'}
-                                    type="submit"
-                                    disabled={formDisabled}
-                                >
-                                    Submit Your Review
-                                </button>
-                                <div className="edit-review-cancel" onClick={(e) => setEdit(!edit)}> Cancel</div>
+                                    </div>
+                                </div>
+                                <div className="update_cancel_review">
+                                    <button
+                                        className={'tours-buttons'}
+                                        type="submit"
+                                        disabled={formDisabled}
+                                    >
+                                        Update Your Review
+                                    </button>
+                                    <div className="booking_update_buttons" onClick={(e) => setEdit(!edit)}> Cancel</div>
+                                </div>
                             </div>
 
                         </form>

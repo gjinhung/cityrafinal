@@ -236,11 +236,11 @@ def edit_tour(id):
     if form.validate_on_submit():
         tour.updated_at = datetime.datetime.utcnow()
 
-        tour.city_id = (city_data_id,)
-        tour.type_id = (type_data_id,)
-        tour.title = (form.title.data,)
-        tour.price = (form.price.data,)
-        tour.about = (form.about.data,)
+        tour.city_id = city_data_id
+        tour.type_id = type_data_id
+        tour.title = form.title.data
+        tour.price = form.price.data
+        tour.about = form.about.data
         tour.duration = form.duration.data
 
         db.session.commit()

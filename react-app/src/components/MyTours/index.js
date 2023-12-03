@@ -19,20 +19,7 @@ export default function MyTours({ loaded }) {
     const tours = useSelector((state) => state.tours)
     const normalizedTours = Object.values(tours)
     const cities = useSelector((state) => state.cities)
-    // const type = useSelector((state) => state.types)
-    // const languages = useSelector((state) => state.languages)
 
-    // function typeImg(img) {
-    //     if (img.id === 3) {
-    //         return adventure
-    //     } else if (img.id === 1) {
-    //         return food
-    //     } else if (img.id === 2) {
-    //         return history
-    //     } else {
-    //         return other
-    //     }
-    // }
     const user_tours_arr = []
 
     normalizedTours.forEach((tour) => {

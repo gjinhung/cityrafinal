@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import ReviewCard from "./ReviewCard";
 import { useParams } from "react-router-dom/";
 import TourBooking from "./BookingCard";
+import Mountain from '../../images/Mountain.png'
+
 
 export default function GuideSliderCard({ type }) {
     const { id } = useParams()
@@ -17,7 +19,9 @@ export default function GuideSliderCard({ type }) {
         let res = avail_arr.map((avail) =>
             dates[avail.date_id].date
         )
-        return (res)
+        let availSet = new Set(res)
+        let finalRes = Array.from(availSet)
+        return (finalRes)
     }
 
 
@@ -54,25 +58,32 @@ export default function GuideSliderCard({ type }) {
                     <div key={idx}>
                         <div className="guide_card_container">
                             <div className="guide_card_left">
-                                <i className="fa-solid fa-image"></i>
+                                <img
+                                    src={Mountain}
+                                    className='guide_tour_image'
+                                    alt={tour_id}
+                                    key={tour_id}
+                                />
                             </div>
                             <div className="guide_card_right_container">
                                 <div className="guide_card_right">
-                                    <div>{tours[tour_id].title} ({cities[tours[tour_id].city_id].city})</div>
-                                    <div>{tours[tour_id].about}</div>
+                                    <div className="guide_card_title">{tours[tour_id].title} ({cities[tours[tour_id].city_id].city})</div>
+                                    <div className="guide_card_about">{tours[tour_id].about}</div>
                                     <div className="price_duration">
-                                        <div>${tours[tour_id].price} USD</div>
-                                        <div><i className="fa-regular fa-clock"></i> {tours[tour_id].duration} Hrs</div>
+                                        <div className="guide_card_price">$     {tours[tour_id].price} USD</div>
+                                        <div className="guide_card_duration"><i className="fa-regular fa-clock"></i> {tours[tour_id].duration} Hrs</div>
                                     </div>
                                 </div>
                                 <div className="guide_card_right_right">
                                     <div className="availability-container">
-                                        <>
+                                        <div className="guide_card_title">
                                             Tour Dates:
-                                        </>
+                                        </div>
                                         <div className="avail-date-container">
                                             {getAvail(tour_id).map((date, idx) =>
-                                                <div key={idx}>
+                                                <div
+                                                    className="guide_tour_dates"
+                                                    key={idx}>
                                                     {date}
                                                 </div>
                                             )}
@@ -87,11 +98,15 @@ export default function GuideSliderCard({ type }) {
                         <TourBooking
                             tour_id={tour_id}
                         />
+                        < hr />
                     </div>
+
                 )
+
             })
 
             }
+
         </>
     )
 }

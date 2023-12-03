@@ -16,7 +16,7 @@ export default function GuidePage({ loaded }) {
     const user = users[id]
     const guide = users[id]
     const languages = useSelector((state) => state.languages)
-    const current_user = useSelector((state) => state.session)
+    const current_user = useSelector((state) => state.session.user)
     const [showType, setShowType] = useState('Tours')
 
 
@@ -81,10 +81,10 @@ export default function GuidePage({ loaded }) {
                                     alt={guide.id}
                                     key={guide.id}
                                 />
-                                {(+current_user.id === +id) &&
+                                {/* {(+current_user.id === +id) &&
                                     <NavLink exact to="/dashboard" className="edit_profile_button">
                                         Edit Profile
-                                    </NavLink>}
+                                    </NavLink>} */}
                             </div>
                             <div className="guide-info-container">
                                 <div className="users_name"> {user.first_name} {user.last_name}</div>
@@ -110,7 +110,7 @@ export default function GuidePage({ loaded }) {
                             {
                                 (toursTypeArray()).map((type, idx) => {
                                     return (
-                                        <div key={idx} onClick={(e) => {
+                                        <div key={idx} className="type-selector" onClick={(e) => {
                                             setShowType(type)
                                             setActiveTour(0)
                                         }}>

@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 
 import TourCard from "./TourCard";
 import './MyToursPage.css'
+import PostTourButton from "./PostTourButton";
 
 export default function MyToursPage({ loaded }) {
-    const current_user = useSelector((state) => state.session.user)
-    const user_tours = current_user.tours_given_ids
+    const user_tours = useSelector((state) => state.session.user.tours_given_ids)
 
     if (!loaded) {
         return (
@@ -20,8 +20,8 @@ export default function MyToursPage({ loaded }) {
         return (
             <div className="my-tours-page-container">
                 <div className="my-tours-page-small-container">
-                    <div >
-                        MY TOURS
+                    <div>
+                        <PostTourButton />
                     </div>
                     {user_tours.map((tour_id, idx) => {
                         return (

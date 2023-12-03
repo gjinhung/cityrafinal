@@ -116,10 +116,49 @@
     color: #069;
     text-decoration: underline;
     cursor: pointer;
+    width: fit-content;
 }
 
 .edit-review-container{
     display: flex;
     flex-direction: row;
     margin-top: 5px;
+}
+
+
+
+.no_tours_container{
+    display: flex;
+    border: lightgray 1px solid;
+    border-radius: 10px;
+    width: 100%;
+    height: 280px;
+}
+
+
+.no_tours_cont{
+    padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.left_no_tour{
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.right_no_tour{
+    width: 70%;
+}
+
+.post-tour-container{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 30px;
+    padding-right: 30px;
 }
