@@ -56,6 +56,7 @@ function PostTour({ loaded }) {
         })
         const uniqueAvail = new Set(availArr)
         const uniqueAvailArr = Array.from(uniqueAvail);
+        console.log(uniqueAvailArr)
 
         if (Object.keys(errors).length === 0) {
 
@@ -86,11 +87,10 @@ function PostTour({ loaded }) {
                                             'time': splitData[0],
                                             'tour_id': data.id
                                         }
-                                        console.log(avail_data)
                                         const availErrors = dispatch(newAvailability(data.id, avail_data))
                                         if (availErrors) {
                                             console.log('Adding Availabilities Errors, see console')
-                                            console.log(availErrors)
+                                            console.log(availErrors.errors)
                                         }
                                     })
                                 ).then(() => history.push('/mytours'))
@@ -104,6 +104,7 @@ function PostTour({ loaded }) {
         let avail = [...availabilities]
         avail[idx].time = e.target.value
         setAvailabilities(avail)
+        console.log(availabilities)
     }
 
 
@@ -118,6 +119,7 @@ function PostTour({ loaded }) {
         })
         avail[idx].date_id = date_id
         setAvailabilities(avail)
+        console.log(availabilities)
     }
 
     function handleTitle(e) {

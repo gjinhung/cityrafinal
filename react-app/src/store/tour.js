@@ -62,7 +62,7 @@ export const newTour = (tour) => async (dispatch) => {
             return data;
         }
     } else {
-        return ["A posting error occurred. Please try again."];
+        return { 'errors': "A posting error occurred. Please try again." };
     }
 };
 

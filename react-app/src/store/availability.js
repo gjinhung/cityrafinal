@@ -48,6 +48,7 @@ export const newAvailability = (tour_id, avail_data) => async (dispatch) => {
         console.log('successful posting new availability')
         dispatch(getTours());
     } else if (response.status < 500) {
+        console.timeLog('errror posting new availability')
         const data = await response.json();
         if (data.errors) {
             return data;
