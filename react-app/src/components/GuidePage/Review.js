@@ -9,6 +9,7 @@ import { authenticate } from "../../store/session";
 
 
 export default function Review({ review }) {
+
     const { id } = useParams
     const dispatch = useDispatch()
     const users = useSelector((state) => state.users)
@@ -94,6 +95,12 @@ export default function Review({ review }) {
         setEdit(!edit)
     };
 
+    function averageRating() {
+        const numbers = [review.professionalism_rating, review.communication_rating, review.knowledgeability_rating];
+        const average = Math.round((numbers.reduce((a, b) => a + b) / numbers.length) * 100) / 100;
+        return average;
+    }
+
 
     return (
         <>
@@ -108,7 +115,7 @@ export default function Review({ review }) {
                     <div className="rating-container">
                         <div
                             className='review'>
-                            <div>Rating: {review.rating}<i className="fa-solid fa-star"></i></div>
+                            <div>Rating: {averageRating()}<i className="fa-solid fa-star"></i></div>
                             <div className="namedatecontainer">
                                 <div className="reviewer-name">{users[review.reviewer_id].first_name}</div>
 
