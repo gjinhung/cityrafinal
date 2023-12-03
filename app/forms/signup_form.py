@@ -2,8 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DateTimeField, BooleanField, DateField, SubmitField
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
-from flask_wtf.file import FileField, FileAllowed, FileRequired
-from app.aws import ALLOWED_EXTENSIONS
+
+ALLOWED_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif"}
 
 
 # is image extension valid?
@@ -37,10 +37,7 @@ class SignUpForm(FlaskForm):
     password = StringField("password", validators=[DataRequired()])
     first_name = StringField("first_name", validators=[DataRequired()])
     last_name = StringField("last_name", validators=[DataRequired()])
-    profile_pic = FileField(
-        "profile_pic",
-        validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))],
-    )
+    profile_pic = StringField("profile_pic", validators=[DataRequired()])
     joined_on = DateTimeField("joined_on")
     language = StringField("language")
     student = BooleanField("student")

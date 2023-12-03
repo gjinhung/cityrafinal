@@ -11,6 +11,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
+
   const ulRef = useRef();
 
   const openMenu = () => {
@@ -63,8 +64,10 @@ function ProfileButton({ user }) {
             <li>Welcome, {user.username}</li>
             <li>{user.first_name} {user.last_name}</li>
             <li>{user.email}</li>
-            <li>
-              <NavLink onClick={closeMenu} exact to="/mytours" className="view-dash-button">My Tours</NavLink></li>
+            {user.student &&
+              <li>
+                <NavLink onClick={closeMenu} exact to="/mytours" className="view-dash-button">My Tours</NavLink></li>
+            }
             <li>
               <NavLink onClick={closeMenu} exact to="/mybookings" className="view-dash-button">My Bookings</NavLink></li>
             <li>

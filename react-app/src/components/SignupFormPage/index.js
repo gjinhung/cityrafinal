@@ -49,6 +49,7 @@ function SignupFormPage() {
       } else {
         const data = await dispatch(signUp(username, email, password, first_name, last_name, profile_pic, student));
         console.log('handlesubmit')
+        console.log({ username, email, password, first_name, last_name, profile_pic, student })
         console.log(data)
         if (data) {
           setErrors(data)
@@ -106,11 +107,10 @@ function SignupFormPage() {
   }
 
   const secondNext = async () => {
-    const formData = new FormData()
-    setProfilePic(formData.append("profile_pic", profile_pic))
 
-    setImageLoading(true);
     const data = await dispatch(signUp(username, email, password, first_name, last_name, profile_pic, student, graduation_date));
+    console.log('secondnext')
+    console.log(data)
     if (data["first_name"] || data['last_name'] || data['profile_pic']) {
 
       const errorList = {
@@ -191,8 +191,7 @@ function SignupFormPage() {
           <label>
             <label style={{ color: "red" }}>{errors['profile_pic']}</label>
           </label>
-          <input type='file' accept="image/*" onChange={(e) => setProfilePic(e.target.files[0])}></input>
-          {(imageLoading) && <p>Loading...</p>}
+          <input type='text' placeholder="Profile Picture URL" value={profile_pic} onChange={(e) => setProfilePic(e.target.value)}></input>
         </div>
         <button
           type="button"

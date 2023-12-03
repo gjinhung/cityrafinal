@@ -3,7 +3,6 @@ from app.models import User, db, Review, Language, Booking
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.aws import upload_file_to_s3, get_unique_filename
 import datetime
 
 auth_routes = Blueprint("auth", __name__)
@@ -168,20 +167,20 @@ def sign_up():
     if form.validate_on_submit():
         # IMAGE UPLOAD
 
-        image = form.data["profile_pic"]
-        print(image)
-        image.filename = get_unique_filename(image.filename)
-        upload = upload_file_to_s3(image)
-        print("look here!!!")
-        print(upload)
+        # image = form.data["profile_pic"]
+        # print(image)
+        # image.filename = get_unique_filename(image.filename)
+        # upload = upload_file_to_s3(image)
+        # print("look here!!!")
+        # print(upload)
 
-        if "url" not in upload:
-            # if the dictionary doesn't have a url key
-            # it means that there was an error when you tried to upload
-            # so you send back that error message (and you printed it above)
-            return upload
+        # if "url" not in upload:
+        #     # if the dictionary doesn't have a url key
+        #     # it means that there was an error when you tried to upload
+        #     # so you send back that error message (and you printed it above)
+        #     return upload
 
-        url = upload["url"]
+        # url = upload["url"]
 
         user = User(
             username=form.data["username"],
@@ -189,21 +188,21 @@ def sign_up():
             password=form.data["password"],
             first_name=form.data["first_name"],
             last_name=form.data["last_name"],
-            profile_pic=url,
+            profile_pic=form.data["profile_pic"],
             student=form.data["student"],
             graduation_date=form.data["graduation_date"],
             joined_on=datetime.datetime.utcnow(),
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow(),
         )
+        if form.data["language"]:
+            language_arr = form.data["language"].split(", ")
+            language_ids = []
+            for lng in language_arr:
+                lang = Language.query.filter_by(language=lng.title()).first()
+                language_ids.append(lang)
 
-        language_arr = form.data["language"].split(", ")
-        language_ids = []
-        for lng in language_arr:
-            lang = Language.query.filter_by(language=lng.title()).first()
-            language_ids.append(lang)
-
-        user.languages = language_ids
+            user.languages = language_ids
 
         db.session.add(user)
         db.session.commit()
