@@ -13,6 +13,8 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
     const types = useSelector((state) => state.types)
     const normalizedTypes = Object.values(types)
     const [type, setType] = useState(tour.type)
+    const [newType, setNewType] = useState('')
+    const [newCity, setNewCity] = useState('')
     const cities = useSelector((state) => state.cities)
     const normalizedCities = Object.values(cities)
     const dates = useSelector((state) => state.dates)
@@ -47,6 +49,7 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
         const uniqueAvail = new Set(availArr)
         const uniqueAvailArr = Array.from(uniqueAvail);
 
+
         if (Object.keys(errors).length === 0) {
             if (!type) {
                 setType(tour.type)
@@ -69,7 +72,7 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                 setErrors(data)
                 console.log(data)
             } else {
-                await dispatch(getTypes()).then(() =>
+                dispatch(getTypes()).then(() =>
                     dispatch(getCities())).then(() =>
                         dispatch(getTours())).then(() =>
                             dispatch(allUsers())).then(() =>
@@ -200,7 +203,7 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
 
     function handleOtherType(e) {
         if (e.target.value === "Others") {
-            setType('')
+            // setType('')
             setShowType(true)
         } else {
             setShowType(false)
@@ -211,12 +214,22 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
 
     function handleOtherCity(e) {
         if (e.target.value === "Others") {
-            setCity('')
+            // setCity('')
             setShowCity(true)
         } else {
             setShowCity(false)
             setCity(e.target.value)
         }
+    }
+
+    function handleNewType(e) {
+        setNewType(e.target.value)
+        setType(e.target.value)
+    }
+
+    function handleNewCity(e) {
+        setNewCity(e.target.value)
+        setCity(e.target.value)
     }
 
 
@@ -253,12 +266,12 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                             <input
                                 className="tour-type"
                                 placeholder="Type of Tour"
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
+                                value={newType}
+                                onChange={(e) => handleNewType(e)}
                             />
                         </>
                     )}
-                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors['type']}</div> : <div className="empty-space"> </div>}
+                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors.type}</div> : <div className="empty-space"> </div>}
 
                 </div>
                 <div>
@@ -281,8 +294,8 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                             <input
                                 className="tour-city"
                                 placeholder="City of Tour"
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
+                                value={newCity}
+                                onChange={(e) => handleNewCity(e)}
                             />
                         </>
                     )}
