@@ -6,12 +6,15 @@ import { getCities } from "../../store/city";
 import { deleteAvailabilities, newAvailability } from "../../store/availability";
 import { allUsers } from "../../store/users";
 
-export default function TourUpdateComponent({ tour_id }) {
+export default function TourUpdateComponent({ tour_id, handleLoaded }) {
     const dispatch = useDispatch()
-    const tour = useSelector((state) => state.tours[tour_id])
+    const tours = useSelector((state) => state.tours)
+    const tour = tours[tour_id]
     const types = useSelector((state) => state.types)
     const normalizedTypes = Object.values(types)
     const [type, setType] = useState(tour.type)
+    const [newType, setNewType] = useState('')
+    const [newCity, setNewCity] = useState('')
     const cities = useSelector((state) => state.cities)
     const normalizedCities = Object.values(cities)
     const dates = useSelector((state) => state.dates)
@@ -45,10 +48,12 @@ export default function TourUpdateComponent({ tour_id }) {
         })
         const uniqueAvail = new Set(availArr)
         const uniqueAvailArr = Array.from(uniqueAvail);
-        console.log(uniqueAvailArr)
+
 
         if (Object.keys(errors).length === 0) {
-
+            if (!type) {
+                setType(tour.type)
+            }
             let tour_data = {
                 'type': type,
                 'city': city,
@@ -58,37 +63,44 @@ export default function TourUpdateComponent({ tour_id }) {
                 'about': about
             }
 
+            handleLoaded(false)
+
             const data = await dispatch(editTour(tour_id, tour_data))
             if (data) {
                 setErrors(data)
                 console.log(data)
             } else {
-                dispatch(getTypes())
-                dispatch(getCities())
-                dispatch(getTours())
-                dispatch(allUsers())
-                await dispatch(deleteAvailabilities(tour_id)).then((data) => {
-                    if (data) {
-                        console.log('Delete Availabilities Errors, see console')
-                        console.log(data)
-                    }
-                }).then(() => {
-                    console.log('availabilities deleted')
-                    uniqueAvailArr.forEach((avail) => {
-                        const splitData = avail.split(' - ')
-                        let avail_data = {
-                            'date': dates[+splitData[1]].date,
-                            'time': splitData[0],
-                            'tour_id': tour_id
-                        }
-                        console.log(avail_data)
-                        const availErrors = dispatch(newAvailability(tour_id, avail_data))
-                        if (availErrors) {
-                            console.log('Adding Availabilities Errors, see console')
-                            console.log(availErrors)
-                        }
-                    })
-                })
+                dispatch(getTypes()).then(() =>
+                    dispatch(getCities())).then(() =>
+                        dispatch(getTours())).then(() =>
+                            dispatch(allUsers())).then(() =>
+                                dispatch(deleteAvailabilities(tour_id))).then((data) => {
+                                    if (data) {
+                                        console.log('Delete Availabilities Errors, see console')
+                                        console.log(data)
+                                    }
+                                }).then(() => {
+                                    console.log('availabilities deleted')
+                                    uniqueAvailArr.forEach((avail) => {
+                                        const splitData = avail.split(' - ')
+                                        let avail_data = {
+                                            'date': dates[+splitData[1]].date,
+                                            'time': splitData[0],
+                                            'tour_id': tour_id
+                                        }
+                                        // console.log(avail_data)
+                                        const availErrors = dispatch(newAvailability(tour_id, avail_data))
+                                        if (availErrors) {
+                                            console.log('Adding Availabilities Errors, see console')
+                                            console.log(availErrors)
+                                        }
+                                    })
+                                }).then(() => {
+                                    setShowCity(false)
+                                    setShowType(false)
+                                    handleLoaded(true)
+
+                                })
 
             }
 
@@ -188,7 +200,7 @@ export default function TourUpdateComponent({ tour_id }) {
 
     function handleOtherType(e) {
         if (e.target.value === "Others") {
-            setType('')
+            // setType('')
             setShowType(true)
         } else {
             setShowType(false)
@@ -199,12 +211,22 @@ export default function TourUpdateComponent({ tour_id }) {
 
     function handleOtherCity(e) {
         if (e.target.value === "Others") {
-            setCity('')
+            // setCity('')
             setShowCity(true)
         } else {
             setShowCity(false)
             setCity(e.target.value)
         }
+    }
+
+    function handleNewType(e) {
+        setNewType(e.target.value)
+        setType(e.target.value)
+    }
+
+    function handleNewCity(e) {
+        setNewCity(e.target.value)
+        setCity(e.target.value)
     }
 
 
@@ -220,7 +242,7 @@ export default function TourUpdateComponent({ tour_id }) {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
-                        {errors && errors['title'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                        {errors && errors['title'] ? <div style={{ color: "red" }}>{errors['title']}</div> : <div className="empty-space"> </div>}
 
                     </div>
                     <label className="tour_box_title">TYPE OF TOUR: </label>
@@ -234,19 +256,19 @@ export default function TourUpdateComponent({ tour_id }) {
                                 <option key={idx} value={type.type}> {type.type}</option>
                             )
                         })}
-                        <option value='Others'>Others</option>
+                        <option value='Others'>Add New Type</option>
                     </select>
                     {showType && (
                         <>
                             <input
                                 className="tour-type"
                                 placeholder="Type of Tour"
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
+                                value={newType}
+                                onChange={(e) => handleNewType(e)}
                             />
                         </>
                     )}
-                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors.type}</div> : <div className="empty-space"> </div>}
 
                 </div>
                 <div>
@@ -262,19 +284,19 @@ export default function TourUpdateComponent({ tour_id }) {
                                 <option key={idx} value={city.city}> {city.city}</option>
                             )
                         })}
-                        <option value='Others'>Others</option>
+                        <option value='Others'>Add New City</option>
                     </select>
                     {showCity && (
                         <>
                             <input
                                 className="tour-city"
                                 placeholder="City of Tour"
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
+                                value={newCity}
+                                onChange={(e) => handleNewCity(e)}
                             />
                         </>
                     )}
-                    {errors && errors['city'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                    {errors && errors['city'] ? <div style={{ color: "red" }}>{errors['city']}</div> : <div className="empty-space"> </div>}
                 </div>
                 <div className="price_duration_container">
                     <div className="dur_price_container">
@@ -331,6 +353,7 @@ export default function TourUpdateComponent({ tour_id }) {
                 </div>
                 < div className="avail-container">
                     <label className="tour_box_title">AVAILABILITIES: </label>
+                    {console.log(availabilities)}
                     {availabilities.map((avail, idx) => {
                         return (
                             <div key={idx} className="avail-slots">
