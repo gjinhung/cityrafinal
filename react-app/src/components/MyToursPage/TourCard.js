@@ -57,6 +57,7 @@ export default function TourCard({ tour_id }) {
         })
         let normalizedResKey = ['Sunday', "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
+        console.log(tour_id)
         console.log(tours[tour_id])
         console.log(cities[tours[tour_id].city_id])
 
