@@ -3,6 +3,24 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import json
 
+
+tour_specialties = db.Table(
+    "tour_specialties",
+    db.Model.metadata,
+    db.Column(
+        "specialty_id",
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod("specialties.id")),
+        primary_key=True,
+    ),
+    db.Column(
+        "specialty_tour_id",
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod("tour_guides.id")),
+        primary_key=True,
+    ),
+)
+
 users_languages = db.Table(
     "users_languages",
     db.Model.metadata,
