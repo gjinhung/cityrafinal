@@ -26,7 +26,7 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
     const [errors, setErrors] = useState({});
     const [showType, setShowType] = useState(false)
     const [showCity, setShowCity] = useState(false)
-    const [availabilities, setAvailabilities] = useState(tour.availabilities)
+    const [availabilities, setAvailabilities] = useState(tours[tour_id].availabilities)
     const [formDisabled, setFormDisabled] = useState(false)
     const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -63,8 +63,6 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                 'about': about
             }
 
-            console.log(tour_data)
-
             handleLoaded(false)
 
             const data = await dispatch(editTour(tour_id, tour_data))
@@ -96,13 +94,12 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                                             console.log('Adding Availabilities Errors, see console')
                                             console.log(availErrors)
                                         }
-
                                     })
                                 }).then(() => {
-
                                     setShowCity(false)
                                     setShowType(false)
                                     handleLoaded(true)
+
                                 })
 
             }
@@ -356,6 +353,7 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                 </div>
                 < div className="avail-container">
                     <label className="tour_box_title">AVAILABILITIES: </label>
+                    {console.log(availabilities)}
                     {availabilities.map((avail, idx) => {
                         return (
                             <div key={idx} className="avail-slots">
