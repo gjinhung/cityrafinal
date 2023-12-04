@@ -34,6 +34,8 @@ export default function SearchBar({ loaded }) {
     async function handleSearch() {
         const { language, city, type, date } = searchTerms
 
+        console.log([language, city, type, date])
+
 
         const tours_id = Object.keys(tours)
         //fill each category with all tours

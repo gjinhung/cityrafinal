@@ -65,10 +65,10 @@ export default function TourUpdateComponent({ tour_id }) {
                 setErrors(data)
                 console.log(data)
             } else {
-                dispatch(getTypes())
-                dispatch(getCities())
-                dispatch(getTours())
-                dispatch(allUsers())
+                await dispatch(getTypes())
+                await dispatch(getCities())
+                await dispatch(getTours())
+                await dispatch(allUsers())
                 await dispatch(deleteAvailabilities(tour_id)).then((data) => {
                     if (data) {
                         console.log('Delete Availabilities Errors, see console')

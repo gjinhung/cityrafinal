@@ -70,8 +70,8 @@ function ProfileButton({ user }) {
             }
             <li>
               <NavLink onClick={closeMenu} exact to="/mybookings" className="view-dash-button">My Bookings</NavLink></li>
-            <li>
-              <NavLink onClick={closeMenu} exact to="/dashboard" className="view-dash-button">Dashboard</NavLink></li>
+            {/* <li>
+              <NavLink onClick={closeMenu} exact to="/dashboard" className="view-dash-button">Dashboard</NavLink></li> */}
             <li onClick={handleLogout} className="logout-red-button">Log Out</li>
 
 
