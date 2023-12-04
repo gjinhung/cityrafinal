@@ -145,7 +145,7 @@ export default function TourBooking({ tour_id }) {
     return (
         <>
             <div className="book-now-button-container">
-                {+current_user.id !== +tours[tour_id].guide_id && < button className="book-now-button" onClick={(e) => showBookingOptions(e)}>
+                {current_user && +current_user.id !== +tours[tour_id].guide_id && < button className="book-now-button" onClick={(e) => showBookingOptions(e)}>
                     BOOK NOW
                 </button >}
             </div>
