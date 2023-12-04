@@ -119,7 +119,7 @@ def add_tour():
 
     if not form.about.data:
         errors["about"] = "Description of Tour Required"
-    elif len(form.about.data) <= 20:
+    elif len(form.about.data) < 20:
         errors["about"] = "Description needs at least 20 characters"
 
     if form.type.data:
@@ -206,6 +206,9 @@ def edit_tour(id):
         else:
             city_data_id = city_data.id
 
+    if form.about.data:
+        if len(form.about.data) < 20:
+            errors["about"] = "Description needs at least 20 characters"
     if form.about.data:
         if len(form.about.data) < 20:
             errors["about"] = "Description needs at least 20 characters"
