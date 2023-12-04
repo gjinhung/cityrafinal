@@ -262,6 +262,7 @@ class Tour(db.Model):
             "id": self.id,
             "guide_id": self.guide_id,
             "city_id": self.city_id,
+            "type_id": self.type_id,
             "title": self.title,
             "price": self.price,
             "duration": self.duration,

@@ -42,9 +42,6 @@ def get_all_tours():
         tour_dict["availabilities"] = availability_list
 
         types = tour.type.to_dict()
-        # types_data = []
-        # for type in types:
-        #     types_data.append(type.id)
         tour_dict["type"] = types["type"]
 
         tours_data.append(tour_dict)
@@ -83,6 +80,9 @@ def get_one_tour(id):
         }
         availability_list.append(dict)
     tour_dict["availabilities"] = availability_list
+
+    types = tour.type.to_dict()
+    tour_dict["type"] = types["type"]
 
     # return tour_dict
 
@@ -176,6 +176,9 @@ def add_tour():
             availability_list.append(dict)
         tour_dict["availabilities"] = availability_list
 
+        types = tour.type.to_dict()
+        tour_dict["type"] = types["type"]
+
         return tour_dict
     else:
         return {"errors": validation_errors_to_error_messages(form.errors)}
@@ -202,22 +205,10 @@ def edit_tour(id):
             city_data_id = new_city(city_name)["id"]
         else:
             city_data_id = city_data.id
-    else:
-        errors["city"] = "City Required"
 
-        #         if not form.duration.data:
-        errors["duration"] = "Duration Required"
-
-    if not form.title.data:
-        errors["title"] = "Title Required"
-
-    if not form.price.data:
-        errors["price"] = "Price Required"
-
-    if not form.about.data:
-        errors["about"] = "Description of Tour Required"
-    elif len(form.about.data) <= 20:
-        errors["about"] = "Description needs at least 20 characters"
+    if form.about.data:
+        if len(form.about.data) < 20:
+            errors["about"] = "Description needs at least 20 characters"
 
     if form.type.data:
         type_name = (form.type.data).title()
@@ -227,8 +218,6 @@ def edit_tour(id):
             type_data_id = new_type(type_name)["id"]
         else:
             type_data_id = type_data.id
-    else:
-        errors["type"] = "Type of Tour Required"
 
     if len(errors):
         return jsonify(errors), 403
@@ -236,12 +225,18 @@ def edit_tour(id):
     if form.validate_on_submit():
         tour.updated_at = datetime.datetime.utcnow()
 
-        tour.city_id = city_data_id
-        tour.type_id = type_data_id
-        tour.title = form.title.data
-        tour.price = form.price.data
-        tour.about = form.about.data
-        tour.duration = form.duration.data
+        if form.city.data:
+            tour.city_id = city_data_id
+        if form.type.data:
+            tour.type_id = type_data_id
+        if form.title.data:
+            tour.title = form.title.data
+        if form.price.data:
+            tour.price = form.price.data
+        if form.about.data:
+            tour.about = form.about.data
+        if form.duration.data:
+            tour.duration = form.duration.data
 
         db.session.commit()
 
@@ -269,6 +264,9 @@ def edit_tour(id):
             }
             availability_list.append(dict)
         tour_dict["availabilities"] = availability_list
+
+        types = tour.type.to_dict()
+        tour_dict["type"] = types["type"]
 
         return tour_dict
     else:

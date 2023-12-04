@@ -10,7 +10,6 @@ export default function TourUpdateComponent({ tour_id }) {
     const dispatch = useDispatch()
     const tours = useSelector((state) => state.tours)
     const tour = tours[tour_id]
-    console.log(tour.availabilities)
     const types = useSelector((state) => state.types)
     const normalizedTypes = Object.values(types)
     const [type, setType] = useState(tour.type)
@@ -28,7 +27,7 @@ export default function TourUpdateComponent({ tour_id }) {
     const [availabilities, setAvailabilities] = useState(tour.availabilities)
     const [formDisabled, setFormDisabled] = useState(false)
     const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    console.log(availabilities)
+
     useEffect(() => {
         if (Object.keys(errors).length) {
             setFormDisabled(true)
@@ -59,6 +58,8 @@ export default function TourUpdateComponent({ tour_id }) {
                 'duration': duration,
                 'about': about
             }
+
+            console.log(tour_data)
 
             const data = await dispatch(editTour(tour_id, tour_data))
             if (data) {
@@ -222,7 +223,7 @@ export default function TourUpdateComponent({ tour_id }) {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
-                        {errors && errors['title'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                        {errors && errors['title'] ? <div style={{ color: "red" }}>{errors['title']}</div> : <div className="empty-space"> </div>}
 
                     </div>
                     <label className="tour_box_title">TYPE OF TOUR: </label>
@@ -248,7 +249,7 @@ export default function TourUpdateComponent({ tour_id }) {
                             />
                         </>
                     )}
-                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors['type']}</div> : <div className="empty-space"> </div>}
 
                 </div>
                 <div>
@@ -276,7 +277,7 @@ export default function TourUpdateComponent({ tour_id }) {
                             />
                         </>
                     )}
-                    {errors && errors['city'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                    {errors && errors['city'] ? <div style={{ color: "red" }}>{errors['city']}</div> : <div className="empty-space"> </div>}
                 </div>
                 <div className="price_duration_container">
                     <div className="dur_price_container">

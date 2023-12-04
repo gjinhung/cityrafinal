@@ -76,6 +76,8 @@ export const editTour = (id, tour) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json();
+        console.log('edit tour state')
+        console.log(data)
         dispatch(postTour(data));
     } else if (response.status < 500) {
         const data = await response.json();
