@@ -13,6 +13,7 @@ export default function TourCard({ tour_id }) {
     const { activeDetTour, setDetActiveTour } = useActiveTourDetails()
     const [showDets, setShowDets] = useState(false)
     const [updateDelete, setUpdateDelete] = useState(true)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (activeDetTour !== tour_id) {
@@ -26,6 +27,10 @@ export default function TourCard({ tour_id }) {
 
     function selectUpdate(e) {
         setUpdateDelete(true)
+    }
+
+    function handleLoaded(tf) {
+        setLoading(tf)
     }
 
     function handleShowDets(e) {
@@ -57,9 +62,6 @@ export default function TourCard({ tour_id }) {
         })
         let normalizedResKey = ['Sunday', "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
-        console.log(tour_id)
-        console.log(tours[tour_id])
-        console.log(cities[tours[tour_id].city_id])
 
         return (
             <>
@@ -95,7 +97,15 @@ export default function TourCard({ tour_id }) {
             </>
         )
     }
-    if (tours[tour_id]) {
+    if (!loading) {
+        return (
+            <div className="loading-style">
+                <div className='loading-font'>
+                    Loading....
+                </div>
+            </div>
+        )
+    } else if (tours[tour_id]) {
         return (
             <div className="tour-container" >
                 <div className="tour-subcontainer">
@@ -152,6 +162,7 @@ export default function TourCard({ tour_id }) {
                                     <>
                                         <TourUpdateComponent
                                             tour_id={tour_id}
+                                            setLoading={setLoading}
                                         />
                                     </>
                                 ) : (

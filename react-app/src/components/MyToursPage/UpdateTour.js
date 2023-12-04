@@ -6,20 +6,19 @@ import { getCities } from "../../store/city";
 import { deleteAvailabilities, newAvailability } from "../../store/availability";
 import { allUsers } from "../../store/users";
 
-export default function TourUpdateComponent({ tour_id }) {
+export default function TourUpdateComponent({ tour_id, setLoading }) {
     const dispatch = useDispatch()
     const tours = useSelector((state) => state.tours)
     const tour = tours[tour_id]
-    console.log(tour.availabilities)
     const types = useSelector((state) => state.types)
     const normalizedTypes = Object.values(types)
-    const [type, setType] = useState(tour.type)
     const cities = useSelector((state) => state.cities)
     const normalizedCities = Object.values(cities)
     const dates = useSelector((state) => state.dates)
     const [city, setCity] = useState(cities[tour.city_id].city)
     const [title, setTitle] = useState(tour.title)
     const [price, setPrice] = useState(tour.price)
+    const [type, setType] = useState(tour.type)
     const [duration, setDuration] = useState(tour.duration)
     const [about, setAbout] = useState(tour.about)
     const [errors, setErrors] = useState({});
@@ -28,7 +27,7 @@ export default function TourUpdateComponent({ tour_id }) {
     const [availabilities, setAvailabilities] = useState(tour.availabilities)
     const [formDisabled, setFormDisabled] = useState(false)
     const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    console.log(availabilities)
+
     useEffect(() => {
         if (Object.keys(errors).length) {
             setFormDisabled(true)
@@ -47,7 +46,6 @@ export default function TourUpdateComponent({ tour_id }) {
         })
         const uniqueAvail = new Set(availArr)
         const uniqueAvailArr = Array.from(uniqueAvail);
-        console.log(uniqueAvailArr)
 
         if (Object.keys(errors).length === 0) {
 
@@ -60,37 +58,45 @@ export default function TourUpdateComponent({ tour_id }) {
                 'about': about
             }
 
+            setLoading(false)
             const data = await dispatch(editTour(tour_id, tour_data))
             if (data) {
                 setErrors(data)
-                console.log(data)
+                console.log(errors)
+                // console.log(data)
             } else {
-                await dispatch(getTypes()).then(() =>
-                    dispatch(getCities())).then(() =>
-                        dispatch(getTours())).then(() =>
-                            dispatch(allUsers())).then(() =>
-                                dispatch(deleteAvailabilities(tour_id))).then((data) => {
-                                    if (data) {
-                                        console.log('Delete Availabilities Errors, see console')
-                                        console.log(data)
-                                    }
-                                }).then(() => {
-                                    console.log('availabilities deleted')
-                                    uniqueAvailArr.forEach((avail) => {
-                                        const splitData = avail.split(' - ')
-                                        let avail_data = {
-                                            'date': dates[+splitData[1]].date,
-                                            'time': splitData[0],
-                                            'tour_id': tour_id
-                                        }
-                                        console.log(avail_data)
-                                        const availErrors = dispatch(newAvailability(tour_id, avail_data))
-                                        if (availErrors) {
-                                            console.log('Adding Availabilities Errors, see console')
-                                            console.log(availErrors)
-                                        }
-                                    })
-                                })
+
+                dispatch(getTypes()).then(() => {
+                    console.log('dispatch get cities')
+                    dispatch(getCities())
+                }).then(() => {
+                    console.log('dispatch get tours')
+                    dispatch(getTours())
+                }).then(() => {
+                    console.log('dispatch get all users')
+                    dispatch(allUsers())
+                }).then(() =>
+                    dispatch(deleteAvailabilities(tour_id))).then((data) => {
+                        if (data) {
+                            console.log('Delete Availabilities Errors, see console')
+                            // console.log(data)
+                        }
+                    }).then(() => {
+                        console.log('availabilities deleted')
+                        uniqueAvailArr.forEach(async (avail) => {
+                            const splitData = avail.split(' - ')
+                            let avail_data = {
+                                'date': dates[+splitData[1]].date,
+                                'time': splitData[0],
+                                'tour_id': tour_id
+                            }
+                            let availErrors = await dispatch(newAvailability(tour_id, avail_data))
+                            if (availErrors) {
+                                console.log('Adding Availabilities Errors, see console')
+                                console.log(availErrors)
+                            }
+                        })
+                    }).then(setLoading(true))
 
             }
 
@@ -148,6 +154,7 @@ export default function TourUpdateComponent({ tour_id }) {
 
     function handleDuration(e) {
         const result = e.target.value.replace(/\D/g, '');
+        console.log(result)
         setDuration(result);
         if (result <= 0 || result === "") {
             let priceUpdate = { ...errors }
@@ -185,18 +192,26 @@ export default function TourUpdateComponent({ tour_id }) {
         let avail = [...availabilities]
         avail.splice(idx, 1)
         setAvailabilities(avail)
-        console.log(availabilities)
     }
 
     function handleOtherType(e) {
         if (e.target.value === "Others") {
+            console.log('handleOtherType true')
             setType('')
             setShowType(true)
         } else {
+            console.log('handleOtherType false')
             setShowType(false)
             setType(e.target.value)
         }
 
+    }
+
+    function handleNewType(e) {
+        let typeUpdate = { ...errors }
+        delete typeUpdate['type']
+        setErrors(typeUpdate)
+        setType(e)
     }
 
     function handleOtherCity(e) {
@@ -207,6 +222,13 @@ export default function TourUpdateComponent({ tour_id }) {
             setShowCity(false)
             setCity(e.target.value)
         }
+    }
+
+    function handleNewCity(e) {
+        let cityUpdate = { ...errors }
+        delete cityUpdate['type']
+        setErrors(cityUpdate)
+        setCity(e)
     }
 
 
@@ -222,14 +244,15 @@ export default function TourUpdateComponent({ tour_id }) {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
-                        {errors && errors['title'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                        {errors && errors['title'] ? <div style={{ color: "red" }}>{errors['title']}</div> : <div className="empty-space"> </div>}
 
                     </div>
                     <label className="tour_box_title">TYPE OF TOUR: </label>
+                    {tour.type}
                     <select
                         className="tour-type"
                         name='type'
-                        defaultValue={type}
+                        value={type}
                         onChange={(e) => handleOtherType(e)}>
                         {normalizedTypes.map((type, idx) => {
                             return (
@@ -244,11 +267,11 @@ export default function TourUpdateComponent({ tour_id }) {
                                 className="tour-type"
                                 placeholder="Type of Tour"
                                 value={type}
-                                onChange={(e) => setType(e.target.value)}
+                                onChange={(e) => handleNewType(e.target.value)}
                             />
                         </>
                     )}
-                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                    {errors && errors['type'] ? <div style={{ color: "red" }}>{errors['type']}</div> : <div className="empty-space"> </div>}
 
                 </div>
                 <div>
@@ -272,11 +295,11 @@ export default function TourUpdateComponent({ tour_id }) {
                                 className="tour-city"
                                 placeholder="City of Tour"
                                 value={city}
-                                onChange={(e) => setCity(e.target.value)}
+                                onChange={(e) => handleNewCity(e.target.value)}
                             />
                         </>
                     )}
-                    {errors && errors['city'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
+                    {errors && errors['city'] ? <div style={{ color: "red" }}>{errors['city']}</div> : <div className="empty-space"> </div>}
                 </div>
                 <div className="price_duration_container">
                     <div className="dur_price_container">
@@ -308,7 +331,7 @@ export default function TourUpdateComponent({ tour_id }) {
                             />
                         </div>
                         <div>
-                            {errors && errors['duration'] ? <div style={{ color: "red" }}>{errors['duration']}</div> : <div className="empty-space"> </div>}
+                            {errors && errors['duration'] ? <div style={{ color: "red" }}>{errors.duration}</div> : <div className="empty-space"> </div>}
                         </div>
                     </div>
                 </div>

@@ -119,7 +119,7 @@ def add_tour():
 
     if not form.about.data:
         errors["about"] = "Description of Tour Required"
-    elif len(form.about.data) <= 20:
+    elif len(form.about.data) < 20:
         errors["about"] = "Description needs at least 20 characters"
 
     if form.type.data:
@@ -202,22 +202,21 @@ def edit_tour(id):
             city_data_id = new_city(city_name)["id"]
         else:
             city_data_id = city_data.id
-    else:
-        errors["city"] = "City Required"
+    # else:
+    #     errors["city"] = "City Required"
 
-        #         if not form.duration.data:
-        errors["duration"] = "Duration Required"
+    #         if not form.duration.data:
+    # errors["duration"] = "Duration Required"
 
-    if not form.title.data:
-        errors["title"] = "Title Required"
+    # if not form.title.data:
+    #     errors["title"] = "Title Required"
 
-    if not form.price.data:
-        errors["price"] = "Price Required"
+    # if not form.price.data:
+    #     errors["price"] = "Price Required"
 
-    if not form.about.data:
-        errors["about"] = "Description of Tour Required"
-    elif len(form.about.data) <= 20:
-        errors["about"] = "Description needs at least 20 characters"
+    if form.about.data:
+        if len(form.about.data) < 20:
+            errors["about"] = "Description needs at least 20 characters"
 
     if form.type.data:
         type_name = (form.type.data).title()
@@ -227,8 +226,8 @@ def edit_tour(id):
             type_data_id = new_type(type_name)["id"]
         else:
             type_data_id = type_data.id
-    else:
-        errors["type"] = "Type of Tour Required"
+    # else:
+    #     errors["type"] = "Type of Tour Required"
 
     if len(errors):
         return jsonify(errors), 403
