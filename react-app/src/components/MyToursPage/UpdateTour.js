@@ -65,32 +65,32 @@ export default function TourUpdateComponent({ tour_id }) {
                 setErrors(data)
                 console.log(data)
             } else {
-                await dispatch(getTypes())
-                await dispatch(getCities())
-                await dispatch(getTours())
-                await dispatch(allUsers())
-                await dispatch(deleteAvailabilities(tour_id)).then((data) => {
-                    if (data) {
-                        console.log('Delete Availabilities Errors, see console')
-                        console.log(data)
-                    }
-                }).then(() => {
-                    console.log('availabilities deleted')
-                    uniqueAvailArr.forEach((avail) => {
-                        const splitData = avail.split(' - ')
-                        let avail_data = {
-                            'date': dates[+splitData[1]].date,
-                            'time': splitData[0],
-                            'tour_id': tour_id
-                        }
-                        console.log(avail_data)
-                        const availErrors = dispatch(newAvailability(tour_id, avail_data))
-                        if (availErrors) {
-                            console.log('Adding Availabilities Errors, see console')
-                            console.log(availErrors)
-                        }
-                    })
-                })
+                await dispatch(getTypes()).then(() =>
+                    dispatch(getCities())).then(() =>
+                        dispatch(getTours())).then(() =>
+                            dispatch(allUsers())).then(() =>
+                                dispatch(deleteAvailabilities(tour_id))).then((data) => {
+                                    if (data) {
+                                        console.log('Delete Availabilities Errors, see console')
+                                        console.log(data)
+                                    }
+                                }).then(() => {
+                                    console.log('availabilities deleted')
+                                    uniqueAvailArr.forEach((avail) => {
+                                        const splitData = avail.split(' - ')
+                                        let avail_data = {
+                                            'date': dates[+splitData[1]].date,
+                                            'time': splitData[0],
+                                            'tour_id': tour_id
+                                        }
+                                        console.log(avail_data)
+                                        const availErrors = dispatch(newAvailability(tour_id, avail_data))
+                                        if (availErrors) {
+                                            console.log('Adding Availabilities Errors, see console')
+                                            console.log(availErrors)
+                                        }
+                                    })
+                                })
 
             }
 

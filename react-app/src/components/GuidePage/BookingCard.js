@@ -141,7 +141,7 @@ export default function TourBooking({ tour_id }) {
         setBookingTime('')
         setAvailTimes([])
     }
-    console.log(current_user)
+
     return (
         <>
             <div className="book-now-button-container">
