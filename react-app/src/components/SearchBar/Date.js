@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useState } from "react";
 import { useSearch } from "../../context/SearchBar";
 // import { useSelector } from "react-redux";
@@ -10,19 +10,6 @@ export default function DateSelection() {
     const [error, setError] = useState('')
     const { searchTerms, setSearch } = useSearch()
     const [date, setDate] = useState('')
-
-    // useEffect(() => {
-    //     let handler = (e) => {
-    //         if (!menuRef.current.contains(e.target))
-    //             setShow(false)
-    //     }
-
-    //     document.addEventListener('mousedown', handler)
-
-    //     return () => {
-    //         document.removeEventListener('mousedown', handler)
-    //     }
-    // }, [menuRef])
 
     // const normalized_dates = Object.values(dates)
     // normalized_dates.forEach((date) => {
@@ -40,6 +27,7 @@ export default function DateSelection() {
         let obj = searchTerms
         if (!e || e.toLowerCase() === "any") {
             obj.date = ''
+            setSearch(obj)
         } else {
             obj.date = e
             setSearch(obj)
@@ -62,7 +50,7 @@ export default function DateSelection() {
             handleSelected('any')
         } else {
             // setDayOfWk(weekday[newDate.getDay()])
-            handleSelected(weekday[newDate.getDay()])
+            handleSelected(e)
             setError('')
         }
     };

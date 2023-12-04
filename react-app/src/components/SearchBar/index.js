@@ -36,7 +36,6 @@ export default function SearchBar({ loaded }) {
 
         console.log([language, city, type, date])
 
-
         const tours_id = Object.keys(tours)
         //fill each category with all tours
         const tour_ids = []
@@ -44,7 +43,6 @@ export default function SearchBar({ loaded }) {
             tour_ids.push(+id)
         })
 
-        console.log(tour_ids)
         let city_tours = tour_ids
         let type_tours = tour_ids
         let language_tours = tour_ids
@@ -86,7 +84,17 @@ export default function SearchBar({ loaded }) {
         }
         // if a date was select get tours of that date
         if (date) {
-            const date_id = await dispatch(dateByName(date)).catch((response) => {
+            const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+            let year = date.substring(0, 4);
+            let month = date.substring(5, 7);
+            let day = date.substring(8, 10);
+            let newDate = new Date(`${year}-${month}-${day}`);
+
+            let dayOfWeek = weekday[newDate.getDay()]
+            console.log(dayOfWeek)
+
+            const date_id = await dispatch(dateByName(dayOfWeek)).catch((response) => {
                 const data = response.json()
                 return data
             });

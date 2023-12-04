@@ -6,10 +6,10 @@ import { useSearch } from "../../context/SearchBar";
 export default function CitySelection() {
     // let menuRef = useRef()
     // const [show, setShow] = useState(false)
-    const [selectedCity, setSelectCity] = useState('City')
     const options = []
     const cities = useSelector((state) => state.cities)
     const { searchTerms, setSearch } = useSearch()
+    const [selectedCity, setSelectCity] = useState(searchTerms.city)
 
     // useEffect(() => {
     //     let handler = (e) => {

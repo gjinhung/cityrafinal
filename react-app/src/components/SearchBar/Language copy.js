@@ -6,10 +6,10 @@ import { useSearch } from "../../context/SearchBar";
 export default function LanguageSelection() {
     // let menuRef = useRef()
     // const [show, setShow] = useState(false)
-    const [selectedLang, setSelectLang] = useState('Language')
     const options = []
     const languages = useSelector((state) => state.languages)
     const { searchTerms, setSearch } = useSearch()
+    const [selectedLang, setSelectLang] = useState(searchTerms.language)
 
     const normalized_languages = Object.values(languages)
     normalized_languages.forEach((language) => {

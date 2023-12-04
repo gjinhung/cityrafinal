@@ -5,10 +5,10 @@ import { useSearch } from "../../context/SearchBar";
 
 export default function TypeSelection() {
     // const [show, setShow] = useState(false)
-    const [selectedType, setSelectType] = useState('')
+    const { searchTerms, setSearch } = useSearch()
+    const [selectedType, setSelectType] = useState(searchTerms.type)
     const options = []
     const types = useSelector((state) => state.types)
-    const { searchTerms, setSearch } = useSearch()
 
     const normalized_types = Object.values(types)
     normalized_types.forEach((type) => {
