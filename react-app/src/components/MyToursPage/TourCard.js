@@ -101,7 +101,7 @@ export default function TourCard({ tour_id }) {
         return (
             <div className="loading-style">
                 <div className='loading-font'>
-                    Loading....
+                    Updating....
                 </div>
             </div>
         )
@@ -162,7 +162,7 @@ export default function TourCard({ tour_id }) {
                                     <>
                                         <TourUpdateComponent
                                             tour_id={tour_id}
-                                            setLoading={setLoading}
+                                            handleLoaded={handleLoaded}
                                         />
                                     </>
                                 ) : (

@@ -6,7 +6,7 @@ import { getCities } from "../../store/city";
 import { deleteAvailabilities, newAvailability } from "../../store/availability";
 import { allUsers } from "../../store/users";
 
-export default function TourUpdateComponent({ tour_id }) {
+export default function TourUpdateComponent({ tour_id, handleLoaded }) {
     const dispatch = useDispatch()
     const tours = useSelector((state) => state.tours)
     const tour = tours[tour_id]
@@ -46,10 +46,11 @@ export default function TourUpdateComponent({ tour_id }) {
         })
         const uniqueAvail = new Set(availArr)
         const uniqueAvailArr = Array.from(uniqueAvail);
-        console.log(uniqueAvailArr)
 
         if (Object.keys(errors).length === 0) {
-
+            if (!type) {
+                setType(tour.type)
+            }
             let tour_data = {
                 'type': type,
                 'city': city,
@@ -60,6 +61,8 @@ export default function TourUpdateComponent({ tour_id }) {
             }
 
             console.log(tour_data)
+
+            handleLoaded(false)
 
             const data = await dispatch(editTour(tour_id, tour_data))
             if (data) {
@@ -84,13 +87,19 @@ export default function TourUpdateComponent({ tour_id }) {
                                             'time': splitData[0],
                                             'tour_id': tour_id
                                         }
-                                        console.log(avail_data)
+                                        // console.log(avail_data)
                                         const availErrors = dispatch(newAvailability(tour_id, avail_data))
                                         if (availErrors) {
                                             console.log('Adding Availabilities Errors, see console')
                                             console.log(availErrors)
                                         }
+
                                     })
+                                }).then(() => {
+
+                                    setShowCity(false)
+                                    setShowType(false)
+                                    handleLoaded(true)
                                 })
 
             }
