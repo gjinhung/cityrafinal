@@ -25,7 +25,9 @@ export default function GuidePage({ loaded }) {
     const toursTypeArray = () => {
         let res = ['Tours']
         users[id].tours_given_ids.map((tour_id) => {
-            res.push(tours[tour_id].type)
+            if (!res.includes(tours[tour_id].type)) {
+                res.push(tours[tour_id].type)
+            }
         })
         res.push('Reviews')
         return res

@@ -8,7 +8,9 @@ import { allUsers } from "../../store/users";
 
 export default function TourUpdateComponent({ tour_id }) {
     const dispatch = useDispatch()
-    const tour = useSelector((state) => state.tours[tour_id])
+    const tours = useSelector((state) => state.tours)
+    const tour = tours[tour_id]
+    console.log(tour.availabilities)
     const types = useSelector((state) => state.types)
     const normalizedTypes = Object.values(types)
     const [type, setType] = useState(tour.type)
@@ -26,7 +28,7 @@ export default function TourUpdateComponent({ tour_id }) {
     const [availabilities, setAvailabilities] = useState(tour.availabilities)
     const [formDisabled, setFormDisabled] = useState(false)
     const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
+    console.log(availabilities)
     useEffect(() => {
         if (Object.keys(errors).length) {
             setFormDisabled(true)
@@ -234,7 +236,7 @@ export default function TourUpdateComponent({ tour_id }) {
                                 <option key={idx} value={type.type}> {type.type}</option>
                             )
                         })}
-                        <option value='Others'>Others</option>
+                        <option value='Others'>Add New Type</option>
                     </select>
                     {showType && (
                         <>
@@ -262,7 +264,7 @@ export default function TourUpdateComponent({ tour_id }) {
                                 <option key={idx} value={city.city}> {city.city}</option>
                             )
                         })}
-                        <option value='Others'>Others</option>
+                        <option value='Others'>Add New City</option>
                     </select>
                     {showCity && (
                         <>

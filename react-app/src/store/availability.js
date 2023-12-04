@@ -50,7 +50,7 @@ export const newAvailability = (tour_id, avail_data) => async (dispatch) => {
     } else if (response.status < 500) {
         console.timeLog('errror posting new availability')
         const data = await response.json();
-        if (data.errors) {
+        if (data) {
             return data;
         }
     } else {

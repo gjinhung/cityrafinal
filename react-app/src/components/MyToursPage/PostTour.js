@@ -46,10 +46,27 @@ function PostTour({ loaded }) {
 
     }, [dispatch, errors])
 
+    const availSubmit = async (avail, data) => {
+        console.log("in avail submit function")
+        const splitData = avail.split(' - ')
+        let avail_data = {
+            'date': dates[+splitData[1]].date,
+            'time': splitData[0],
+            'tour_id': data.id
+        }
+        const availErrors = await dispatch(newAvailability(data.id, avail_data))
+        console.log(availErrors)
+        if (availErrors) {
+            console.log('Adding Availabilities Errors, see console')
+            console.log(availErrors)
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         let availArr = []
+        console.log(availabilities)
         availabilities.forEach((data) => {
             let newData = `${data.time} - ${data.date_id}`
             availArr.push(newData)
@@ -57,7 +74,6 @@ function PostTour({ loaded }) {
         const uniqueAvail = new Set(availArr)
         const uniqueAvailArr = Array.from(uniqueAvail);
         console.log(uniqueAvailArr)
-
         if (Object.keys(errors).length === 0) {
 
             let tour_data = {
@@ -70,30 +86,36 @@ function PostTour({ loaded }) {
             }
 
             const data = await dispatch(newTour(tour_data))
+            console.log(data)
             if (data.errors) {
                 setErrors(data)
                 console.log(data)
             } else {
-                dispatch(authenticate()).then(() =>
+                await dispatch(authenticate()).then(() =>
                     dispatch(getTypes())).then(() =>
                         dispatch(getCities())).then(() =>
                             dispatch(getTours())).then(() =>
-                                dispatch(allUsers())).then(() =>
-
-                                    uniqueAvailArr.forEach((avail) => {
+                                dispatch(allUsers())).then(() => {
+                                    console.log('unique Avail Arr')
+                                    console.log(uniqueAvailArr)
+                                    uniqueAvailArr.forEach(async (avail) => {
                                         const splitData = avail.split(' - ')
                                         let avail_data = {
                                             'date': dates[+splitData[1]].date,
                                             'time': splitData[0],
                                             'tour_id': data.id
                                         }
-                                        const availErrors = dispatch(newAvailability(data.id, avail_data))
+                                        const availErrors = await dispatch(newAvailability(data.id, avail_data))
                                         if (availErrors) {
                                             console.log('Adding Availabilities Errors, see console')
-                                            console.log(availErrors.errors)
+                                            console.log(availErrors)
                                         }
                                     })
-                                ).then(() => history.push('/mytours'))
+                                }
+                                ).then(() =>
+                                    dispatch(authenticate())).then(() =>
+                                        dispatch(getTours())).then(() =>
+                                            history.push('/mytours'))
             }
 
         }
@@ -263,7 +285,7 @@ function PostTour({ loaded }) {
                                         <option key={idx} value={type.type}> {type.type}</option>
                                     )
                                 })}
-                                <option value='Others'>Others</option>
+                                <option value='Others'>Add New Type</option>
                             </select>
                             {showType && (
                                 <>
@@ -291,7 +313,7 @@ function PostTour({ loaded }) {
                                         <option key={idx} value={city.city}> {city.city}</option>
                                     )
                                 })}
-                                <option value='Others'>Others</option>
+                                <option value='Others'>Add New City</option>
                             </select>
                             {showCity && (
                                 <>

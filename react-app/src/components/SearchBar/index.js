@@ -55,11 +55,21 @@ export default function SearchBar({ loaded }) {
         }
         //if there is a language fetch tours with that language
         if (language) {
+            console.log('yes language')
             const language_id = await dispatch(langByName(language)).catch((response) => {
                 const data = response.json()
                 return data
             });
-            language_tours = (Object.values(language_id)[0].tours_id)
+            console.log(language_id)
+            let resLanguage = []
+            let guide_array = (Object.values(language_id)[0].guides_id)
+            guide_array.forEach((user_id) => {
+                let tours = users[user_id].tours_given_ids
+                tours.forEach((tour_id) => {
+                    resLanguage.push(tour_id)
+                })
+            })
+            language_tours = resLanguage
         }
         // if there is a specialty fetch tours with that specialty
         if (type) {
