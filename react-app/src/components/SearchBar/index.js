@@ -41,10 +41,13 @@ export default function SearchBar({ loaded }) {
         tours_id.forEach((id) => {
             tour_ids.push(+id)
         })
+
+        console.log(tour_ids)
         let city_tours = tour_ids
         let type_tours = tour_ids
         let language_tours = tour_ids
         let date_tours = tour_ids
+
         // if there is a city fetch tours of that city
         if (city) {
             const city_id = await dispatch(cityByName(city)).catch((response) => {
@@ -60,9 +63,9 @@ export default function SearchBar({ loaded }) {
                 const data = response.json()
                 return data
             });
-            console.log(language_id)
             let resLanguage = []
             let guide_array = (Object.values(language_id)[0].guides_id)
+            console.log(guide_array)
             guide_array.forEach((user_id) => {
                 let tours = users[user_id].tours_given_ids
                 tours.forEach((tour_id) => {
@@ -88,6 +91,8 @@ export default function SearchBar({ loaded }) {
 
             date_tours = (Object.values(date_id)[0].tours_id)
         }
+
+        console.log(type_tours)
         const firstFilter = await city_tours.filter(value => language_tours.includes(value));
         const secondFilter = await firstFilter.filter(value => type_tours.includes(value))
         const thirdFilter = await secondFilter.filter(value => date_tours.includes(value))

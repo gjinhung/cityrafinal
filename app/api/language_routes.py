@@ -24,7 +24,7 @@ def get_all_languages():
         guides_list = []
         for guide in guides:
             g_dic = guide.to_dict()
-        guides_list.append(g_dic["id"])
+            guides_list.append(g_dic["id"])
         language_dict["guides_id"] = guides_list
         language_data.append(language_dict)
 

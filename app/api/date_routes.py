@@ -20,7 +20,7 @@ def get_all_dates():
         tours = date.available_tours
         tour_list = []
         for tour in tours:
-            t_dic = tour.id
+            t_dic = tour.tour_id
             tour_list.append(t_dic)
 
         date_dict["tours_id"] = tour_list
