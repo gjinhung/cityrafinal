@@ -8,6 +8,7 @@ import TimeOption from "../Times";
 import { allUsers } from "../../store/users";
 import { deleteBooking, editBooking, getBookings } from "../../store/booking";
 import { authenticate } from "../../store/session";
+import Mountain from '../../images/Mountain.png'
 // import MapContainer from "../MapContainer"
 
 
@@ -19,6 +20,7 @@ export default function BookingPage() {
     const bookings = useSelector((state) => state.bookings)
     const users = useSelector((state) => state.users)
     const dates = useSelector((state) => state.dates)
+    const tours = useSelector((state) => state.tours)
     const normalizedDates = Object.values(dates)
     const [showUpdate, setShowUpdate] = useState(false)
     const [bookingDate, setBookingDate] = useState(bookings[id] ? bookings[id].date : '')
@@ -72,6 +74,22 @@ export default function BookingPage() {
             }
         </>
     )
+
+    function prevImg(booking_id) {
+        let imagesArr = tours[bookings[booking_id].tour_id].images
+
+        if (!imagesArr.length) {
+            return Mountain
+        }
+        let prev
+        imagesArr.forEach((image) => {
+            if (image.preview) {
+                console.log(image.url)
+                prev = image.url
+            }
+        })
+        return prev
+    }
 
     const simpleDate = (data) => {
         const booking_date = new Date(data);
@@ -219,7 +237,7 @@ export default function BookingPage() {
                             Tour Guided By {users[bookings[id].guide_id].first_name} {users[bookings[id].guide_id].last_name}
                         </div>
                         <img
-                            src={users[bookings[id].guide_id].profile_pic}
+                            src={prevImg(id)}
                             className='booking_details_img'
                             alt={id}
                             key={id}

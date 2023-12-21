@@ -8,6 +8,7 @@ import no_bookings from '../../images/add_tour_img.jpeg'
 import './MyBookings.css'
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import { getBookings } from "../../store/booking";
+import Mountain from '../../images/Mountain.png'
 
 
 export default function MyBookings() {
@@ -25,6 +26,22 @@ export default function MyBookings() {
     useEffect(() => {
         dispatch(getBookings()).then(() => setLoaded(true))
     }, [dispatch])
+
+    function prevImg(booking_id) {
+        let imagesArr = tours[bookings[booking_id].tour_id].images
+        console.log(imagesArr)
+        if (!imagesArr.length) {
+            return Mountain
+        }
+        let prev
+        imagesArr.forEach((image) => {
+            if (image.preview) {
+                console.log(image.url)
+                prev = image.url
+            }
+        })
+        return prev
+    }
 
     if (!loaded) {
 
@@ -133,13 +150,14 @@ export default function MyBookings() {
         } else {
             showUpcoming = (
                 upcomingBooking_ids.length && upcomingBooking_ids.map((booking_id, idx) => {
+                    console.log(`${prevImg(booking_id)}`)
                     return (
 
                         <div className='booking_wrapper' key={idx}>
 
                             <div className="booking_image">
                                 <img
-                                    src={users[bookings[booking_id].guide_id].profile_pic}
+                                    src={`${prevImg(booking_id)}`}
                                     className='booking_guide_img'
                                     alt={booking_id}
                                     key={idx}
@@ -210,7 +228,7 @@ export default function MyBookings() {
                                 >
                                     <div className="prev_booking_left">
                                         <img
-                                            src={users[bookings[booking_id].guide_id].profile_pic}
+                                            src={`${prevImg(booking_id)}`}
                                             className='prev_booking_img'
                                             alt={booking_id}
                                             key={idx}
