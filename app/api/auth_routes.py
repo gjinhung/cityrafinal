@@ -3,9 +3,12 @@ from app.models import User, db, Review, Language, Booking
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from .aws import get_unique_filename, upload_file_to_s3
 import datetime
 
 auth_routes = Blueprint("auth", __name__)
+
+ALLOWED_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif"}
 
 
 def validation_errors_to_error_messages(validation_errors):
@@ -165,22 +168,24 @@ def sign_up():
     form = SignUpForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
-        # IMAGE UPLOAD
+        try:
+            # Retrieving form data separately
+            image = form.data["profile_pic"]
+            image.filename = get_unique_filename(image.filename)
+            print("😇", image)
+            upload = upload_file_to_s3(image)
+            print(request.files)
 
-        # image = form.data["profile_pic"]
-        # print(image)
-        # image.filename = get_unique_filename(image.filename)
-        # upload = upload_file_to_s3(image)
-        # print("look here!!!")
-        # print(upload)
+            # Printing filename and upload info for debugging
+            print(f"Filename: {image.filename}")
+            print("😇😇😇", upload)
 
-        # if "url" not in upload:
-        #     # if the dictionary doesn't have a url key
-        #     # it means that there was an error when you tried to upload
-        #     # so you send back that error message (and you printed it above)
-        #     return upload
-
-        # url = upload["url"]
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return (
+                jsonify({"error": "An error occurred while uploading the image"}),
+                500,
+            )
 
         user = User(
             username=form.data["username"],
@@ -188,7 +193,7 @@ def sign_up():
             password=form.data["password"],
             first_name=form.data["first_name"],
             last_name=form.data["last_name"],
-            profile_pic=form.data["profile_pic"],
+            profile_pic=upload["url"],
             student=form.data["student"],
             graduation_date=form.data["graduation_date"],
             joined_on=datetime.datetime.utcnow(),

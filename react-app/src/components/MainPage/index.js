@@ -9,6 +9,8 @@ function MainPage({ loaded }) {
     const { logSignIn } = useLogSignIn()
     const sessionUser = useSelector((state) => state.session.user);
 
+
+
     let show
     if (!sessionUser) { //if not log in
         show = ( //show login/signup and search

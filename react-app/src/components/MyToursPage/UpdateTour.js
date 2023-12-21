@@ -6,14 +6,13 @@ import { getCities } from "../../store/city";
 import { deleteAvailabilities, newAvailability } from "../../store/availability";
 import { allUsers } from "../../store/users";
 
-export default function TourUpdateComponent({ tour_id, handleLoaded }) {
+export default function TourUpdateComponent({ tour_id }) {
     const dispatch = useDispatch()
     const tours = useSelector((state) => state.tours)
     const tour = tours[tour_id]
     const types = useSelector((state) => state.types)
     const normalizedTypes = Object.values(types)
     const [type, setType] = useState(tour.type)
-    const [newType, setNewType] = useState('')
     const [newCity, setNewCity] = useState('')
     const cities = useSelector((state) => state.cities)
     const normalizedCities = Object.values(cities)
@@ -24,7 +23,6 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
     const [duration, setDuration] = useState(tour.duration)
     const [about, setAbout] = useState(tour.about)
     const [errors, setErrors] = useState({});
-    const [showType, setShowType] = useState(false)
     const [showCity, setShowCity] = useState(false)
     const [availabilities, setAvailabilities] = useState(tours[tour_id].availabilities)
     const [formDisabled, setFormDisabled] = useState(false)
@@ -63,7 +61,6 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                 'about': about
             }
 
-            handleLoaded(false)
 
             const data = await dispatch(editTour(tour_id, tour_data))
             if (data) {
@@ -97,8 +94,6 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                                     })
                                 }).then(() => {
                                     setShowCity(false)
-                                    setShowType(false)
-                                    handleLoaded(true)
 
                                 })
 
@@ -195,18 +190,6 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
         let avail = [...availabilities]
         avail.splice(idx, 1)
         setAvailabilities(avail)
-        console.log(availabilities)
-    }
-
-    function handleOtherType(e) {
-        if (e.target.value === "Others") {
-            // setType('')
-            setShowType(true)
-        } else {
-            setShowType(false)
-            setType(e.target.value)
-        }
-
     }
 
     function handleOtherCity(e) {
@@ -217,11 +200,6 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
             setShowCity(false)
             setCity(e.target.value)
         }
-    }
-
-    function handleNewType(e) {
-        setNewType(e.target.value)
-        setType(e.target.value)
     }
 
     function handleNewCity(e) {
@@ -250,24 +228,15 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                         className="tour-type"
                         name='type'
                         defaultValue={type}
-                        onChange={(e) => handleOtherType(e)}>
+                        onChange={(e) => setType(e.target.value)}>
                         {normalizedTypes.map((type, idx) => {
                             return (
                                 <option key={idx} value={type.type}> {type.type}</option>
                             )
                         })}
-                        <option value='Others'>Add New Type</option>
+
                     </select>
-                    {showType && (
-                        <>
-                            <input
-                                className="tour-type"
-                                placeholder="Type of Tour"
-                                value={newType}
-                                onChange={(e) => handleNewType(e)}
-                            />
-                        </>
-                    )}
+
                     {errors && errors['type'] ? <div style={{ color: "red" }}>{errors.type}</div> : <div className="empty-space"> </div>}
 
                 </div>
@@ -353,7 +322,6 @@ export default function TourUpdateComponent({ tour_id, handleLoaded }) {
                 </div>
                 < div className="avail-container">
                     <label className="tour_box_title">AVAILABILITIES: </label>
-                    {console.log(availabilities)}
                     {availabilities.map((avail, idx) => {
                         return (
                             <div key={idx} className="avail-slots">

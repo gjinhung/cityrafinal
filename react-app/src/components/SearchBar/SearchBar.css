@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     height: 50px;
-    background-color: #cf2e2e;
+    background-color: #2F3E46;
     
 }
 
@@ -32,13 +32,18 @@
 }
 
 .image_container{
-    display: grid;
+    /* display: grid;
     grid-template-columns: 25% repeat(3, 1fr);
     justify-content: center;
     align-content: center;
     gap: 5px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 10px; */
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    padding-top: 40px;
 }
 
 .search-selection, .date-button{
@@ -79,8 +84,11 @@
     justify-content: center;
     align-items: center;
     height: 100px;
-    background-color: #cf2e2e;
-    width: 100%;
+    background-color: #2F3E46;
+    width: 80%;
+    position: absolute;
+    bottom: 100px; 
+    /* left: 40px; */
 }
 
 .search-button{
@@ -90,7 +98,7 @@
     width: 250px;
     align-self: flex-end;
     color: white;
-    background-color: #cf2e2e;
+    background-color: #2F3E46;
     border: white solid 2px;
     cursor: pointer;
 }
@@ -102,7 +110,7 @@
 .date-input{
     width: 100%;
     border: none;
-    background-color: #cf2e2e;
+    background-color: #2F3E46;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     font-size: small;
@@ -128,11 +136,11 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 .nosearch{
     display: flex;
-    font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    /* font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; */
     font-weight: bold;
     padding: 30px;
     text-align: center;
-    color: white;
+    color: #2F3E46;
 }
 
 body {
@@ -152,7 +160,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    transform-style: preserve-3d;
+    /* transform-style: preserve-3d; */
     z-index: -1;
   }
 
@@ -173,10 +181,243 @@ body {
 }
 
 .section {
-    background-color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f8f9fa;
   }
 
 .tour-guide-info-num{
 font-size: small;
 font-weight: 300;
+}
+
+.search-container{
+    margin: 0 10%;
+    border-bottom: #ecece5 solid 1.25rem;
+    
+}
+
+.search-userImg{
+    height: 40px;
+    border-radius: 100px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+}
+
+.search-hostinfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.search_hostcontainer{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.search_hostrating{
+    font-size: 12px;
+    color: gray;
+}
+
+.search_tour_details_box{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 25px;
+    flex-basis: 45%;
+    max-width: 45%;
+}
+
+.search_avail_day{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+    background-color: #2F3E46;;
+    font-weight: 700;
+    margin-bottom: 7px;
+    font-size: 16px;
+}
+
+.search_avail_times{
+    font-size: 10px;
+    color: #354F52;
+}
+
+.search_left_sub_container{
+    padding: 30px 30px 20px;
+    /* display: grid; */
+    /* grid-template-columns: 50% 50%; */
+    /* grid-row: auto auto */
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.search_tour-subcontainer{
+    display: flex;
+    flex-direction: column;
+    padding: 0 90px 60px;
+    }
+
+
+.search_time_slot{
+    border: 1px #e6e5e5 solid;
+    padding: .5rem .625rem 1rem 1rem;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.booking_button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #2F3E46;
+    color: white;
+    min-width: 5rem;
+    height: 50px;
+    font-weight: 700;
+    font-size: small;
+    letter-spacing: 2px;
+}
+
+.search_time_slot_price{
+    font-size: 18px;
+    font-weight: 600;
+    color: #354F52
+}
+
+.search_time_slot_ptitle, .search_time_slot_startEnd{
+    font-size: 14px;
+    letter-spacing: .2rem;    
+    margin-bottom: 5px;
+}
+
+.search_time_slot_time{
+    margin-bottom: 10px;
+    
+}
+
+.choose_time_title{
+    padding: 0 15px 10px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+}
+
+.search_time_slot_time{
+    font-size: 16px;
+    letter-spacing: .05rem;
+    font-weight: bold;
+}
+
+.search_time_slot_remaining{
+    margin-bottom: 10px;
+}
+
+.search_tour_box_details{
+        font-size: 14px;
+        color: #2F3E46
+}
+
+.search_tour_main_details{
+    width: 100%;
+    border: 1px solid #e6e5e5;
+}
+
+.search_tour_main_image{
+    position: relative;
+}
+
+.filter_searchBarContainer{
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    background-color: #2F3E46;
+    
+}
+
+.filter_searchBarContainerCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background-color: #2F3E46;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 60px;
+}
+
+
+.search_right_subcontainer{
+    width: 100%;
+}
+
+.search-tour-subcontainer{
+    display: flex;
+    flex-direction: column;
+    /* padding: 0 90px 60px; */
+    padding-bottom: 60px;
+}
+
+.search-left-right-container{
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+}
+
+.search-tour-info-left{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+
+.see-image-button{
+    /* background-color: red; */
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+    height: 40px;
+    width: 40px;
+    color: white;
+    font-size: x-large;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.see-image-button:hover{
+    background-color: rgba(128, 128, 128, 0.704);
+    cursor: pointer;
+}
+
+.images_button{
+        all: unset;
+        height: 30px;
+        width: 30px;
+        margin-top: 0px;
+        margin-bottom: 5px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 }

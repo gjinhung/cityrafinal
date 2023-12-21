@@ -204,7 +204,6 @@ export default function MyBookings() {
                 pastBookings_ids.length && pastBookings_ids.map((booking_id, idx) => {
                     return (
                         <div key={idx}>
-                            <h2>Previous Tours</h2>
                             <div className="booking_scroll-container">
                                 <div className='prev_booking_container' key={idx}
                                     onClick={(e) => goToBooking(e, booking_id)}
@@ -247,7 +246,10 @@ export default function MyBookings() {
                     <div className="booking_scroll-container">
                         {showUpcoming}
                     </div>
-                    {showPrev}
+                    <h2>Previous Tours</h2>
+                    <div className="prev_tours_container">
+                        {showPrev}
+                    </div>
                 </div>
             </div >
         )

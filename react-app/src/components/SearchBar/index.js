@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LanguageSelection from './Language copy'
 import CitySelection from './City copy'
 import SpecialtySelection from "./Type";
@@ -12,30 +12,41 @@ import './SearchBar.css'
 import DateSelection from "./Date";
 import { NavLink } from "react-router-dom";
 import NYC from '../../images/NYC.png'
-import mountains from '../../images/Mountain.png'
+import SearchedTour from "./SearchedTour";
+import vietnam_streets from '../../images/vietnam_streets.jpg'
+import { useNavScroll } from "../../context/NavScrollToggle";
 
-export default function SearchBar({ loaded }) {
+export default function SearchBar({ loaded, }) {
     const searchRef = useRef(null)
     const users = useSelector((state) => state.users)
     const students = []
     const normalizedUsers = Object.values(users)
+    const current_user = useSelector((state) => state.session.user)
     normalizedUsers.forEach((user) => {
         if (user.student) {
             students.push(user.id)
         }
     })
     const tours = useSelector((state) => (state.tours))
-    const { searchTerms } = useSearch()
+    const { searchTerms, submitSearch, setSubmit } = useSearch()
     const dispatch = useDispatch()
-    let guideSet = new Set()
-    let guide_array = []
-    const [guide_ids, setGuide_Ids] = useState(students)
+    // let tours_array = Object.keys(tours)
+    const [tourIds, setTour_ids] = useState([])
+    const { scrollTop, setScrollTop } = useNavScroll()
+    const { language, city, type, date } = searchTerms
+
+    useEffect(() => {
+        setScrollTop(0)
+    }, [])
+
+    const handleScroll = (event) => {
+
+        setScrollTop(event.currentTarget.scrollTop);
+    };
 
     async function handleSearch() {
-        const { language, city, type, date } = searchTerms
-
-        console.log([language, city, type, date])
-
+        setSubmit(searchTerms)
+        console.log(searchTerms)
         const tours_id = Object.keys(tours)
         //fill each category with all tours
         const tour_ids = []
@@ -65,7 +76,6 @@ export default function SearchBar({ loaded }) {
             });
             let resLanguage = []
             let guide_array = (Object.values(language_id)[0].guides_id)
-            console.log(guide_array)
             guide_array.forEach((user_id) => {
                 let tours = users[user_id].tours_given_ids
                 tours.forEach((tour_id) => {
@@ -92,7 +102,7 @@ export default function SearchBar({ loaded }) {
             let newDate = new Date(`${year}-${month}-${day}`);
 
             let dayOfWeek = weekday[newDate.getDay()]
-            console.log(dayOfWeek)
+            // console.log(dayOfWeek)
 
             const date_id = await dispatch(dateByName(dayOfWeek)).catch((response) => {
                 const data = response.json()
@@ -101,21 +111,18 @@ export default function SearchBar({ loaded }) {
 
             date_tours = (Object.values(date_id)[0].tours_id)
         }
-
         console.log(type_tours)
-        const firstFilter = await city_tours.filter(value => language_tours.includes(value));
-        const secondFilter = await firstFilter.filter(value => type_tours.includes(value))
-        const thirdFilter = await secondFilter.filter(value => date_tours.includes(value))
+        const firstFilter = city_tours.filter(value => language_tours.includes(value));
+        const secondFilter = firstFilter.filter(value => type_tours.includes(value))
+        const thirdFilter = secondFilter.filter(value => date_tours.includes(value))
 
-        await thirdFilter.forEach((tour_id) => (
-            guideSet.add(tours[tour_id].guide_id)
-        ))
+        console.log(thirdFilter)
 
-        guide_array = await Array.from(guideSet)
-        setGuide_Ids(guide_array)
+        setTour_ids(thirdFilter)
 
         searchRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
+
 
     if (!loaded) {
         return (
@@ -124,70 +131,83 @@ export default function SearchBar({ loaded }) {
                     Loading......
                 </div>
             </div>
+
         )
     } else {
-        // console.log(users)
+
         return (
-            <div className="wrap">
-                <img src={mountains} className="background" alt="mountain"></img>
-                <img src={NYC} className="foreground" alt="foreground"></img>
+            <div className="wrap"
+                onScroll={(e) => handleScroll(e)}>
+                <img src={vietnam_streets} className="background" alt="background_image"></img>
                 <div className="header">
-                    <div className="searchBarContainerCont">
-                        <div className="searchBarContainer" >
-                            <div className="searchBar" >
-                                <DateSelection />
-                                <LanguageSelection />
-                                <CitySelection />
-                                <SpecialtySelection />
-                                <div className="searchButton-container">
-                                    <button
-                                        type='submit'
-                                        onClick={handleSearch}
-                                        className={"search-button"}>
-                                        SEARCH
-                                    </button>
+                    {scrollTop === 0 &&
+                        <div className="searchBarContainerCont">
+                            <div className="searchBarContainer" >
+                                <div className="searchBar" >
+                                    <DateSelection />
+                                    {/* <LanguageSelection /> */}
+                                    <CitySelection />
+                                    {/* <SpecialtySelection /> */}
+                                    <div className="searchButton-container">
+                                        <button
+                                            type='submit'
+                                            onClick={handleSearch}
+                                            className={"search-button"}>
+                                            SEARCH
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div >
+                        </div >
+                    }
                 </div>
 
-                <div
+                {submitSearch.date && <div
                     ref={searchRef}
                     className="section">
-                    {!guide_ids.length ?
+                    {scrollTop > 0 &&
+                        <div
+                            className="filter_searchBarContainerCont">
+                            <div className="filter_searchBarContainer" >
+                                <div className="searchBar" >
+                                    <DateSelection />
+                                    {/* <LanguageSelection /> */}
+                                    <CitySelection />
+                                    <SpecialtySelection />
+                                    <div className="searchButton-container">
+                                        <button
+                                            type='submit'
+                                            onClick={(e) => handleSearch(e)}
+                                            className={"search-button"}>
+                                            FILTER
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div >}
+                    {!tourIds.length ?
                         <div className="nosearch-container">
                             <div className="nosearch">
                                 Sorry but no tours are available for your search criteria. Try another search parameter.
                             </div>
                         </div> :
                         <div className="image_container">
-                            {guide_ids.map((guide_id, idx) => (
-                                <div className='tour-images-container'
-                                    key={idx}>
+                            {tourIds.map((tour_id, idx) => {
+                                return (
+                                    tours[tour_id].guide_id !== current_user.id &&
 
-                                    <img src={users[guide_id].profile_pic}
-                                        className='tourImg'
-                                        alt={users[guide_id].id}
+                                    <SearchedTour
                                         key={idx}
-                                    />
-                                    <NavLink exact to={`/guide/${guide_id}`}>
-                                        <div className="content">
-                                            <div className="tour-guide-info">{users[guide_id].first_name} {users[guide_id].last_name}</div>
-                                            < br />
-                                            <div className="tour-guide-info">{users[guide_id].rating}<i className="fa-solid fa-star"></i></div>
-                                            <p className="tour-guide-info-num">({users[guide_id].reviews_of_guide_id.length} {users[guide_id].reviews_of_guide_id.length === 1 ? 'rating' : 'ratings'})</p>
-                                            < br />
-                                            <p className="tour-guide-info-num2">{users[guide_id].tours_given_ids.length} {users[guide_id].tours_given_ids.length === 1 ? "tour" : "tours"} available</p>
-                                        </div>
-                                    </NavLink>
-                                </div>
-                            ))}
+                                        tour_id={tour_id} />
+
+                                )
+                            }
+                            )}
                         </div>
                     }
-                </div>
+                </div>}
 
-            </div>
+            </div >
         )
     }
 }

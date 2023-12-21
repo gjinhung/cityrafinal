@@ -5,21 +5,48 @@ import './MyToursPage.css'
 import Mountain from '../../images/Mountain.png'
 import TourUpdateComponent from "./UpdateTour";
 import DeleteTour from "./DeleteTour";
+import OpenModalButton from "../OpenModalButton";
+import AddImage from "./AddImage";
+import UserImages from "./UserImages";
 
 export default function TourCard({ tour_id }) {
     const tours = useSelector((state) => state.tours)
-    const cities = useSelector((state) => state.cities)
+    let previewImg = []
+    let notPImg = []
+    const [img_id, setImgId] = useState(previewImg[0])
+    useEffect(() => {
+        console.log('tours changed')
+        let tour = tours[tour_id]
+        let images = tour.images
+        previewImg = []
+        notPImg = []
+        images.forEach((image) => {
+            if (image.preview) {
+                previewImg = [image]
+                setImgId(image)
+            } else {
+                notPImg.push(image)
+            }
+        })
+    }, [tours])
+
+    let sortedImages = [...previewImg, ...notPImg]
+
+
+
+
+
+    // const cities = useSelector((state) => state.cities)
     const dates = useSelector((state) => state.dates)
     const { activeDetTour, setDetActiveTour } = useActiveTourDetails()
     const [showDets, setShowDets] = useState(false)
     const [updateDelete, setUpdateDelete] = useState(true)
-    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (activeDetTour !== tour_id) {
             setShowDets(false)
         }
-    }, [activeDetTour])
+    }, [activeDetTour, tour_id])
 
     function selectDelete(e) {
         setUpdateDelete(false)
@@ -29,9 +56,6 @@ export default function TourCard({ tour_id }) {
         setUpdateDelete(true)
     }
 
-    function handleLoaded(tf) {
-        setLoading(tf)
-    }
 
     function handleShowDets(e) {
         setShowDets(!showDets)
@@ -97,15 +121,7 @@ export default function TourCard({ tour_id }) {
             </>
         )
     }
-    if (!loading) {
-        return (
-            <div className="loading-style">
-                <div className='loading-font'>
-                    Updating....
-                </div>
-            </div>
-        )
-    } else if (tours[tour_id]) {
+    if (tours[tour_id]) {
         return (
             <div className="tour-container" >
                 <div className="tour-subcontainer">
@@ -115,12 +131,22 @@ export default function TourCard({ tour_id }) {
                     <div className="left-right-container">
                         <div className="tour-info-left">
                             <div className="tour_main_details">
-                                <img
-                                    src={Mountain}
-                                    className='tour_image'
-                                    alt={tour_id}
-                                    key={tour_id}
-                                />
+                                <div className="tour_image_container">
+                                    <img
+                                        src={img_id ? img_id.url : Mountain}
+                                        className='tour_image'
+                                        alt={tour_id}
+                                        key={tour_id}
+                                    />
+                                    <div className="edit-image-button">
+                                        <OpenModalButton
+                                            buttonText={"+"}
+                                            modalComponent={<UserImages
+                                                tour_id={tour_id} />}
+                                            className='plus_button'
+                                        />
+                                    </div>
+                                </div>
                                 <div className="left_sub_container">
                                     <div className="tour_details_box">
                                         <div className="tour_box_title">TYPE: </div>
@@ -136,7 +162,9 @@ export default function TourCard({ tour_id }) {
                                     </div>
                                     <div className="tour_details_box">
                                         <div className="tour_box_title">CITY: </div>
-                                        <div className="tour_box_details">{cities[tours[tour_id].city_id].city}</div>
+                                        {/* <div className="tour_box_details">{cities[tours[tour_id].city_id].city}</div> */}
+
+                                        <div className="tour_box_details">{tours[tour_id].city_id}</div>
                                     </div>
                                     <div className="show_more_button" onClick={(e) => handleShowDets(e)}>{!showDets ? ('+  SEE MORE DETAILS') : ('-  SEE LESS DETAILS')}</div>
                                 </div>
@@ -162,7 +190,6 @@ export default function TourCard({ tour_id }) {
                                     <>
                                         <TourUpdateComponent
                                             tour_id={tour_id}
-                                            handleLoaded={handleLoaded}
                                         />
                                     </>
                                 ) : (

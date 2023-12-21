@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import ReviewCard from "./ReviewCard";
 import { useParams } from "react-router-dom/";

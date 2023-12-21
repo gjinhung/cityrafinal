@@ -8,6 +8,7 @@ from app.models import (
     Tour,
     Language,
     Type,
+    Image,
     Availability,
     environment,
     SCHEMA,
@@ -165,43 +166,106 @@ def seed_users():
         updated_at=datetime.datetime.now(),
     )
 
+    after_dark = Type(
+        type="After Dark",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    city = Type(
+        type="City",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    day_trip = Type(
+        type="Day Trip / Out of Town",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    first_time = Type(
+        type="First Time Visitor",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    hiking = Type(
+        type="Hiking and Walking",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    local = Type(
+        type="Local Experience",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    museum = Type(
+        type="Museums / Culture",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    nature = Type(
+        type="Nature and Wildlife",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    religious = Type(
+        type="Religious Heritage",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    shopping = Type(
+        type="Shopping",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+    excursion = Type(
+        type="Shore Excursion",
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
     monday = Date(
+        id=1,
         date="Monday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     tuesday = Date(
+        id=2,
         date="Tuesday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     wednesday = Date(
+        id=3,
         date="Wednesday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     thursday = Date(
+        id=4,
         date="Thursday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     friday = Date(
+        id=5,
         date="Friday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     saturday = Date(
+        id=6,
         date="Saturday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     sunday = Date(
+        id=7,
         date="Sunday",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
@@ -318,6 +382,7 @@ def seed_users():
     review1 = Review(
         reviewer=demo3,
         guide_id=1,
+        # tour=tour1,
         communication_rating=5,
         knowledgeability_rating=4,
         professionalism_rating=5,
@@ -331,6 +396,7 @@ def seed_users():
     review2 = Review(
         reviewer=demo3,
         guide_id=2,
+        # tour=tour2,
         communication_rating=5,
         knowledgeability_rating=4,
         professionalism_rating=5,
@@ -344,6 +410,7 @@ def seed_users():
     review3 = Review(
         reviewer=demo,
         guide_id=2,
+        # tour=tour2,
         communication_rating=5,
         knowledgeability_rating=4,
         professionalism_rating=5,
@@ -357,6 +424,7 @@ def seed_users():
     review4 = Review(
         reviewer=demo4,
         guide_id=5,
+        # tour=tour3,
         communication_rating=5,
         knowledgeability_rating=4,
         professionalism_rating=5,
@@ -465,6 +533,42 @@ def seed_users():
         updated_at=datetime.datetime.now(),
     )
 
+    image3 = Image(
+        tour=tour2,
+        preview=True,
+        url="https://www.nationsonline.org/gallery/USA/Hollywood-sign.jpg",
+        user=demo2,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    image4 = Image(
+        tour=tour2,
+        preview=False,
+        url="https://st.depositphotos.com/2619031/4587/i/450/depositphotos_45878955-stock-photo-los-angeles-december-18-2013.jpg",
+        user=demo2,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    image5 = Image(
+        tour=tour3,
+        preview=True,
+        url="https://gowanderwild.com/wp-content/uploads/2022/05/Wonderland-Trail-2.jpg",
+        user=demo2,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    image6 = Image(
+        tour=tour3,
+        preview=False,
+        url="https://www.wta.org/site_images/hikes/skyline-trail-loop-photo-by-ivy-jin.jpg/@@images/d7b425a1-c4f7-4add-b373-6e423f602950.jpeg",
+        user=demo2,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
     db.session.add_all(
         [
             tour3_avail,
@@ -513,6 +617,21 @@ def seed_users():
             booking5,
             booking6,
             booking7,
+            after_dark,
+            city,
+            day_trip,
+            first_time,
+            hiking,
+            local,
+            museum,
+            nature,
+            religious,
+            shopping,
+            excursion,
+            image3,
+            image4,
+            image5,
+            image6,
         ]
     )
     db.session.commit()

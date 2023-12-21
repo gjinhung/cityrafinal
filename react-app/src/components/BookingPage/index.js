@@ -8,6 +8,7 @@ import TimeOption from "../Times";
 import { allUsers } from "../../store/users";
 import { deleteBooking, editBooking, getBookings } from "../../store/booking";
 import { authenticate } from "../../store/session";
+// import MapContainer from "../MapContainer"
 
 
 export default function BookingPage() {
@@ -38,7 +39,7 @@ export default function BookingPage() {
         } else {
             setFormDisabled(false)
         }
-    }, [dispatch, bookingDate, bookingTime])
+    }, [dispatch, bookingDate, bookingTime, bookings, id, history])
 
 
     function formattedTime(str_time) {
@@ -345,7 +346,7 @@ export default function BookingPage() {
                     </div>
                 </div>
                 <div className="booking_details_right">
-                    MAP
+                    {/* <MapContainer tour={business} businessId={business.id} /> */}
                 </div>
             </div >
         ) : (

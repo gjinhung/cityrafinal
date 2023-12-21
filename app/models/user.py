@@ -1,7 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-import json
 
 users_languages = db.Table(
     "users_languages",
@@ -46,6 +45,7 @@ class User(db.Model, UserMixin):
     tours_given = db.relationship("Tour", back_populates="guide")
     reviews = db.relationship("Review", back_populates="reviewer")
     bookings = db.relationship("Booking", back_populates="tourist")
+    images = db.relationship("Image", back_populates="user")
 
     languages = db.relationship(
         "Language", secondary=users_languages, back_populates="guides"
@@ -187,6 +187,7 @@ class Review(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     reviewer_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
+    # tour_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tours.id")))
     guide_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     communication_rating = db.Column(db.Integer, nullable=False)
@@ -197,11 +198,13 @@ class Review(db.Model):
     updated_at = db.Column(db.DateTime, default=db.func.now())
 
     reviewer = db.relationship("User", back_populates="reviews")
+    # tour = db.relationship("Tour", back_populates="reviews")
 
     def to_dict(self):
         return {
             "id": self.id,
             "reviewer_id": self.reviewer_id,
+            # "tour_id": self.tour_id,
             "guide_id": self.guide_id,
             "communication_rating": self.communication_rating,
             "knowledgeability_rating": self.knowledgeability_rating,
@@ -248,6 +251,8 @@ class Tour(db.Model):
     price = db.Column(db.Float, nullable=False)
     duration = db.Column(db.Integer, nullable=False)
     about = db.Column(db.String(255), nullable=False)
+    latitude = db.Column(db.Float, nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
     created_at = db.Column(db.DateTime(), nullable=False)
     updated_at = db.Column(db.DateTime(), nullable=False)
 
@@ -256,6 +261,8 @@ class Tour(db.Model):
     bookings = db.relationship("Booking", back_populates="tour")
     type = db.relationship("Type", back_populates="tours")
     availability = db.relationship("Availability", back_populates="tour")
+    images = db.relationship("Image", back_populates="tour")
+    # reviews = db.relationship("Review", back_populates="tour")
 
     def to_dict(self):
         return {
@@ -267,6 +274,8 @@ class Tour(db.Model):
             "price": self.price,
             "duration": self.duration,
             "about": self.about,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }
@@ -298,6 +307,35 @@ class Availability(db.Model):
             "tour_id": self.tour_id,
             "date_id": self.date_id,
             "time": self.time,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
+
+class Image(db.Model):
+    __tablename__ = "images"
+
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    tour_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tours.id")))
+    preview = db.Column(db.Boolean)
+    url = db.Column(db.String(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
+    created_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False)
+
+    tour = db.relationship("Tour", back_populates="images")
+    user = db.relationship("User", back_populates="images")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "tour_id": self.tour_id,
+            "preview": self.preview,
+            "url": self.url,
+            "user_id": self.user_id,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }

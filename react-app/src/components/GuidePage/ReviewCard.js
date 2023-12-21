@@ -4,9 +4,6 @@ import { useParams } from "react-router-dom/";
 import { getReviews, newReview } from "../../store/reviews";
 import { allUsers } from "../../store/users";
 import StarsRating from "./StarRating";
-import OpenModalButton from "../OpenModalButton"
-import EditReviewModal from "../EditReviewModal";
-import DeleteReviewModal from '../DeleteReviewModal'
 import './GuidePage.css'
 import { authenticate } from "../../store/session";
 import Review from "./Review";
@@ -19,7 +16,7 @@ export default function ReviewCard() {
     const users = useSelector((state) => state.users)
     const reviews = useSelector((state) => state.reviews)
     const [canPost, setCanPost] = useState(true)
-    const [loggedIn, setLoggedIn] = useState(false)
+    // const [loggedIn, setLoggedIn] = useState(false)
     const [kStars, setKStars] = useState(0);
     const [cStars, setCStars] = useState(0);
     const [pStars, setPStars] = useState(0);
@@ -31,7 +28,7 @@ export default function ReviewCard() {
     useEffect(() => {
         setCanPost(true)
         if (current_user) {
-            setLoggedIn(true)
+            // setLoggedIn(true)
             if (+current_user.id === +id) {
                 setCanPost(false)
             } else {
@@ -44,7 +41,7 @@ export default function ReviewCard() {
             }
         } else {
             setCanPost(false)
-            setLoggedIn(false)
+            // setLoggedIn(false)
         }
     }, [current_user, id, reviews, users]);
 
@@ -101,10 +98,6 @@ export default function ReviewCard() {
 
     const onChangeP = (stars) => {
         setPStars(stars);
-    }
-
-    const onValueChanged = (input) => {
-        setCanPost(input);
     }
 
     let review_lists = []

@@ -1,8 +1,14 @@
 // constants
+const ADD_CITY = 'city/ADD_CITY'
 const LOAD_CITIES = "city/LOAD_CITIES";
 
 const loadCities = (data) => ({
     type: LOAD_CITIES,
+    payload: data,
+});
+
+const addCity = (data) => ({
+    type: ADD_CITY,
     payload: data,
 });
 
@@ -36,13 +42,36 @@ export const cityByName = (city) => async (dispatch) => {
     }
 };
 
+export const newCity = (city) => async (dispatch) => {
+    const response = await fetch(`/api/city/new`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(city),
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(addCity(data))
+        return data
+    } else {
+        return (await response.json());
+    }
+};
+
 const initialState = { cities: null };
 
 const cities = (state = initialState, action) => {
-    // const newState = { ...state }
+    let newState = {}
     switch (action.type) {
         case LOAD_CITIES:
             return { ...action.payload }
+        case ADD_CITY:
+            newState = {
+                ...state,
+                [action.payload.id]: action.payload
+            }
+            return newState
         default:
             return state;
     }

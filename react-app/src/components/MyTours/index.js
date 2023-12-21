@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 // import adventure from '../../images/adventure.png'
 // import history from '../../images/history.png'
 // import food from '../../images/food.png'
-import other from '../../images/other.png'
+import Mountain from '../../images/Mountain.png'
 import './MyTours.css'
 import OpenModalButton from "../OpenModalButton";
 import EditTourModal from "../EditTourModal";
@@ -44,7 +44,7 @@ export default function MyTours({ loaded }) {
                         <div key={idx}>
                             <div className="image toursicon" >
                                 <img
-                                    src={other}
+                                    src={Mountain}
                                     className='guide_img'
                                     alt={tour_id}
                                     key={idx} />

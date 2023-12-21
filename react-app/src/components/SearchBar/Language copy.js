@@ -25,8 +25,10 @@ export default function LanguageSelection() {
     function handleSelected(e) {
         let obj = searchTerms
         obj.language = e
+
+        let searchUpdate = { ...searchTerms, langauge: e }
         setSelectLang(e)
-        setSearch(obj)
+        setSearch(searchUpdate)
         // setShow(false)
     }
 

@@ -5,12 +5,15 @@ import { logout } from "../../store/session";
 // import OpenModalButton from "../OpenModalButton";
 // import LoginFormModal from "../LoginFormModal";
 // import SignupFormModal from "../SignupFormModal";
+import { useNavScroll } from "../../context/NavScrollToggle";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
+  const { scrollTop } = useNavScroll()
+
 
   const ulRef = useRef();
 
@@ -37,8 +40,17 @@ function ProfileButton({ user }) {
     console.log('logoutclicked')
     e.preventDefault();
     dispatch(logout());
+    closeMenu()
     history.push('/')
   };
+
+  function containerToggle() {
+    if (scrollTop >= 10) {
+      return "-active"
+    } else {
+      return ''
+    }
+  }
 
   const closeMenu = () => setShowMenu(false);
   const ulClassName = "profile-drop" + (showMenu ? "" : " hidden");
@@ -47,12 +59,12 @@ function ProfileButton({ user }) {
     <>
       {!user ? (
         <NavLink exact to="/slider" className="logSignUp-button-container">
-          <button className="logSignUp-button">
+          <button className={`logSignUp-button${containerToggle()}`}>
             LogIn / SignUp
           </button>
         </NavLink>
       ) : (
-        <button onClick={openMenu} className="profile-button">
+        <button onClick={(e) => openMenu(e)} className="profile-button">
           <img src={user.profile_pic} className="mini-profile" alt='user_profile_pic'></img>
         </button>
       )}
@@ -60,20 +72,35 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user && (
           <>
-
-            <li>Welcome, {user.username}</li>
-            <li>{user.first_name} {user.last_name}</li>
-            <li>{user.email}</li>
+            <div className="profile_dropdown_user">
+              {/* <div className="profile_dropdown_left">
+                <img src={user.profile_pic} className="mini-profile" alt='user_profile_pic'></img>
+              </div> */}
+              <div className="profile_dropdown_right">
+                {/* <li>Welcome, {user.username}</li> */}
+                <div className="user_first_last">{user.first_name} {user.last_name}</div>
+                <li style={{ color: "gray" }}>{user.email}</li>
+              </div>
+            </div>
             {user.student &&
-              <li>
-                <NavLink onClick={closeMenu} exact to="/mytours" className="view-dash-button">My Tours</NavLink></li>
+              <div className="view-dash-container">
+                <li>
+                  <NavLink onClick={(e) => closeMenu()} exact to="/mytours" className="view-dash-button"><i className="fa-solid fa-flag"></i>My Tours</NavLink>
+                </li>
+                {/* <div className="right-arrow">{`>`}</div> */}
+              </div>
             }
-            <li>
-              <NavLink onClick={closeMenu} exact to="/mybookings" className="view-dash-button">My Bookings</NavLink></li>
+            <div className="view-dash-container">
+              <li>
+                <NavLink onClick={(e) => closeMenu()} exact to="/mybookings" className="view-dash-button"><i className="fa-solid fa-book"></i>My Bookings</NavLink></li>
+              {/* <div className="right-arrow">{`>`}</div> */}
+            </div>
             {/* <li>
               <NavLink onClick={closeMenu} exact to="/dashboard" className="view-dash-button">Dashboard</NavLink></li> */}
-            <li onClick={handleLogout} className="logout-red-button">Log Out</li>
-
+            <div className="view-dash-container">
+              <li onClick={(e) => handleLogout(e)} className="view-dash-button" ><i className="fa-solid fa-right-from-bracket"></i>Log Out</li>
+              {/* <div className="right-arrow">{`>`}</div> */}
+            </div>
 
           </>
         )
@@ -97,7 +124,7 @@ function ProfileButton({ user }) {
           //   </>
           // )
         }
-      </ul>
+      </ul >
     </>
   );
 }

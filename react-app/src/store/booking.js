@@ -16,10 +16,10 @@ const postBooking = (data) => ({
     payload: data
 })
 
-const removeBooking = (data) => ({
-    type: REMOVE_BOOKINGS,
-    payload: data
-});
+// const removeBooking = (data) => ({
+//     type: REMOVE_BOOKINGS,
+//     payload: data
+// });
 
 export const getBookings = () => async (dispatch) => {
     const response = await fetch(`/api/bookings`);

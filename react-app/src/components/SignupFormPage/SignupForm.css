@@ -8,23 +8,6 @@
   height: 100%;
   text-align: center;
 }
-
-.card {
-    background-color: white;
-    border-radius: .5rem;
-    padding: 20px;
-    max-width: 300px;
-    margin: 0 auto;
-    animation: fade 250ms ease-in-out forwards;
-    display: none;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: .5rem;
-    gap: .25em;
-  }
   
   .form-group:last-child {
     margin: 0;
@@ -38,9 +21,10 @@
   }
   
   .form-group > input {
-    border: 1px solid #333;
-    border-radius: .25em;
-    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid black;
+    /* border-radius: .25em; */
+    font-size: 14px;
     padding: .25em;
   }
   
@@ -50,6 +34,17 @@
     text-align: center;
   }
   
+  .card {
+    background-color: white;
+    border-radius: .5rem;
+    padding: 20px;
+    /* max-width: 300px; */
+    width: 100%;
+    /* margin: 0 auto; */
+    animation: fade 250ms ease-in-out forwards;
+    display: none;
+  }
+
   .card.active {
     animation: slide 250ms 125ms ease-in-out both;
     display: block;
@@ -98,6 +93,7 @@
     font-size: 3px;
     font-weight: 200;
     line-height: .0;
+    margin-top: 0.5rem;
     /* padding: 1rem 1.6rem; */
     text-align: center;
     text-decoration: none crimson solid;
@@ -128,3 +124,33 @@
       padding: 1rem 1rem;
     }
   }
+
+  .imgurl-input {
+    width: 95%;
+    /* background-color: rgb(232, 243, 246); */
+    margin: auto;
+    border: none;
+}
+
+#uploadprofile{
+  border: none;
+}
+
+.signupwrapper{
+  width: 100%;
+  position: relative;
+}
+
+.fa-xmark{
+  position: absolute;
+  padding-top: 3px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  height: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.fa-xmark:hover{
+  text-shadow: lightgrey 1px 0 10px;
+}

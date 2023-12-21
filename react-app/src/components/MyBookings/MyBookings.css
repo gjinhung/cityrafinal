@@ -241,3 +241,11 @@ h2{
     flex-direction: row;
     justify-content: flex-start;
 }
+
+.prev_tours_container{
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    white-space: nowrap;
+    padding: 10px;
+}

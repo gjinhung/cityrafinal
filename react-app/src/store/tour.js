@@ -1,4 +1,3 @@
-import { getCities } from "./city";
 import { authenticate } from "./session";
 import { allUsers } from "./users";
 

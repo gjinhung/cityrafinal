@@ -9,6 +9,7 @@ import languages from './language'
 import types from './type';
 import reviews from './reviews';
 import users from './users'
+// import { images } from './images';
 
 const rootReducer = combineReducers({
   session,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   languages,
   types,
   reviews,
-  users
+  users,
+  // images
 });
 
 

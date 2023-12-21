@@ -11,6 +11,7 @@ def get_all_dates():
 
     if request.args.get("date"):
         date = request.args.get("date").title()
+        print(date)
         if not Date.query.filter_by(date=date).count():
             return jsonify({"errors": "Date does not exist"}), 404
         else:

@@ -14,7 +14,7 @@ export function SearchProvider({ children }) {
     search.type = ''
     const [searchTerms, setSearch] = useState(search);
 
-    const [submitSearch, setSubmit] = useState({ search })
+    const [submitSearch, setSubmit] = useState(search)
 
     return (
         <SearchContext.Provider value={{ searchTerms, setSearch, submitSearch, setSubmit }}>

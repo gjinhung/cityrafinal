@@ -35,8 +35,9 @@ export default function CitySelection() {
     function handleSelected(e) {
         let obj = searchTerms
         obj.city = e
+        let searchUpdate = { ...searchTerms, city: e }
         setSelectCity(e)
-        setSearch(obj)
+        setSearch(searchUpdate)
         // setShow(false)
     }
 

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useSearch } from "../../context/SearchBar";
 // import { useSelector } from "react-redux";
@@ -9,8 +9,7 @@ export default function DateSelection() {
     // const [dayOfWk, setDayOfWk] = useState('');
     const [error, setError] = useState('')
     const { searchTerms, setSearch } = useSearch()
-    const [date, setDate] = useState('')
-
+    const [date, setDate] = useState(searchTerms.date)
     // const normalized_dates = Object.values(dates)
     // normalized_dates.forEach((date) => {
     //     options.push(date.date)
@@ -27,25 +26,30 @@ export default function DateSelection() {
         let obj = searchTerms
         if (!e || e.toLowerCase() === "any") {
             obj.date = ''
-            setSearch(obj)
+            let searchUpdate = { ...searchTerms, date: "" }
+            setSearch(searchUpdate)
         } else {
-            obj.date = e
-            setSearch(obj)
+            let searchUpdate = { ...searchTerms, date: e }
+            setSearch(searchUpdate)
         }
         // setShow(false)
     }
-    const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    // const weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
     const handleChange = (e) => {
         dateRef.current = e
         setDate(e)
-        console.log(dateRef.current)
         let year = dateRef.current.substring(0, 4);
         let month = dateRef.current.substring(5, 7);
         let day = dateRef.current.substring(8, 10);
-        let newDate = new Date(`${year}-${month}-${day}`);
-        let currentDate = new Date()
-        if ((newDate - currentDate) < 0) {
+        // let newDate = new Date(`${year}-${month}-${day}`);
+        let newDate = Date.UTC(year, month - 1, day)
+
+        const now = new Date();
+        const currentDate = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+        // let currentDate = new Date()
+
+        if ((newDate - currentDate) <= 0) {
             setError("Past Dates are Invalid")
             handleSelected('any')
         } else {
@@ -64,7 +68,7 @@ export default function DateSelection() {
         <>
             <div ref={menuRef} className="date-button">
                 <div className="search-title-cont">
-                    <label className="search-title">SELECT A DATE</label>
+                    <label className="search-title">SELECT A DATE *</label>
                     {error && <>
                         <div style={{ textDecoration: 'underline' }} className="search-title">{error}</div>
                     </>}

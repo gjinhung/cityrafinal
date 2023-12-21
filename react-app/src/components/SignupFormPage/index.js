@@ -25,8 +25,9 @@ function SignupFormPage() {
   const [student, setStudent] = useState(false)
   const [graduation_date, setGraduation] = useState("")
   const [errors, setErrors] = useState({});
-  const [imageLoading, setImageLoading] = useState(false);
   const [allowSub, setAllowSub] = useState(false)
+  const [image_url, setImgUrl] = useState("");
+
 
   const history = useHistory()
 
@@ -34,35 +35,36 @@ function SignupFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('profile_pic', profile_pic);
+    formData.append('username', username)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append("first_name", first_name)
+    formData.append('last_name', last_name)
+    formData.append('student', student)
+    console.log(profile_pic)
+    if (graduation_date) {
+      formData.append('graduation_date', graduation_date)
+    }
     if (password === confirmPassword) {
-      if (graduation_date) {
-        const data = await dispatch(signUp(username, email, password, first_name, last_name, profile_pic, student, graduation_date));
-        if (data) {
-          setErrors(data)
-          console.log(data)
-        }
-        else {
-          dispatch(allUsers())
-          dispatch(authenticate())
-          history.push('/')
-        }
-      } else {
-        const data = await dispatch(signUp(username, email, password, first_name, last_name, profile_pic, student));
-        console.log('handlesubmit')
-        console.log({ username, email, password, first_name, last_name, profile_pic, student })
+
+      const data = await dispatch(signUp(formData));
+      console.log('handlesubmit')
+      console.log(formData.get(graduation_date))
+      if (data) {
+        setErrors(data)
         console.log(data)
-        if (data) {
-          setErrors(data)
-          console.log(data)
-        }
-        else {
-          dispatch(allUsers())
-          dispatch(authenticate())
-          history.push('/')
-        }
       }
+      else {
+        dispatch(allUsers())
+        dispatch(authenticate())
+        history.push('/')
+      }
+
     } else {
-      setErrors({ "confirmPassword": 'Confirm Password field must be the same as the Password field' });
+      setErrors({ "confirmPassword": 'Passwords do not match' });
     }
   };
 
@@ -71,6 +73,7 @@ function SignupFormPage() {
     setStudent(!student)
     console.log(stuRef.current)
     if (!stuRef.current) {//if not a student
+      setGraduation('') //reset date
       setAllowSub(false) //not disabled
     }//if student
     if (stuRef.current) {
@@ -85,10 +88,20 @@ function SignupFormPage() {
   }
 
   const firstNext = async (e) => {
+    const formData = new FormData();
+    formData.append('profile_pic', profile_pic);
+    formData.append('username', username)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append("first_name", first_name)
+    formData.append('last_name', last_name)
+    formData.append('student', student)
+    formData.append('graduation_date', graduation_date)
+    console.log(email)
     if (password !== confirmPassword) {
-      setErrors({ "confirmPassword": 'Confirm Password field must be the same as the Password field' })
+      setErrors({ "confirmPassword": 'Passwords do not match' })
     } else {
-      const data = await dispatch(signUp(username, email, password, first_name, last_name, profile_pic, student, graduation_date));
+      const data = await dispatch(signUp(formData));
       console.log('firstnext')
       console.log(data)
       if (data["username"] || data['email'] || data['password']) {
@@ -108,7 +121,17 @@ function SignupFormPage() {
 
   const secondNext = async () => {
 
-    const data = await dispatch(signUp(username, email, password, first_name, last_name, profile_pic, student, graduation_date));
+    const formData = new FormData();
+    formData.append('profile_pic', profile_pic);
+    formData.append('username', username)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append("first_name", first_name)
+    formData.append('last_name', last_name)
+    formData.append('student', student)
+    formData.append('graduation_date', graduation_date)
+
+    const data = await dispatch(signUp(formData));
     console.log('secondnext')
     console.log(data)
     if (data["first_name"] || data['last_name'] || data['profile_pic']) {
@@ -141,31 +164,32 @@ function SignupFormPage() {
     <form
       ref={multiStepRef}
       onSubmit={handleSubmit}
+      encType="multipart/form-data"
       className="multi-step-form">
       <div className={`card ${card1}`} >
         <h3 className="step-title">Create Account</h3>
         <div className="form-group">
           <label>
             <label></label>
-            <label style={{ color: "red" }}>{errors["email"]}</label>
+            {errors.email ? (<label style={{ color: "red" }}>{errors['email']}</label>) : (<div className="empty-space"> </div>)}
           </label>
           <input placeholder={"Email"} type='text' value={email} onChange={(e) => setEmail(e.target.value)}></input>
         </div>
         <div className="form-group">
           <label>
-            <label style={{ color: "red" }}>{errors["username"]}</label>
+            {errors.username ? (<label style={{ color: "red" }}>{errors['username']}</label>) : (<div className="empty-space"> </div>)}
           </label>
           <input placeholder={"Username"} type='text' value={username} onChange={(e) => setUsername(e.target.value)}></input>
         </div>
         <div className="form-group">
           <label>
-            <label style={{ color: "red" }}>{errors["password"]}</label>
+            {errors.password ? (<label style={{ color: "red" }}>{errors['password']}</label>) : (<div className="empty-space"> </div>)}
           </label>
           <input placeholder={"Password"} type='password' value={password} autoComplete="off" onChange={(e) => setPassword(e.target.value)}></input>
         </div>
         <div className="form-group">
           <label>
-            <label style={{ color: "red" }}>{errors["confirmPassword"]}</label>
+            {errors.confirmPassword ? (<label style={{ color: "red" }}>{errors['confirmPassword']}</label>) : (<div className="empty-space"> </div>)}
           </label>
           <input placeholder={"Confirm Password"} type='password' value={confirmPassword} autoComplete="off" onChange={(e) => setConfirmPassword(e.target.value)}></input>
         </div>
@@ -177,21 +201,48 @@ function SignupFormPage() {
         <h3 className="step-title">Who are you?</h3>
         <div className="form-group">
           <label>
-            <label style={{ color: "red" }}>{errors['first_name']}</label>
+            {errors && errors.first_name ? (<label style={{ color: "red" }}>{errors['first_name']}</label>) : (<div className="empty-space"> </div>)}
+
+            {/* <label style={{ color: "red" }}>{errors['first_name']}</label> */}
           </label>
           <input placeholder="First Name" type='text' value={first_name} onChange={(e) => setFirstName(e.target.value)}></input>
         </div>
         <div className="form-group">
           <label>
-            <label style={{ color: "red" }}>{errors['last_name']}</label>
+            {errors.last_name ? (<label style={{ color: "red" }}>{errors['last_name']}</label>) : (<div className="empty-space"> </div>)}
           </label>
           <input placeholder="Last Name" type='text' value={last_name} onChange={(e) => setLastName(e.target.value)}></input>
         </div>
         <div className="form-group">
-          <label>
-            <label style={{ color: "red" }}>{errors['profile_pic']}</label>
-          </label>
-          <input type='text' placeholder="Profile Picture URL" value={profile_pic} onChange={(e) => setProfilePic(e.target.value)}></input>
+          {errors && errors.profile_pic ?
+            (<label>
+              <label style={{ color: "red" }}>{errors['profile_pic']}</label>
+            </label>) : (
+              <label>
+                Upload a Profile Picture
+              </label>)
+          }
+          <div className="signupwrapper">
+            <input
+              type="file"
+              id='uploadprofile'
+              accept="image/*"
+              placeholder="Image URL"
+              value={image_url}
+              onChange={(e) => {
+                setProfilePic(e.target.files[0]);
+                setImgUrl(e.target.value);
+              }}
+              // onChange={handleFileChange}
+              className="imgurl-input"
+              required
+            />
+            {image_url && <i className="fa-solid fa-xmark" onClick={(e) => {
+              setImgUrl('')
+              setProfilePic('')
+            }}></i>}
+            {/* <input type='text' placeholder="Profile Picture URL" value={profile_pic} onChange={(e) => setProfilePic(e.target.value)}></input> */}
+          </div>
         </div>
         <button
           type="button"

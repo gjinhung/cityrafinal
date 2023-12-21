@@ -5,3 +5,4 @@ from .booking_form import BookingForm
 from .review_form import ReviewForm
 from .tour_form import TourForm
 from .city_form import CityForm
+from .image_form import ImageForm

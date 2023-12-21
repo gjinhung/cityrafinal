@@ -123,55 +123,97 @@ cursor: pointer;
 }
 
 .profile-drop.hidden {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: 500ms ease;
 }
+
+.profile-drop::before{
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: 20px;
+  height: 20px;
+  width: 20px;
+  background-color: #f9f9f9;
+  transform: rotate(45deg);
+}
+
 
 .profile-drop {
   /* position: absolute; */
   background-color: #f9f9f9;
-  min-width: 150px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  margin: 5px;
+  min-width: 160px;
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+  /* margin: 5px; */
   z-index: 10;
   position: fixed;
   flex-direction: column;
-  row-gap: 5px;
-  background-color: white;
-  border-radius: 5px;
+  /* row-gap: 5px; */
+  /* border-radius: 5px; */
   font-size: small;
   box-shadow: 0px 0px 10px lightgray;
   top: 80px;
-  right: 8px;
+  right: 165px;
   transform-origin: top;
   list-style-type: none;
   transition: background-color 0.3s ease-in-out;
   display: flex;
   justify-content: center;
-  background-color: #cf2e2e;
-  color: white;
+  background-color: #f8f9fa;
+  color: #2F3E46;
   font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  padding: 15px;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: 500ms ease;
 }
 
 .view-dash-button{
 all: unset;
 cursor: pointer;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+}
+
+.view-dash-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.view-dash-container:hover{
+  font-weight: bold;
+}
+
+.right-arrow{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile-drop li{
   text-decoration: none;
-  font-size: larger;
+  font-size: 14px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin: 0;
+  /* padding-top: 10px; */
+  /* padding-bottom: 10px; */
+  margin: 5px 0px;
 }
 
-.profile-drop li:hover{
+/* .profile-drop li:hover{
   background-color: #971c1c;
-  border-radius: 5px 5px 0 0 
-}
+  border-radius: 5px 5px 0 0; 
+  font-weight: bold;
+} */
 
 .profile-drop li:last-child {
   border-bottom: none;
@@ -205,8 +247,7 @@ cursor: pointer;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #e1e1e1;
+  /* border-bottom: 1px solid #e1e1e1; */
   height: 40px;
   width: 80%;
 }
@@ -217,9 +258,38 @@ cursor: pointer;
 }
 
 .nav-big-container{
+  position: fixed;
+  height: 90px;
+  z-index: 1;
+  transition: .3s ease-in;
   display: flex;
   justify-content: center;
   width: 100%;
+  overflow: hidden;
+}
+
+.nav-big-container-notmain{
+  /* position: fixed; */
+  height: 90px;
+  z-index: 1;
+  transition: .3s ease-in;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.nav-big-container-active{
+  position: fixed;
+  height: 90px;
+  z-index: 1;
+  transition: .3s ease-in;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f8f9fa;
 }
 
 .small-logo {
@@ -252,16 +322,32 @@ cursor: pointer;
 
 .logSignUp-button{
   background-color: transparent;
-  border: #cf2e2e solid 2px;
+  border: white solid 2px;
   border-radius: 3px;
   font-size: larger;
-  color: #cf2e2e;
+  color: white;
   padding: 8px;
   font-weight: bold;
 }
 
 .logSignUp-button:hover{
-  background-color: #cf2e2e;
+  background-color: #2F3E46;
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+.logSignUp-button-active{
+  background-color: transparent;
+  border: #2F3E46 solid 2px;
+  border-radius: 3px;
+  font-size: larger;
+  color: #2F3E46;
+  padding: 8px;
+  font-weight: bold;
+}
+
+.logSignUp-button-active:hover{
+  background-color: #2F3E46;
   color: whitesmoke;
   cursor: pointer;
 }
@@ -273,4 +359,34 @@ cursor: pointer;
   height: 50px;
   border-radius: 30px;
   cursor: pointer;
+  border: solid 2px white;
+}
+
+.profile_dropdown_user{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+  padding-bottom: 10px;
+  border-bottom: solid gray 1px;
+  margin-bottom: 5px;
+}
+
+.fa-book, .fa-flag, .fa-right-from-bracket{
+  padding: 10px;
+  background-color: lightgray;
+  border-radius: 30px;
+  margin-right: 15px;
+  aspect-ratio: 1/1;
+}
+
+.profile_dropdown_right{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user_first_last{
+  font-size: 16px;
 }

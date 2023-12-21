@@ -65,7 +65,7 @@ export default function TourBooking({ tour_id }) {
         } else {
             setFormDisabled(false)
         }
-    }, [bookingDate, bookingTime, activeTour])
+    }, [bookingDate, bookingTime, activeTour, tour_id])
 
 
     const handleChange = async (e) => {

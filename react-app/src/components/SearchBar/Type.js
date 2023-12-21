@@ -22,10 +22,15 @@ export default function TypeSelection() {
         let obj = searchTerms
         if (e.toLowerCase() === "any") {
             obj.type = ''
-        } else { obj.type = e }
-        setSelectType(e)
-        setSearch(obj)
-        // setShow(false)
+            let searchUpdate = { ...searchTerms, type: "" }
+            setSearch(searchUpdate)
+        } else {
+            obj.type = e
+            setSelectType(e)
+            let searchUpdate = { ...searchTerms, type: e }
+            setSearch(searchUpdate)
+            // setShow(false)
+        }
     }
 
     return (

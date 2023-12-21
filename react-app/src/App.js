@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
+// import SignupFormPage from "./components/SignupFormPage";
+// import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import { getTours } from "./store/tour";
@@ -16,11 +16,11 @@ import { getReviews } from "./store/reviews";
 import MainPage from "./components/MainPage";
 import LogInSignUp from "./components/LogInSignUp";
 import GuidePage from "./components/GuidePage";
-import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import MyBookings from "./components/MyBookings";
 import BookingPage from "./components/BookingPage";
 import MyToursPage from "./components/MyToursPage";
+import MyTours from "./components/MyTours";
 import PostTour from "./components/MyToursPage/PostTour";
 
 function App() {
@@ -51,12 +51,6 @@ function App() {
         <Navigation isLoaded={isLoaded} />
         {isLoaded && (
           <Switch>
-            {/* <Route path="/login" >
-              <LoginFormPage />
-            </Route>
-            <Route path="/signup">
-              <SignupFormPage />
-            </Route> */}
             <Route path="/slider">
               <LogInSignUp loaded={isLoaded} />
             </Route>
@@ -66,14 +60,14 @@ function App() {
             <Route path='/booking/:id'>
               <BookingPage loaded={isLoaded} />
             </Route>
-            {/* <ProtectedRoute path='/dashboard' exact={true}>
-              < Dashboard loaded={isLoaded} />
-            </ProtectedRoute> */}
             <ProtectedRoute path='/mybookings' exact={true}>
               < MyBookings loaded={isLoaded} />
             </ProtectedRoute>
             <ProtectedRoute path='/mytours' exact={true}>
               < MyToursPage loaded={isLoaded} />
+            </ProtectedRoute>
+            <ProtectedRoute path='/tours' exact={true}>
+              < MyTours loaded={isLoaded} />
             </ProtectedRoute>
             <ProtectedRoute path='/mytours/new' exact={true}>
               < PostTour loaded={isLoaded} />
@@ -81,7 +75,6 @@ function App() {
             <Route exact path='/'>
               <MainPage loaded={isLoaded} />
             </Route>
-            {/* <SelfRoutes /> */}
           </Switch>
         )}
 

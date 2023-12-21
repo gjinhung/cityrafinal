@@ -13,10 +13,10 @@ const postReview = (data) => ({
     payload: data
 })
 
-const removeReview = (id) => ({
-    type: REMOVE_REVIEWS,
-    payload: id
-});
+// const removeReview = (id) => ({
+//     type: REMOVE_REVIEWS,
+//     payload: id
+// });
 
 export const getReviews = () => async (dispatch) => {
     const response = await fetch(`/api/reviews`);

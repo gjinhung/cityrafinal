@@ -12,6 +12,7 @@ import * as sessionActions from "./store/session";
 import App from "./App";
 
 import "./index.css";
+import { NavScrollProvider } from "./context/NavScrollToggle";
 
 const store = configureStore();
 
@@ -32,8 +33,10 @@ function Root() {
 						<SearchProvider>
 							<ActiveTourProvider>
 								<ActiveTourDetailsProvider>
-									<App />
-									<Modal />
+									<NavScrollProvider>
+										<App />
+										<Modal />
+									</NavScrollProvider>
 								</ActiveTourDetailsProvider>
 							</ActiveTourProvider>
 						</SearchProvider>

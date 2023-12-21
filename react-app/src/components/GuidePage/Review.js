@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StarsRating from "./StarRating";
 import './GuidePage.css'
-import { useParams } from "react-router-dom/";
 import { deleteReview, editReview, getReviews } from "../../store/reviews";
 import { allUsers } from "../../store/users";
 import { authenticate } from "../../store/session";
@@ -10,7 +9,6 @@ import { authenticate } from "../../store/session";
 
 export default function Review({ review }) {
 
-    const { id } = useParams
     const dispatch = useDispatch()
     const users = useSelector((state) => state.users)
     const current_user = useSelector((state) => state.session.user)

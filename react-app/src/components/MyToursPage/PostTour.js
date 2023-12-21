@@ -44,23 +44,23 @@ function PostTour({ loaded }) {
         }
 
 
-    }, [dispatch, errors])
+    }, [dispatch, errors, title.length, about.length, price, duration])
 
-    const availSubmit = async (avail, data) => {
-        console.log("in avail submit function")
-        const splitData = avail.split(' - ')
-        let avail_data = {
-            'date': dates[+splitData[1]].date,
-            'time': splitData[0],
-            'tour_id': data.id
-        }
-        const availErrors = await dispatch(newAvailability(data.id, avail_data))
-        console.log(availErrors)
-        if (availErrors) {
-            console.log('Adding Availabilities Errors, see console')
-            console.log(availErrors)
-        }
-    }
+    // const availSubmit = async (avail, data) => {
+    //     console.log("in avail submit function")
+    //     const splitData = avail.split(' - ')
+    //     let avail_data = {
+    //         'date': dates[+splitData[1]].date,
+    //         'time': splitData[0],
+    //         'tour_id': data.id
+    //     }
+    //     const availErrors = await dispatch(newAvailability(data.id, avail_data))
+    //     console.log(availErrors)
+    //     if (availErrors) {
+    //         console.log('Adding Availabilities Errors, see console')
+    //         console.log(availErrors)
+    //     }
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
