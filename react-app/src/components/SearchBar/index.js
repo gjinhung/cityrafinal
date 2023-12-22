@@ -149,12 +149,12 @@ export default function SearchBar({ loaded }) {
                 <img src={banner} className="background" alt="background_image"></img>
                 <div className="header">
                     <div className="book_tour_container">
-                        BOOK A TOUR TODAY!
+                        BOOK A TOUR TODAY
                     </div>
                     <div className="book_tour_sub">
                         Tours by local students
                     </div>
-                    {scrollTop === 0 &&
+                    {scrollTop <= 60 &&
                         <div className="searchBarContainerCont">
                             <div className="searchBarContainer" >
                                 <div className="searchBar" >
@@ -178,7 +178,7 @@ export default function SearchBar({ loaded }) {
 
                 {submitSearch.date && <div
                     className="section">
-                    {scrollTop > 0 &&
+                    {scrollTop > 60 &&
                         <div
                             className="filter_searchBarContainerCont">
                             <div className="filter_searchBarContainer" >

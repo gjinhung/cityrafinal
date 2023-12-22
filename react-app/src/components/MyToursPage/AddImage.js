@@ -25,13 +25,14 @@ function AddImage({ tour_id }) {
         formData.append('tour_id', tour_id)
         formData.append('preview', preview)
 
+
         const data = await dispatch(createImage(tour_id, formData))
         if (data) {
             console.log(data)
         } else {
             await dispatch(getTours())
-            await closeModal()
-            await console.log(tours)
+            closeModal()
+            // await console.log(tours)
             history.push('/mytours')
         }
 
@@ -66,9 +67,9 @@ function AddImage({ tour_id }) {
                 <label>Main Image</label>
             </div>
             <div className='image_upload_wrapper'>
-                <div className="upload_image_button" onClick={(e) => handleAddImage(e)}>
+                <button className={`upload_image_button`} disabled={image_url ? false : true} onClick={(e) => handleAddImage(e)}>
                     UPLOAD IMAGE
-                </div>
+                </button>
                 <div >
                     <OpenModalButton
                         buttonText={"CANCEL"}

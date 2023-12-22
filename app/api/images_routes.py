@@ -42,6 +42,11 @@ def images_post(id):
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
+        images = Image.query.filter(Image.tour_id == id).all()
+
+        if not images:
+            form.preview.data = True
+
         try:
             # Retrieving form data separately
             image = form.data["url"]

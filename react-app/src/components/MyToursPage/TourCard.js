@@ -11,11 +11,12 @@ import UserImages from "./UserImages";
 
 export default function TourCard({ tour_id }) {
     const tours = useSelector((state) => state.tours)
+    const cities = useSelector((state) => state.cities)
     let previewImg = []
     let notPImg = []
     const [img_id, setImgId] = useState(previewImg[0])
     useEffect(() => {
-        console.log('tours changed')
+        // console.log('tours changed')
         let tour = tours[tour_id]
         let images = tour.images
         previewImg = []
@@ -162,9 +163,9 @@ export default function TourCard({ tour_id }) {
                                     </div>
                                     <div className="tour_details_box">
                                         <div className="tour_box_title">CITY: </div>
-                                        {/* <div className="tour_box_details">{cities[tours[tour_id].city_id].city}</div> */}
+                                        <div className="tour_box_details">{cities[tours[tour_id].city_id].city}</div>
 
-                                        <div className="tour_box_details">{tours[tour_id].city_id}</div>
+                                        {/* <div className="tour_box_details">{tours[tour_id].city_id}</div> */}
                                     </div>
                                     <div className="show_more_button" onClick={(e) => handleShowDets(e)}>{!showDets ? ('+  SEE MORE DETAILS') : ('-  SEE LESS DETAILS')}</div>
                                 </div>
