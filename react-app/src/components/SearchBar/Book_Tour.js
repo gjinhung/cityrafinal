@@ -13,6 +13,7 @@ function Book_Tour({ avail_time, tour_id }) {
     const [error, setError] = useState('')
     const tours = useSelector((state) => state.tours)
     const history = useHistory()
+    const current_user = useSelector((state) => state.session.user)
 
 
     const handleSubmit = async (e) => {
@@ -64,9 +65,9 @@ function Book_Tour({ avail_time, tour_id }) {
                     </div>
 
                 </div>
-                <div className='search_time_slot_remaining'>
+                {/* <div className='search_time_slot_remaining'>
                     REMAINING SPOTS:
-                </div>
+                </div> */}
                 <div className='search_time_slot_ptitle'>
                     PRICE
                 </div>
@@ -76,7 +77,7 @@ function Book_Tour({ avail_time, tour_id }) {
             </div>
             <div className='search_time_slot_right'>
                 <div className='booking_button'
-                    onClick={(e) => handleSubmit(e)}>BOOK</div>
+                    onClick={(e) => current_user ? handleSubmit(e) : history.push("/slider")}>BOOK</div>
 
                 {error && <div> {error} </div>}
 

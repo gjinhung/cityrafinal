@@ -16,7 +16,7 @@ import SearchedTour from "./SearchedTour";
 import vietnam_streets from '../../images/vietnam_streets.jpg'
 import { useNavScroll } from "../../context/NavScrollToggle";
 
-export default function SearchBar({ loaded, }) {
+export default function SearchBar({ loaded }) {
     const searchRef = useRef(null)
     const users = useSelector((state) => state.users)
     const students = []
@@ -29,6 +29,7 @@ export default function SearchBar({ loaded, }) {
     })
     const tours = useSelector((state) => (state.tours))
     const { searchTerms, submitSearch, setSubmit } = useSearch()
+
     const dispatch = useDispatch()
     // let tours_array = Object.keys(tours)
     const [tourIds, setTour_ids] = useState([])
@@ -37,7 +38,8 @@ export default function SearchBar({ loaded, }) {
 
     useEffect(() => {
         setScrollTop(0)
-    }, [])
+        handleSearch()
+    }, [current_user])
 
     const handleScroll = (event) => {
 
@@ -111,18 +113,20 @@ export default function SearchBar({ loaded, }) {
 
             date_tours = (Object.values(date_id)[0].tours_id)
         }
-        console.log(type_tours)
+
         const firstFilter = city_tours.filter(value => language_tours.includes(value));
         const secondFilter = firstFilter.filter(value => type_tours.includes(value))
         const thirdFilter = secondFilter.filter(value => date_tours.includes(value))
 
-        console.log(thirdFilter)
-
-        setTour_ids(thirdFilter)
+        if (current_user) {
+            const userFilter = thirdFilter.filter(value => tours[value].guide_id != current_user.id)
+            setTour_ids(userFilter)
+        } else {
+            setTour_ids(thirdFilter)
+        }
 
         searchRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
-
 
     if (!loaded) {
         return (
@@ -193,14 +197,24 @@ export default function SearchBar({ loaded, }) {
                         </div> :
                         <div className="image_container">
                             {tourIds.map((tour_id, idx) => {
-                                return (
-                                    tours[tour_id].guide_id !== current_user.id &&
+                                if (current_user) {
+                                    return (
 
-                                    <SearchedTour
-                                        key={idx}
-                                        tour_id={tour_id} />
+                                        tours[tour_id].guide_id !== current_user.id &&
 
-                                )
+                                        <SearchedTour
+                                            key={idx}
+                                            tour_id={tour_id} />
+
+                                    )
+                                }
+                                else {
+                                    return (
+                                        <SearchedTour
+                                            key={idx}
+                                            tour_id={tour_id} />
+                                    )
+                                }
                             }
                             )}
                         </div>

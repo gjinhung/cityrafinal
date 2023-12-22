@@ -29,14 +29,12 @@ export default function MyBookings() {
 
     function prevImg(booking_id) {
         let imagesArr = tours[bookings[booking_id].tour_id].images
-        console.log(imagesArr)
         if (!imagesArr.length) {
             return Mountain
         }
         let prev
         imagesArr.forEach((image) => {
             if (image.preview) {
-                console.log(image.url)
                 prev = image.url
             }
         })
@@ -150,7 +148,6 @@ export default function MyBookings() {
         } else {
             showUpcoming = (
                 upcomingBooking_ids.length && upcomingBooking_ids.map((booking_id, idx) => {
-                    console.log(`${prevImg(booking_id)}`)
                     return (
 
                         <div className='booking_wrapper' key={idx}>

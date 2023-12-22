@@ -19,7 +19,7 @@ function SearchedTour({ tour_id }) {
     const users = useSelector((state) => state.users)
     const guide = users[tours[tour_id].guide_id]
     const history = useHistory()
-    const { searchTerms, submitSearch } = useSearch()
+    const { submitSearch } = useSearch()
 
     let previewImg = []
     let notPImg = []

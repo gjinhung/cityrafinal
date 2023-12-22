@@ -84,7 +84,6 @@ export default function BookingPage() {
         let prev
         imagesArr.forEach((image) => {
             if (image.preview) {
-                console.log(image.url)
                 prev = image.url
             }
         })
