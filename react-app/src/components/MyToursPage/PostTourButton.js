@@ -37,7 +37,7 @@ function PostTourButton() {
     } else {
         showUpcoming = (
             <div className='post-tour-container'>
-                <NavLink exact to="/mytours/new" className="tours-buttons">
+                <NavLink exact to="/mytours/new" className="post-new-button">
                     POST A NEW TOUR
                 </NavLink>
             </div>

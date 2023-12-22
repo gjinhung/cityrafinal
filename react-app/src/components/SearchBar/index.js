@@ -11,9 +11,11 @@ import { typeByName } from "../../store/type";
 import './SearchBar.css'
 import DateSelection from "./Date";
 import { NavLink } from "react-router-dom";
-import NYC from '../../images/NYC.png'
 import SearchedTour from "./SearchedTour";
 import vietnam_streets from '../../images/vietnam_streets.jpg'
+import wallstreet from "../../images/wallstreet.jpg"
+import greek_statues from '../../images/greek_statues.jpg'
+import neon_signs from '../../images/neon_signs.jpg'
 import { useNavScroll } from "../../context/NavScrollToggle";
 
 export default function SearchBar({ loaded }) {
@@ -29,17 +31,19 @@ export default function SearchBar({ loaded }) {
     })
     const tours = useSelector((state) => (state.tours))
     const { searchTerms, submitSearch, setSubmit } = useSearch()
-
     const dispatch = useDispatch()
-    // let tours_array = Object.keys(tours)
     const [tourIds, setTour_ids] = useState([])
-    const { scrollTop, setScrollTop } = useNavScroll()
+    const { scrollTop, setScrollTop } = useNavScroll(0)
+    const [banner, setBanner] = useState(vietnam_streets)
     const { language, city, type, date } = searchTerms
+
+    let imgs = [vietnam_streets, wallstreet, greek_statues, neon_signs]
 
     useEffect(() => {
         setScrollTop(0)
         handleSearch()
-    }, [current_user])
+        setBanner(imgs[Math.floor(Math.random() * imgs.length)])
+    }, [])
 
     const handleScroll = (event) => {
 
@@ -142,8 +146,14 @@ export default function SearchBar({ loaded }) {
         return (
             <div className="wrap"
                 onScroll={(e) => handleScroll(e)}>
-                <img src={vietnam_streets} className="background" alt="background_image"></img>
+                <img src={banner} className="background" alt="background_image"></img>
                 <div className="header">
+                    <div className="book_tour_container">
+                        BOOK A TOUR TODAY!
+                    </div>
+                    <div className="book_tour_sub">
+                        Tours by local students
+                    </div>
                     {scrollTop === 0 &&
                         <div className="searchBarContainerCont">
                             <div className="searchBarContainer" >
@@ -167,7 +177,6 @@ export default function SearchBar({ loaded }) {
                 </div>
 
                 {submitSearch.date && <div
-                    ref={searchRef}
                     className="section">
                     {scrollTop > 0 &&
                         <div
@@ -191,11 +200,11 @@ export default function SearchBar({ loaded }) {
                         </div >}
                     {!tourIds.length ?
                         <div className="nosearch-container">
-                            <div className="nosearch">
+                            <div ref={searchRef} className="nosearch">
                                 Sorry but no tours are available for your search criteria. Try another search parameter.
                             </div>
                         </div> :
-                        <div className="image_container">
+                        <div ref={searchRef} className="image_container">
                             {tourIds.map((tour_id, idx) => {
                                 if (current_user) {
                                     return (
