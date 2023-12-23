@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { deleteAvailabilities } from '../../store/availability'
 import { deleteTour, getTours } from '../../store/tour'
 import { authenticate } from '../../store/session'
+import { allUsers } from '../../store/users'
 
 function DeleteTour({ tour_id }) {
     const dispatch = useDispatch()
