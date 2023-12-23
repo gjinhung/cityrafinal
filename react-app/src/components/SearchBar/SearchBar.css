@@ -94,7 +94,8 @@
 .book_tour_container{
     display: flex;
     justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     height: fit-content;
     background-color: transparent;
     font-family: 'Fraunces';
@@ -106,9 +107,17 @@
     font-size: 10vw;
     font-weight: bolder;
     padding: 20px;
-    top: 10vh; 
+    top: 14vh; 
     left: 10vw;
     letter-spacing: .5vw;
+}
+
+.underline{
+    width: 50%;
+    color: #f8f9fa;
+    position: absolute;
+    text-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+    bottom: 0
 }
 
 .book_tour_sub{
@@ -126,7 +135,7 @@
     color: #f8f9fa;
     font-size: 2.5vw;
     padding: 20px;
-    top: 60vh; 
+    top: 62vh; 
     left: 10vw
 }
 

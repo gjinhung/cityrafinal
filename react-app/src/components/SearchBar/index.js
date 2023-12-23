@@ -16,7 +16,8 @@ import vietnam_streets from '../../images/vietnam_streets.jpg'
 import wallstreet from "../../images/wallstreet.jpg"
 import greek_statues from '../../images/greek_statues.jpg'
 import neon_signs from '../../images/neon_signs.jpg'
-import { useNavScroll } from "../../context/NavScrollToggle";
+import { useNavScroll } from "../../context/NavScrollToggle"
+import dual_underline from '../../images/dual-underline.png'
 
 export default function SearchBar({ loaded }) {
     const searchRef = useRef(null)
@@ -149,10 +150,12 @@ export default function SearchBar({ loaded }) {
                 <img src={banner} className="background" alt="background_image"></img>
                 <div className="header">
                     <div className="book_tour_container">
-                        BOOK A TOUR TODAY
+                        <div>BOOK A TOUR </div>
+                        <div className="today">TODAY</div>
+                        <img src={dual_underline} className="underline"></img>
                     </div>
                     <div className="book_tour_sub">
-                        Tours by local students
+                        Local Tours by Local Students
                     </div>
                     {scrollTop <= 60 &&
                         <div className="searchBarContainerCont">
