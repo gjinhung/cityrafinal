@@ -543,7 +543,8 @@ width: 100%;
 }
 
 .delete_buttontrue:hover{
-    background-color: crimson;
+    background-color: #a71a1a;
+    color: white
 }
 
 .image_upload_wrapper{
