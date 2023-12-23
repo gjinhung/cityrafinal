@@ -19,7 +19,6 @@ export function SearchProvider({ children }) {
     const [submitSearch, setSubmit] = useState(search)
     let allTours = Object.values(tours)
     const allIds = []
-    console.log(allTours)
     // allTours.forEach((tour) => {
     //     console.log(tour)
     // })
