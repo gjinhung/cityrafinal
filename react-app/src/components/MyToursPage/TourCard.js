@@ -10,6 +10,7 @@ import AddImage from "./AddImage";
 import UserImages from "./UserImages";
 
 export default function TourCard({ tour_id }) {
+    console.log(tour_id)
     const tours = useSelector((state) => state.tours)
     const cities = useSelector((state) => state.cities)
     let previewImg = []
