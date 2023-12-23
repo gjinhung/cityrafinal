@@ -285,9 +285,9 @@ function PostTour({ loaded }) {
                                         <option key={idx} value={type.type}> {type.type}</option>
                                     )
                                 })}
-                                <option value='Others'>Add New Type</option>
+                                {/* <option value='Others'>Add New Type</option> */}
                             </select>
-                            {showType && (
+                            {/* {showType && (
                                 <>
                                     <input
                                         className="tour-type"
@@ -296,7 +296,7 @@ function PostTour({ loaded }) {
                                         onChange={(e) => setType(e.target.value)}
                                     />
                                 </>
-                            )}
+                            )} */}
                             {errors && errors['type'] ? <div style={{ color: "red" }}>{errors['price']}</div> : <div className="empty-space"> </div>}
 
                         </div>

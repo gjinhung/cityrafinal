@@ -1,12 +1,19 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import TourCard from "./TourCard";
 import './MyToursPage.css'
 import PostTourButton from "./PostTourButton";
+import { authenticate } from "../../store/session";
 
 export default function MyToursPage({ loaded }) {
     const user_tours = useSelector((state) => state.session.user.tours_given_ids)
+    console.log(user_tours)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(authenticate())
+    }, [])
 
     if (!loaded) {
         return (
@@ -17,7 +24,6 @@ export default function MyToursPage({ loaded }) {
             </div>
         )
     } else {
-        console.log(user_tours)
         return (
             <div className="my-tours-page-container">
                 <div className="my-tours-page-small-container">
