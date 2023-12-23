@@ -17,6 +17,7 @@ export default function MyToursPage({ loaded }) {
             </div>
         )
     } else {
+        console.log(user_tours)
         return (
             <div className="my-tours-page-container">
                 <div className="my-tours-page-small-container">
