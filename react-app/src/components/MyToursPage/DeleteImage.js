@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import { deleteImage } from '../../store/images'
 import { getTours } from '../../store/tour'
 import { useModal } from "../../context/Modal";
+import { authenticate } from '../../store/session'
+import { allUsers } from '../../store/users'
 
 function DeleteImage({ tour_id, image_id }) {
     const dispatch = useDispatch()
@@ -18,8 +20,11 @@ function DeleteImage({ tour_id, image_id }) {
         if (data) {
             console.log(data)
         } else {
-            await dispatch(getTours())
-            await closeModal()
+            dispatch(authenticate()).then(() =>
+                dispatch(getTours())).then(() =>
+                    dispatch(allUsers())).then(() =>
+                        closeModal()
+                    )
         }
 
     }

@@ -104,6 +104,7 @@ def images_post(id):
 @login_required
 def images_delete(id):
     image = Image.query.get(id)
+    print(image.preview)
     if not image:
         return jsonify({"error": "Image not found"}), 404
     tour = Tour.query.get(image.tour_id)
@@ -130,8 +131,9 @@ def images_delete(id):
     )
 
     if image.preview:
-        last_img.preview = True
-        last_img.updated_at = datetime.utcnow()
+        if last_img:
+            last_img.preview = True
+            last_img.updated_at = datetime.utcnow()
 
         db.session.commit()
 

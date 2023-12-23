@@ -78,11 +78,14 @@ export const deleteImage = (img_id) => async (dispatch) => {
         method: "DELETE"
     })
     if (response.ok) {
+        console.log('delete imageok')
         dispatch(removeImage(img_id))
         return null
     }
     else {
+        console.log('delete image not okay')
         const data = await response.json();
+        console.log(data)
         if (data) {
             return data;
         }

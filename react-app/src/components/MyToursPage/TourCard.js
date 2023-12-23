@@ -17,19 +17,25 @@ export default function TourCard({ tour_id }) {
     let notPImg = []
     const [img_id, setImgId] = useState(previewImg[0])
     useEffect(() => {
+
         // console.log('tours changed')
         let tour = tours[tour_id]
         let images = tour.images
         previewImg = []
         notPImg = []
-        images.forEach((image) => {
-            if (image.preview) {
-                previewImg = [image]
-                setImgId(image)
-            } else {
-                notPImg.push(image)
-            }
-        })
+        if (images.length) {
+            images.forEach((image) => {
+                if (image.preview) {
+                    previewImg = [image]
+                    setImgId(image)
+                } else {
+                    notPImg.push(image)
+                }
+            })
+        } else {
+            setImgId('')
+        }
+
     }, [tours])
 
     let sortedImages = [...previewImg, ...notPImg]
