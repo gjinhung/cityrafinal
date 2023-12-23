@@ -47,7 +47,7 @@ def images_post(id):
         if not images:
             form.preview.data = True
 
-        print("😇😇😇", form.data['prevew'])
+        print("😇😇😇", form.preview.data)
 
         try:
             # Retrieving form data separately
