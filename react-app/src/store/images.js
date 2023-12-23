@@ -48,7 +48,7 @@ export const getImageData = (tourId) => async (dispatch) => {
 }
 
 export const createImage = (tour_id, imageData) => async (dispatch) => {
-
+    console.log("createImage ")
     const response = await fetch(`/api/tour/${tour_id}/images/new`, {
         method: "POST",
         // headers: {
@@ -56,13 +56,14 @@ export const createImage = (tour_id, imageData) => async (dispatch) => {
         // },
         body: imageData,
     })
-    console.log(" THIS IS IMAGE DATA", imageData.url)
 
     if (response.ok) {
+        console.log("added image")
         const data = await response.json()
         dispatch(addImage({ data }))
         return null
     } else if (response.status < 500) {
+        console.log('error adding image')
         const data = await response.json();
         if (data.errors) {
             return data.errors;

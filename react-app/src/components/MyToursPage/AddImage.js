@@ -18,6 +18,7 @@ function AddImage({ tour_id }) {
 
 
     async function handleAddImage(e) {
+        console.log('add image clicked')
 
         e.preventDefault()
         const formData = new FormData();
@@ -25,7 +26,7 @@ function AddImage({ tour_id }) {
         formData.append('tour_id', tour_id)
         formData.append('preview', preview)
 
-
+        console.log(formData)
         const data = await dispatch(createImage(tour_id, formData))
         if (data) {
             console.log(data)
