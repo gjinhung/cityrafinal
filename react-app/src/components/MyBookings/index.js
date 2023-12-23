@@ -63,7 +63,9 @@ export default function MyBookings() {
             }
         })
 
-
+        pastBookings_ids.forEach((booking_id) => {
+            console.log(bookings[booking_id])
+        })
 
 
         function convertDate(data) {
