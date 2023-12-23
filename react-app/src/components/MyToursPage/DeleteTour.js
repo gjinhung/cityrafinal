@@ -13,7 +13,8 @@ function DeleteTour({ tour_id }) {
         dispatch(deleteAvailabilities(tour_id)).then(() =>
             dispatch(deleteTour(tour_id)).then(() =>
                 dispatch(getTours())).then(() =>
-                    dispatch(authenticate()))
+                    dispatch(authenticate())).then(() =>
+                        dispatch(allUsers()))
         )
 
     }
