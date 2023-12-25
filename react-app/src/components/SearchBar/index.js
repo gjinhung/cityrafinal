@@ -35,10 +35,10 @@ export default function SearchBar({ loaded }) {
     const dispatch = useDispatch()
     const [tourIds, setTour_ids] = useState([])
     const { scrollTop, setScrollTop } = useNavScroll(0)
-    const [banner, setBanner] = useState(vietnam_streets)
+    let imgs = [vietnam_streets, wallstreet, greek_statues, neon_signs]
+    const [banner, setBanner] = useState('')
     const { language, city, type, date } = searchTerms
 
-    let imgs = [vietnam_streets, wallstreet, greek_statues, neon_signs]
 
     useEffect(() => {
         setScrollTop(0)

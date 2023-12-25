@@ -10,17 +10,16 @@ import AddImage from "./AddImage";
 import UserImages from "./UserImages";
 
 export default function TourCard({ tour_id }) {
-    console.log(tour_id)
     const tours = useSelector((state) => state.tours)
     const cities = useSelector((state) => state.cities)
     let previewImg = []
     let notPImg = []
     const [img_id, setImgId] = useState(previewImg[0])
     useEffect(() => {
-
-        // console.log('tours changed')
         let tour = tours[tour_id]
+        console.log(tour)
         let images = tour.images
+        console.log(images)
         previewImg = []
         notPImg = []
         if (images.length) {

@@ -46,21 +46,14 @@ function PostTour({ loaded }) {
 
     }, [dispatch, errors, title.length, about.length, price, duration])
 
-    // const availSubmit = async (avail, data) => {
-    //     console.log("in avail submit function")
-    //     const splitData = avail.split(' - ')
-    //     let avail_data = {
-    //         'date': dates[+splitData[1]].date,
-    //         'time': splitData[0],
-    //         'tour_id': data.id
-    //     }
-    //     const availErrors = await dispatch(newAvailability(data.id, avail_data))
-    //     console.log(availErrors)
-    //     if (availErrors) {
-    //         console.log('Adding Availabilities Errors, see console')
-    //         console.log(availErrors)
-    //     }
-    // }
+    const handleSample = () => {
+        setType("Food")
+        setCity('New York')
+        setTitle("Food Tour of Little Italy")
+        setPrice(200)
+        setDuration(3)
+        setAbout("This is a tour of Little Italy in LES New York. Let me give you a history of the influence of Italian culture in the area and what life was like in the community during the mob era as well as try some local cuisines from historical restaurants")
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -415,6 +408,7 @@ function PostTour({ loaded }) {
                         </div>
                         <button disabled={formDisabled} className={'tours-buttons'} type="submit">POST TOUR</button>
                     </form >
+                    <div onClick={(e) => handleSample()}>Sample Tour</div>
                 </div>
             </div>
         )

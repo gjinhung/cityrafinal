@@ -90,15 +90,15 @@ export const editTour = (id, tour) => async (dispatch) => {
 };
 
 export const deleteTour = (id) => async (dispatch) => {
-    console.log('attemp to delete')
+    console.log('attempt to delete')
     const response = await fetch(`/api/tours/${id}/delete`, {
         method: 'DELETE',
     });
     if (response.ok) {
         console.log('ok')
-        dispatch(allUsers())
-        dispatch(authenticate())
-        dispatch(removeTour(id));
+        // dispatch(allUsers())
+        // dispatch(authenticate())
+        // dispatch(removeTour(id));
     } else if (response.status < 500) {
         const data = await response.json();
         if (data.errors) {
