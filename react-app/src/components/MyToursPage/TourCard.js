@@ -35,7 +35,7 @@ export default function TourCard({ tour_id }) {
             setImgId('')
         }
 
-    }, [tours])
+    }, [])
 
     let sortedImages = [...previewImg, ...notPImg]
 
