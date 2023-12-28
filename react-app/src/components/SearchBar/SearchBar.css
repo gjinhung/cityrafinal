@@ -441,13 +441,13 @@ font-weight: 300;
     object-fit: cover;
     object-position: center;
     aspect-ratio: 1/1;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     color: white;
     font-size: x-large;
     position: absolute;
     bottom: 5%;
-    right: 5%;
+    right: 2%;
     margin: auto;
     display: flex;
     justify-content: center;
@@ -461,14 +461,16 @@ font-weight: 300;
 
 .images_button{
         all: unset;
-        height: 30px;
-        width: 30px;
-        margin-top: 0px;
-        margin-bottom: 5px;
+        height: 20px;
+        width: 20px;
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
+}
+
+.fa-image{
+    font-size: smaller;
 }
 
 .post-new-button{
@@ -506,3 +508,42 @@ font-weight: 300;
       padding: 1.5rem 2rem;
     }
   }
+
+  .view_all_button{
+    all: unset;
+    height: 30px;
+    width: fit-content;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .2rem;
+    /* margin-bottom: 5px; */
+    padding: 0px 5px;
+}
+
+.searched-image-button{
+    /* background-color: red; */
+    object-fit: cover;
+    object-position: center;
+    /* aspect-ratio: 1/1; */
+    /* height: 40px; */
+    width: fit-content;
+    color: white;
+    font-size: x-large;
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* .searched-image-button:hover{
+    background-color: rgba(128, 128, 128, 0.704);
+
+} */

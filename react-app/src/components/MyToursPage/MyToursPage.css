@@ -553,3 +553,35 @@ width: 100%;
     justify-content: center;
     gap: 10px;
 }
+
+.my_tour_left, .my_tour_right{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+aspect-ratio: 1/1;
+height: 10%;
+/* color: rgba(0, 0, 0, 0.572); */
+/* background-color: rgba(0, 0, 0, 0.205); */
+/* border: rgba(0, 0, 0, 0.572) solid 1px; */
+color: #f8f9fa ;
+cursor: pointer;
+}
+
+.my_tour_left{
+    position: absolute;
+    bottom: 45%;
+    left: 0%;
+}
+
+.my_tour_right{
+    position: absolute;
+    bottom: 45%;
+    right: 0%;
+}
+
+.my_tour_left:hover, .my_tour_right:hover{
+background-color: #f8f9fa ;
+border: black solid 1px;
+color: black    
+}

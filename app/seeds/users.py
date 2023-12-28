@@ -120,24 +120,28 @@ def seed_users():
 
     new_york = City(
         city="New York",
+        state="NY",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     los_angeles = City(
         city="Los Angeles",
+        state="CA",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     seattle = City(
         city="Seattle",
+        state="WA",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )
 
     miami = City(
         city="Miami",
+        state="FL",
         created_at=datetime.datetime.now(),
         updated_at=datetime.datetime.now(),
     )

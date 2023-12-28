@@ -15,6 +15,7 @@ function SearchedTour({ tour_id }) {
     const formattedDate = Object.values(dates)
     const { activeDetTour, setDetActiveTour } = useActiveTourDetails()
     const [showDets, setShowDets] = useState(false)
+    const [imgIdx, setImgIdx] = useState(0)
     const [updateDelete, setUpdateDelete] = useState(true)
     const users = useSelector((state) => state.users)
     const guide = users[tours[tour_id].guide_id]
@@ -45,6 +46,24 @@ function SearchedTour({ tour_id }) {
     function handleShowDets(e) {
         setShowDets(!showDets)
         setDetActiveTour(tour_id)
+    }
+
+    const left = () => {
+        // console.log('left')
+        if (imgIdx === 0) {
+            setImgIdx(sortedImages.length - 1)
+        } else {
+            setImgIdx(prev => prev - 1)
+        }
+    }
+
+    const right = () => {
+        // console.log("right")
+        if (imgIdx === sortedImages.length - 1) {
+            setImgIdx(0)
+        } else {
+            setImgIdx(prev => prev + 1)
+        }
     }
 
     function convertTime(time) {
@@ -176,17 +195,25 @@ function SearchedTour({ tour_id }) {
                         <div className="search_tour_main_details">
                             <div className='search_tour_main_image'>
                                 <img
-                                    src={sortedImages[0] ? sortedImages[0].url : Mountain}
+                                    src={sortedImages.length ? sortedImages[imgIdx].url : Mountain}
                                     className='tour_image'
                                     alt={tour_id}
                                     key={tour_id}
                                 />
-                                {sortedImages.length ? (<div className="see-image-button">
+                                {sortedImages.length ? <>
+                                    <div onClick={(e) => left()} className="my_tour_left" ><i className="fa-solid fa-chevron-left"></i></div>
+                                    <div onClick={(e) => right()} className="my_tour_right"><i className="fa-solid fa-chevron-right"></i></div>
+                                </> : <></>
+                                }
+                                {sortedImages.length ? (<div className="searched-image-button">
+                                    {/* {sortedImages.length ? (<div className="see-image-button"> */}
                                     <OpenModalButton
-                                        buttonText={<i className="fa-solid fa-image"></i>}
+                                        // buttonText={<i className="fa-solid fa-image"></i>}
+                                        buttonText={`VIEW IMAGES`}
                                         modalComponent={<Images
                                             tour_id={tour_id} />}
-                                        className='images_button'
+                                        // className='images_button'
+                                        className='view_all_button'
                                     />
                                 </div>) : (<></>)}
                             </div>

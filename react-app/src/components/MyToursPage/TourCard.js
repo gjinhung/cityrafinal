@@ -12,42 +12,47 @@ import UserImages from "./UserImages";
 export default function TourCard({ tour_id }) {
     const tours = useSelector((state) => state.tours)
     const cities = useSelector((state) => state.cities)
-    let previewImg = []
-    let notPImg = []
-    const [img_id, setImgId] = useState(previewImg[0])
-    useEffect(() => {
-        let tour = tours[tour_id]
-        console.log(tour)
-        let images = tour.images
-        console.log(images)
-        previewImg = []
-        notPImg = []
-        if (images.length) {
-            images.forEach((image) => {
-                if (image.preview) {
-                    previewImg = [image]
-                    setImgId(image)
-                } else {
-                    notPImg.push(image)
-                }
-            })
-        } else {
-            setImgId('')
-        }
-
-    }, [])
-
-    let sortedImages = [...previewImg, ...notPImg]
-
-
-
-
-
-    // const cities = useSelector((state) => state.cities)
+    const [imgIdx, setImgIdx] = useState(0)
     const dates = useSelector((state) => state.dates)
     const { activeDetTour, setDetActiveTour } = useActiveTourDetails()
     const [showDets, setShowDets] = useState(false)
     const [updateDelete, setUpdateDelete] = useState(true)
+
+    let previewImg = []
+    let notPImg = []
+    let tour = tours[tour_id]
+    let images = tour.images
+    if (images.length) {
+        images.forEach((image) => {
+            if (image.preview) {
+                previewImg = [image]
+            } else {
+                notPImg.push(image)
+            }
+        })
+    }
+
+    let sortedImages = [...previewImg, ...notPImg]
+
+    const left = () => {
+        // console.log('left')
+        if (imgIdx === 0) {
+            setImgIdx(sortedImages.length - 1)
+        } else {
+            setImgIdx(prev => prev - 1)
+        }
+    }
+
+    const right = () => {
+        // console.log("right")
+        if (imgIdx === sortedImages.length - 1) {
+            setImgIdx(0)
+        } else {
+            setImgIdx(prev => prev + 1)
+        }
+    }
+
+
 
     useEffect(() => {
         if (activeDetTour !== tour_id) {
@@ -85,7 +90,6 @@ export default function TourCard({ tour_id }) {
         normalizedDates.forEach((date) => {
             res[date.date] = []
         })
-        // console.log(tour_avail)
         tour_avail.forEach((avail) => {
 
             let formattedTime = convertTime(avail.time)
@@ -140,11 +144,16 @@ export default function TourCard({ tour_id }) {
                             <div className="tour_main_details">
                                 <div className="tour_image_container">
                                     <img
-                                        src={img_id ? img_id.url : Mountain}
+                                        src={sortedImages.length ? sortedImages[imgIdx].url : Mountain}
                                         className='tour_image'
                                         alt={tour_id}
                                         key={tour_id}
                                     />
+                                    {sortedImages.length ? <>
+                                        <div onClick={(e) => left()} className="my_tour_left" ><i className="fa-solid fa-chevron-left"></i></div>
+                                        <div onClick={(e) => right()} className="my_tour_right"><i className="fa-solid fa-chevron-right"></i></div>
+                                    </> : <></>
+                                    }
                                     <div className="edit-image-button">
                                         <OpenModalButton
                                             buttonText={"+"}

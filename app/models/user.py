@@ -150,7 +150,8 @@ class City(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    city = db.Column(db.String(255), nullable=False, unique=True)
+    city = db.Column(db.String(255), nullable=False)
+    state = db.Column(db.String(2), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False)
     updated_at = db.Column(db.DateTime(), nullable=False)
 
