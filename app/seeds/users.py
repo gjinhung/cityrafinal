@@ -383,6 +383,42 @@ def seed_users():
         updated_at=datetime.datetime.now(),
     )
 
+    tour4 = Tour(
+        guide=demo5,
+        city=miami,
+        price=200,
+        duration=2,
+        title="Guided Hike of Miami Strip",
+        about='Moved out here when I was 2 and been here since! Miami has a lot of great food and sites to see! I"m your Aladin by the Beach. Let me show you the BEACHES!',
+        type=adventure,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    tour4_avail = Availability(
+        tour=tour4,
+        date=friday,
+        time=datetime.time(17),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    tour4_avail2 = Availability(
+        tour=tour4,
+        date=saturday,
+        time=datetime.time(17),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    tour4_avail3 = Availability(
+        tour=tour4,
+        date=thursday,
+        time=datetime.time(17),
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
     review1 = Review(
         reviewer=demo3,
         guide_id=1,
@@ -584,6 +620,9 @@ def seed_users():
             tour2_avail,
             tour2_avail1,
             tour2_avail2,
+            tour4_avail,
+            tour4_avail2,
+            tour4_avail3,
             seattle,
             new_york,
             los_angeles,
@@ -613,6 +652,7 @@ def seed_users():
             tour1,
             tour2,
             tour3,
+            tour4,
             review1,
             review2,
             review3,
