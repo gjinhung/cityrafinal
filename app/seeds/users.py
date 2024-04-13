@@ -609,6 +609,24 @@ def seed_users():
         updated_at=datetime.datetime.now(),
     )
 
+    image7 = Image(
+        tour=tour4,
+        preview=True,
+        url="https://img.freepik.com/free-photo/miami-skyscrapers-with-bridge-sea-day_649448-4790.jpg?w=1480&t=st=1713051027~exp=1713051627~hmac=dc48ab2e5091cb898d6290c7b89ded438e02a660f85c113c021b32bf180debd2",
+        user=demo5,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
+    image8 = Image(
+        tour=tour4,
+        preview=False,
+        url="https://www.sobeachtours.com/images/blogs/FreeThingsToDoMiami/South-Beach-at-night.jpg",
+        user=demo5,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
+    )
+
     db.session.add_all(
         [
             tour3_avail,
